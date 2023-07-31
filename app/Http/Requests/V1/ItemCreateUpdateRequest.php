@@ -39,7 +39,7 @@ class ItemCreateUpdateRequest extends FormRequest
                 }),
             ],
             'price' => 'required',
-            'status' => 'required|numeric|lte:1'
+            'status' => ['required',Rule::in([1,2])],
         ];
         if (request()->has('is_vendor')) {
             $rules['is_vendor'] = 'required|numeric';
@@ -69,8 +69,7 @@ class ItemCreateUpdateRequest extends FormRequest
             'item_category_id.exists' => 'Item Category'.__('messages.validation.not_found'),
             'price.required' => __('messages.validation.price_required'),
             'status.required' => __('messages.validation.status'),
-            'status.numeric' => 'Status' . __('messages.validation.must_numeric'),
-            'status.lte' => __('messages.validation.status_lte'),
+            'status.in' => __('messages.validation.status_in'),
         ];
 
         if(request()->has('is_vendor')){

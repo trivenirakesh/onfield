@@ -38,28 +38,28 @@ class Handler extends ExceptionHandler
             Log::error($th->getMessage());
             if ($th instanceof \Illuminate\Auth\AuthenticationException) {
                 return response()->json([
-                    'status' => 'error',
+                    'status' => 401,
                     'message' => "Access denied. Please login and try again.",
                 ], 401);
             } elseif ($th instanceof ErrorException) {
                 return response()->json([
-                    'status' => 'error',
+                    'status' => 404,
                     'message' => $th->getMessage(),
                 ], 404);
             } elseif ($th instanceof ValidationException) {
                 return response()->json([
-                    'status' => 'error',
+                    'status' => 404,
                     'message' => "Errors found",
                     'errors' => $th->errors(),
                 ], 404);
             } elseif ($th instanceof NotFoundHttpException) {
                 return response()->json([
-                    'status' => 'error',
+                    'status' => 404,
                     'message' => 'Route'.__('messages.validation.not_found'),
                 ], 404);
             } else {
                 return response()->json([
-                    'status' => 'error',
+                    'status' => 500,
                     'message' => $th->getMessage(),
                 ], 500);
             }
