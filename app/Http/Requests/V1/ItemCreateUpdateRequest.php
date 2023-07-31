@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1;
 
 use App\Helpers\CommonHelper;
+use App\Models\Entitymst;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -46,7 +47,7 @@ class ItemCreateUpdateRequest extends FormRequest
                 'required',
                 Rule::exists('entitymst','id')->where(function ($query) {
                     $query->where('status', CommonHelper::getConfigValue('status.active'));
-                    $query->where('entity_type', CommonHelper::getConfigValue('entity_type.vendor'));
+                    $query->where('entity_type', Entitymst::ENTITYVENDOR);
                 }),
             ];
         }

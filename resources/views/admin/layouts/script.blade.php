@@ -48,4 +48,4 @@
   <!-- <script src="{{ asset('/dist/js/demo.js') }}"></script> -->
   <!-- Toaster message -->
   <script src="{{ asset('/plugins/toastr/toastr.min.js') }}"></script>
-  <script src="{{ asset('/dist/js/pages/backoffice/common.js') }}"></script>
+  @stack('script')

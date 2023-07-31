@@ -16,7 +16,7 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+            <!-- <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60"> -->
         </div>
 
         <!-- Navbar -->
@@ -32,12 +32,12 @@
                 <li class="nav-item d-none d-sm-inline-block">
                     <!-- <a href="#" class="nav-link">Contact</a> -->
                     <!-- GlobalSearch Form -->
-                    <div class="form-inline cm-global-search">
+                    <!-- <div class="form-inline cm-global-search">
                         <div class="input-group" data-widget="sidebar-search">
                             <input class="form-control form-control-sidebar" type="search" placeholder="Search…" aria-label="Search">
                             <i class="fas fa-search fa-fw"></i>
                         </div>
-                    </div>
+                    </div> -->
                 </li>
             </ul>
 
@@ -72,10 +72,10 @@
                     <!-- header user panel (optional) -->
                     <div class="user-panel d-flex">
                         <div class="image">
-                            <img src="{{ asset('public/dist/img/avatar.png') }}" class="img-circle" alt="User Image">
+                            <img src="{{ asset('dist/img/avatar.png') }}" class="img-circle" alt="User Image">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block">@if(!empty(session('entity_name'))) {{ session('entity_name')}} @endif 
+                            <a href="#" class="d-block">@if(!empty(Auth::user())) {{ Auth::user()->first_name.' '.Auth::user()->first_name}} @endif 
                               <!-- <p>Super Admin</p>  -->
                             </a>
                         </div>

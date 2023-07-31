@@ -37,7 +37,7 @@
                             <div class="d-flex justify-content-center align-items-center bg-yellow-orange mb-3 p-2 rounded-circle text-center wrapper-56">
                                 <i class="fa fa-suitcase fa-2x text-white"></i>
                             </div>
-                            <h4 class="text-bold">@if(isset($dashboardDetails) && !empty($dashboardDetails['getTotalEngineer'])) {{$dashboardDetails['getTotalEngineer']}} @else 0 @endif</h4>
+                            <h4 class="text-bold">0</h4>
                             <div class="font-weight-bold mb-2">Total Engineers</div>
                             <div class="font-weight-bold text-success">-10% from last month</div>
                         </div>
@@ -48,7 +48,7 @@
                             <div class="d-flex justify-content-center align-items-center bg-heliotrope mb-3 p-2 rounded-circle text-center wrapper-56">
                                 <i class="fa fa-users fa-2x text-white"></i>
                             </div>
-                            <h4 class="text-bold">@if(isset($dashboardDetails) && !empty($dashboardDetails['getTotalClient'])) {{$dashboardDetails['getTotalClient']}} @else 0 @endif</h4>
+                            <h4 class="text-bold">0</h4>
                             <div class="font-weight-bold mb-2">Total Clients</div>
                             <div class="font-weight-bold text-success">+20% from last month</div>
                         </div>
@@ -59,7 +59,7 @@
                             <div class="d-flex justify-content-center align-items-center bg-brink-pink mb-3 p-2 rounded-circle text-center wrapper-56">
                                 <i class="fa fa-paint-brush fa-2x text-white"></i>
                             </div>
-                            <h4 class="text-bold">@if(isset($dashboardDetails) && !empty($dashboardDetails['getTotalItems'])) {{$dashboardDetails['getTotalItems']}} @else 0 @endif</h4>
+                            <h4 class="text-bold">0</h4>
                             <div class="font-weight-bold mb-2">Total Products</div>
                             <div class="font-weight-bold text-success">25% from last month</div>
                         </div>

@@ -13,6 +13,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Entitymst extends Authenticatable
 {
+    const ENTITYADMIN = 0;
+    const ENTITYENGINEER = 1;
+    const ENTITYCLIENT = 2;
+    const ENTITYVENDOR = 3;
+
     protected $table = 'entitymst';
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
