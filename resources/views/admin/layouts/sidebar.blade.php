@@ -52,7 +52,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">
+                                    <a href="{{ route('admin.skill.index')}}" class="nav-link">
                                         <i class="fas fa-circle nav-icon"></i>
                                         <p>Manage Skill</p>
                                     </a>
@@ -61,12 +61,6 @@
                                     <a href="#" class="nav-link">
                                         <i class="fas fa-circle nav-icon"></i>
                                         <p>Manage Address Type</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-circle nav-icon"></i>
-                                        <p>Manage Role</p>
                                     </a>
                                 </li>
                             </ul>

@@ -115,7 +115,7 @@ class AuthController extends Controller
                 return $this->errorResponse('Mobile or password you entered did not match our records.',401);
             }
             $user = Entitymst::where('mobile', $request->mobile)->first();
-            $user->tokens()->delete();
+            // $user->tokens()->delete();
             $getUserDetails['id'] = $user->id;
             $getUserDetails['username'] = $user->first_name.' '.$user->last_name;
             $getUserDetails['email'] = $user->email;

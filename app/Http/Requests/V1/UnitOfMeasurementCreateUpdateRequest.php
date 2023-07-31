@@ -33,10 +33,10 @@ class UnitOfMeasurementCreateUpdateRequest extends FormRequest
     public function messages()
     {
         $messages = [
-            'name.required' => 'Please enter name',
+            'name.required' =>  __('messages.validation.name'),
             'name.max' => __('messages.validation.max_name'),
-            'factor.required' => 'Please enter factor',
-            'factor.numeric' => 'Factor must be a number or decimal',
+            'factor.required' => __('messages.validation.factor_required'),
+            'factor.numeric' => __('messages.validation.factor_numeric'),
             'status.required' => __('messages.validation.status'),
             'status.numeric' => 'Status' . __('messages.validation.must_numeric'),
             'status.lte' => __('messages.validation.status_lte'),

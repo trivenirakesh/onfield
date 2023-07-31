@@ -6,7 +6,7 @@
             <h2 class="theme_primary_text d-inline-block">{{$title}}</h2>
             <div class="text-right d-inline-block">
                 <!-- <button class="theme_primary_btn btn btn-sm float-right  ml-2" onclick="addModel()"><i class="fa fa-plus" aria-hidden="true"></i> Add {{$title}}</button> -->
-                <a href="javascript:void(0)" onclick="globalFunctionModal('skill','Add Skill')" class="btn btn-primary fa fa-plus"> ADD SKILL</a>
+                <a href="javascript:void(0)" onclick="addModel()"class="btn btn-primary fa fa-plus"> ADD SKILL</a>
             </div>
         </div>
     </div>
@@ -23,7 +23,6 @@
                                         <th class="text-center"></th>
                                         <th>Name</th>
                                         <th>Status</th>
-                                        <th>Created At</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -37,7 +36,7 @@
     <input type="hidden" id="page_module" value="{{$title}}">
     <input type="hidden" id="module_index_url" value="{{ route('admin.skill.index') }}">
 </div>
-
+@include('admin.skill.modal')
 <!-- /.content -->
 
 @endsection
