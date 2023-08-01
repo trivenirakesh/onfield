@@ -14,11 +14,11 @@ use Yajra\DataTables\Facades\DataTables;
 class ItemCategoryController extends Controller
 {
     use CommonTrait;
-    protected $ItemCategoryService;
+    protected $itemCategoryService;
 
-    public function __construct(ItemCategoryService $ItemCategoryService)
+    public function __construct(ItemCategoryService $itemCategoryService)
     {
-        $this->ItemCategoryService = $ItemCategoryService;
+        $this->itemCategoryService = $itemCategoryService;
     }
 
     /**
@@ -56,9 +56,9 @@ class ItemCategoryController extends Controller
     public function store(ItemCategoryCreateUpdateRequest $request)
     {
         if (isset($request->id) && $request->id > 0) { //update data
-            $createUpdateItemCategory = $this->ItemCategoryService->update($request, $request->id);
+            $createUpdateItemCategory = $this->itemCategoryService->update($request, $request->id);
         } else { //add data
-            $createUpdateItemCategory  = $this->ItemCategoryService->store($request);
+            $createUpdateItemCategory  = $this->itemCategoryService->store($request);
         }
         if (!$createUpdateItemCategory['status']) {
             return $this->jsonResponse($createUpdateItemCategory, 401);
@@ -71,7 +71,7 @@ class ItemCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $getItemCategoryDetails = $this->ItemCategoryService->show($id);
+        $getItemCategoryDetails = $this->itemCategoryService->show($id);
         if (!$getItemCategoryDetails['status']) {
             return $this->jsonResponse($getItemCategoryDetails, 401);
         }
@@ -83,7 +83,7 @@ class ItemCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $deleteItemCategory = $this->ItemCategoryService->destroy($id);
+        $deleteItemCategory = $this->itemCategoryService->destroy($id);
         if (!$deleteItemCategory['status']) {
             return $this->jsonResponse($deleteItemCategory, 401);
         }

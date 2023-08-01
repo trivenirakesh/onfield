@@ -103,10 +103,16 @@ $(document).ready(function () {
             name: {
                 required: true,
             },
+            factor: {
+                required: true,
+            },
         },
         messages: {
             name: {
                 required: "Please enter name",
+            },
+            factor: {
+                required: "Please enter factor",
             },
         },
         submitHandler: function (form, e) {
@@ -140,7 +146,7 @@ $(document).ready(function () {
                         toastr.error(result.message);
                     }
                 },
-                error: function () {
+                error: function (result) {
                     var errors = result.responseJSON.errors;
                     // Clear previous error messages
                     $(".error-message").text("");
@@ -182,6 +188,14 @@ $(document).ready(function () {
             {
                 data: "name",
                 name: "name",
+            },
+            {
+                data: "description",
+                name: "description",
+            },
+            {
+                data: "factor",
+                name: "factor",
             },
             {
                 data: "status_text",

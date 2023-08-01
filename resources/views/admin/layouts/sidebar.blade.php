@@ -45,12 +45,12 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a href="#" class="nav-link @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/itemcategory')) active @endif">
+                            <a href="#" class="nav-link @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/itemcategory') || request()->is('admin/unitofmeasurement')) active @endif">
                             <i class="nav-icon fas fa-user-shield"></i>
 
                                 <p>Configurations <i class="right fas fa-angle-left"></i></p>
                             </a>
-                            <ul class="nav nav-treeview" style="display: @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/itemcategory')) block @else none @endif">
+                            <ul class="nav nav-treeview" style="display: @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/itemcategory') || request()->is('admin/unitofmeasurement')) block @else none @endif">
                                 <li class="nav-item">
                                     <a href="{{ route('admin.skill.index')}}" class="nav-link {{request()->is('admin/skill*') ?'active' : ''}}">
                                         <i class="fas fa-circle nav-icon"></i>
@@ -67,6 +67,12 @@
                                     <a href="{{ route('admin.itemcategory.index')}}" class="nav-link {{request()->is('admin/itemcategory*') ?'active' : ''}}">
                                         <i class="fas fa-circle nav-icon"></i>
                                         <p>Manage Item Category</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.unitofmeasurement.index')}}" class="nav-link {{request()->is('admin/unitofmeasurement*') ?'active' : ''}}">
+                                        <i class="fas fa-circle nav-icon"></i>
+                                        <p>Manage UOM</p>
                                     </a>
                                 </li>
                             </ul>

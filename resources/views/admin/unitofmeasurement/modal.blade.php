@@ -48,7 +48,7 @@
                 <h4 class="modal-title" id="modal_title">Large Modal</h4>
                 <button type="button" class="close" style="font-size: 20px;" data-dismiss="modal" aria-label="Close">&times;</button>
             </div>
-            <form class="form-horizontal" id="module_form" action="{{route('admin.skill.store')}}" name="module_form" novalidate="novalidate">
+            <form class="form-horizontal" id="module_form" action="{{route('admin.unitofmeasurement.store')}}" name="module_form" novalidate="novalidate">
                 <div class="modal-body">
                     <div class="card-body">
                         <input type="hidden" name="id" id="id" value="">
@@ -66,6 +66,23 @@
                                     <label>Name <span class="red">*</span></label>
                                     <input type="text" class="form-control" placeholder="Please enter name" id="name" name="name" value="">
                                     <label id="name-error" class="error" for="name"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Factor <span class="red">*</span></label>
+                                    <input type="text" class="form-control" placeholder="Please enter factor" id="factor" name="factor" value="">
+                                    <label id="factor-error" class="error" for="factor"></label>
                                 </div>
                             </div>
                         </div>

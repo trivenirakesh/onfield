@@ -141,7 +141,15 @@ $(document).ready(function () {
                     }
                 },
                 error: function () {
-                    toastr.error("Please Reload Page.");
+                    var errors = result.responseJSON.errors;
+                    // Clear previous error messages
+                    $(".error-message").text("");
+                    // Display validation errors in form fields
+                    $.each(errors, function (field, messages) {
+                        var inputField = $('[name="' + $.trim(field) + '"]');
+                        $(".form-group .error").css("display", "block");
+                        inputField.closest(".form-group").find(".error").text(messages[0]);
+                    });
                     formLoader.hide();
                     formBtn.prop("disabled", false);
                 },
