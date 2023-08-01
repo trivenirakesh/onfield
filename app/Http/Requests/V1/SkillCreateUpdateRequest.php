@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SkillCreateUpdateRequest extends FormRequest
 {
@@ -23,7 +24,7 @@ class SkillCreateUpdateRequest extends FormRequest
     {
         $rules =  [
             'name' => 'required|max:200',
-            'status' => 'required|numeric|lte:1'
+            'status' => ['required',Rule::in([1,2])],
         ];
 
         return $rules;
@@ -33,10 +34,9 @@ class SkillCreateUpdateRequest extends FormRequest
     {
         $messages = [
             'name.required' => __('messages.validation.name'),
-            'name.max' => __('messages.validation.max_name'),
+            'name.max' => __('messages.validation.max'),
             'status.required' => __('messages.validation.status'),
-            'status.numeric' => 'Status' . __('messages.validation.must_numeric'),
-            'status.lte' => __('messages.validation.status_lte'),
+            'status.in' => __('messages.validation.status_in'),
         ];
         
         return $messages;

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1;
 
 use App\Helpers\CommonHelper;
+use App\Models\Entitymst;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -38,7 +39,7 @@ class ItemCreateUpdateRequest extends FormRequest
                 }),
             ],
             'price' => 'required',
-            'status' => 'required|numeric|lte:1'
+            'status' => ['required',Rule::in([1,2])],
         ];
         if (request()->has('is_vendor')) {
             $rules['is_vendor'] = 'required|numeric';
@@ -46,7 +47,7 @@ class ItemCreateUpdateRequest extends FormRequest
                 'required',
                 Rule::exists('entitymst','id')->where(function ($query) {
                     $query->where('status', CommonHelper::getConfigValue('status.active'));
-                    $query->where('entity_type', CommonHelper::getConfigValue('entity_type.vendor'));
+                    $query->where('entity_type', Entitymst::ENTITYVENDOR);
                 }),
             ];
         }
@@ -61,22 +62,21 @@ class ItemCreateUpdateRequest extends FormRequest
     public function messages()
     {
         $messages = [
-            'name.required' => 'Please enter name',
-            'uom_id.required' => 'Please enter unit of measurement id',
+            'name.required' => __('messages.validation.name'),
+            'uom_id.required' => __('messages.validation.uom_id_required'),
             'uom_id.exists' => 'Unit of Measurement'.__('messages.validation.not_found'),
-            'item_category_id.required' => 'Please enter item category id',
+            'item_category_id.required' => __('messages.validation.item_category_id_required'),
             'item_category_id.exists' => 'Item Category'.__('messages.validation.not_found'),
-            'price.required' => 'Please email price',
+            'price.required' => __('messages.validation.price_required'),
             'status.required' => __('messages.validation.status'),
-            'status.numeric' => 'Status' . __('messages.validation.must_numeric'),
-            'status.lte' => __('messages.validation.status_lte'),
+            'status.in' => __('messages.validation.status_in'),
         ];
 
         if(request()->has('is_vendor')){
-            $messages['is_vendor.required'] = 'Please enter is vendor';
-            $messages['is_vendor.numeric'] = 'Is vendor value must be numeric';
-            $messages['vendor_id.required'] = 'Please enter vendor id';
-            $messages['vendor_id.exists'] = 'Vendor not found';
+            $messages['is_vendor.required'] = __('messages.validation.is_vendor_required');
+            $messages['is_vendor.numeric'] = __('messages.validation.is_vendor_numeric');
+            $messages['vendor_id.required'] = __('messages.validation.vendor_id_required');
+            $messages['vendor_id.exists'] = 'Vendor'.__('messages.validation.not_found');
         }
 
         if (request()->hasFile('image')) {

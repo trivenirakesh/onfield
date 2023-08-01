@@ -57,7 +57,7 @@ class ItemService
                 $saveUploads = new Upload();
                 $saveUploads['file'] = $data['filename'];
                 $saveUploads['transaction_type'] = 'ITEM';
-                $saveUploads['media_type'] = 'BASE';
+                $saveUploads['media_type'] = Item::MEDIA_TYPES[0];
                 $saveUploads['image_type'] = $data['filetype'];
                 $saveUploads['created_by'] = auth()->user()->id;
                 $saveUploads['created_ip'] = CommonHelper::getUserIp();

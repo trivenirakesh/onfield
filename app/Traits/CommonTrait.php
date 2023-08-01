@@ -8,7 +8,7 @@ trait CommonTrait
 	public function successResponse($data, $message = null, $code = 200)
 	{
 		return response()->json([
-			'status' => true,
+			'status' => $code,
 			'message' => $message,
 			'data' => $data
 		], $code);
@@ -17,7 +17,7 @@ trait CommonTrait
 	public function errorResponse($message = null, $code = 401)
 	{
 		return response()->json([
-			'status' => false,
+			'status' => $code,
 			'message' => $message,
 			'data' => []
 		], $code);

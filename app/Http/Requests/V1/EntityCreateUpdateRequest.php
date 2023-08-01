@@ -27,7 +27,7 @@ class EntityCreateUpdateRequest extends FormRequest
             'entity_type' => 'required|digits:1|lte:2',
             'first_name' => 'required|max:200',
             'last_name' => 'required|max:200',
-            'status' => 'required|numeric|lte:1',
+            'status' => ['required',Rule::in([1,2])],
             'role_id' => [
                 'required',
                 Rule::exists('roles','id')->where(function ($query) {
@@ -75,8 +75,7 @@ class EntityCreateUpdateRequest extends FormRequest
             'entity_type.digits' => __('messages.validation.entity_type_digits'),
             'entity_type.lte' => __('messages.validation.entity_type_lte'),
             'status.required' => __('messages.validation.status'),
-            'status.numeric' => 'Status' . __('messages.validation.must_numeric'),
-            'status.lte' => __('messages.validation.status_lte'),
+            'status.in' => __('messages.validation.status_in'),
             'role_id.required' => __('messages.validation.role_id'),
             'role_id.exists' => 'Role'.__('messages.validation.not_found'),
         ];
