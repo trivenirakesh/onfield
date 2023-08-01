@@ -20,7 +20,7 @@ class AddressTypeService
      */
     public function index()
     {
-        $getSkillsData =  AddressTypeResource::collection(AddressType::latest('id')->get());
+        $getSkillsData =  AddressTypeResource::collection(AddressType::where('id','!=',1)->latest('id')->get());
         return $this->successResponseArr(self::module . __('messages.success.list'), $getSkillsData);
     }
 

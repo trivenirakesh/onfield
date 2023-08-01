@@ -68,6 +68,17 @@ class CommonHelper{
         return $responseArr;
     }
 
+    public static function uploadFile($file,$path){
+        $uploadPath = self::getConfigValue('upload_path').$path;
+        $fileType = $file->getClientMimeType();
+        $imagePath = $file->store($uploadPath);
+        $fileName = basename($imagePath);
+
+        $responseArr['filename'] = $fileName;
+        $responseArr['filetype'] = $fileType;
+        return $responseArr;
+    }
+
     public static function getImageUrl($filename,$path,$type){
         $imageUrl = '';
         $linkPath = self::getConfigValue('link_path');

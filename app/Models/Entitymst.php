@@ -25,6 +25,8 @@ class Entitymst extends Authenticatable
         3 => 'ID-PROOF',
     ];
 
+    const FOLDERNAME = "entity/";
+
     protected $table = 'entitymst';
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 

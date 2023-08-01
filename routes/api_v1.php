@@ -59,4 +59,5 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth:sanctum']], function ()
     // Service category routes
     Route::get('servicecategory',[ServiceCategoryController::class,'index']);
     Route::get('servicecategory/{id}',[ServiceCategoryController::class,'show']);
+    Route::get('states',[AuthController::class,'getStates']);
 });
