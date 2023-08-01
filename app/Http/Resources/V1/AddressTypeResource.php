@@ -18,7 +18,8 @@ class AddressTypeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'status' => ($this->status == 1 ? 'Active' : 'Deactive'),
+            'status' => $this->status,
+            'status_text' => ($this->status == 1 ? 'Active' : 'Deactive'),
             'created_at' => CommonHelper::getConvertedDateTime($this->created_at)
         ];
     }

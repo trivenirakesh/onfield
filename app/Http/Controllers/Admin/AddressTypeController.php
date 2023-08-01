@@ -4,21 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\CommonHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\SkillCreateUpdateRequest;
-use App\Models\Skill;
-use App\Services\V1\SkillService;
+use App\Http\Requests\V1\AddressTypeCreateUpdateRequest;
+use App\Models\AddressType;
+use App\Services\V1\AddressTypeService;
 use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class SkillController extends Controller
+class AddressTypeController extends Controller
 {
     use CommonTrait;
-    protected $skillService;
+    protected $addressTypeService;
 
-    public function __construct(SkillService $skillService)
+    public function __construct(AddressTypeService $addressTypeService)
     {
-        $this->skillService = $skillService;
+        $this->addressTypeService = $addressTypeService;
     }
 
     /**
@@ -27,8 +27,8 @@ class SkillController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $baseurl = route('admin.skill.index');
-            $data = Skill::latest()->get();
+            $baseurl = route('admin.addresstype.index');
+            $data = AddressType::where('id','!=',1)->latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action_edit', function ($row) use ($baseurl) {
@@ -46,24 +46,24 @@ class SkillController extends Controller
                 ->rawColumns(['action_edit', 'action_delete', 'name', 'status_text'])
                 ->make(true);
         }
-        $title =  'Skills';
-        return view('admin.skill.index', compact('title'));
+        $title =  'Address Type';
+        return view('admin.addresstype.index', compact('title'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SkillCreateUpdateRequest $request)
+    public function store(AddressTypeCreateUpdateRequest $request)
     {
         if (isset($request->id) && $request->id > 0) { //update data
-            $createUpdateSkill = $this->skillService->update($request, $request->id);
+            $createUpdateAddressType = $this->addressTypeService->update($request, $request->id);
         } else { //add data
-            $createUpdateSkill  = $this->skillService->store($request);
+            $createUpdateAddressType  = $this->addressTypeService->store($request);
         }
-        if (!$createUpdateSkill['status']) {
-            return $this->jsonResponse($createUpdateSkill, 401);
+        if (!$createUpdateAddressType['status']) {
+            return $this->jsonResponse($createUpdateAddressType, 401);
         }
-        return $this->jsonResponse($createUpdateSkill, 200);
+        return $this->jsonResponse($createUpdateAddressType, 200);
     }
 
     /**
@@ -71,11 +71,11 @@ class SkillController extends Controller
      */
     public function show(string $id)
     {
-        $getSkillDetails = $this->skillService->show($id);
-        if (!$getSkillDetails['status']) {
-            return $this->jsonResponse($getSkillDetails, 401);
+        $getAddressTypeDetails = $this->addressTypeService->show($id);
+        if (!$getAddressTypeDetails['status']) {
+            return $this->jsonResponse($getAddressTypeDetails, 401);
         }
-        return $this->jsonResponse($getSkillDetails, 200);
+        return $this->jsonResponse($getAddressTypeDetails, 200);
     }
 
     /**
@@ -83,10 +83,10 @@ class SkillController extends Controller
      */
     public function destroy(string $id)
     {
-        $deleteSkill = $this->skillService->destroy($id);
-        if (!$deleteSkill['status']) {
-            return $this->jsonResponse($deleteSkill, 401);
+        $deleteAddressType = $this->addressTypeService->destroy($id);
+        if (!$deleteAddressType['status']) {
+            return $this->jsonResponse($deleteAddressType, 401);
         }
-        return $this->jsonResponse($deleteSkill, 200);
+        return $this->jsonResponse($deleteAddressType, 200);
     }
 }

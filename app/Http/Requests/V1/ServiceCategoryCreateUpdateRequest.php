@@ -24,7 +24,7 @@ class ServiceCategoryCreateUpdateRequest extends FormRequest
     {
         $rules =  [
             'name' => 'required|max:200',
-            'status' => ['required',Rule::in([1,2])],
+            'status' => ['required',Rule::in([1,0])],
         ];
 
         if (request()->hasFile('image')) {

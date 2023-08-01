@@ -4,21 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\CommonHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\SkillCreateUpdateRequest;
-use App\Models\Skill;
-use App\Services\V1\SkillService;
+use App\Http\Requests\V1\ItemCategoryCreateUpdateRequest;
+use App\Models\ItemCategory;
+use App\Services\V1\ItemCategoryService;
 use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class SkillController extends Controller
+class ItemCategoryController extends Controller
 {
     use CommonTrait;
-    protected $skillService;
+    protected $ItemCategoryService;
 
-    public function __construct(SkillService $skillService)
+    public function __construct(ItemCategoryService $ItemCategoryService)
     {
-        $this->skillService = $skillService;
+        $this->ItemCategoryService = $ItemCategoryService;
     }
 
     /**
@@ -27,8 +27,8 @@ class SkillController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $baseurl = route('admin.skill.index');
-            $data = Skill::latest()->get();
+            $baseurl = route('admin.itemcategory.index');
+            $data = ItemCategory::latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action_edit', function ($row) use ($baseurl) {
@@ -46,24 +46,24 @@ class SkillController extends Controller
                 ->rawColumns(['action_edit', 'action_delete', 'name', 'status_text'])
                 ->make(true);
         }
-        $title =  'Skills';
-        return view('admin.skill.index', compact('title'));
+        $title =  'Item Category';
+        return view('admin.itemcategory.index', compact('title'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SkillCreateUpdateRequest $request)
+    public function store(ItemCategoryCreateUpdateRequest $request)
     {
         if (isset($request->id) && $request->id > 0) { //update data
-            $createUpdateSkill = $this->skillService->update($request, $request->id);
+            $createUpdateItemCategory = $this->ItemCategoryService->update($request, $request->id);
         } else { //add data
-            $createUpdateSkill  = $this->skillService->store($request);
+            $createUpdateItemCategory  = $this->ItemCategoryService->store($request);
         }
-        if (!$createUpdateSkill['status']) {
-            return $this->jsonResponse($createUpdateSkill, 401);
+        if (!$createUpdateItemCategory['status']) {
+            return $this->jsonResponse($createUpdateItemCategory, 401);
         }
-        return $this->jsonResponse($createUpdateSkill, 200);
+        return $this->jsonResponse($createUpdateItemCategory, 200);
     }
 
     /**
@@ -71,11 +71,11 @@ class SkillController extends Controller
      */
     public function show(string $id)
     {
-        $getSkillDetails = $this->skillService->show($id);
-        if (!$getSkillDetails['status']) {
-            return $this->jsonResponse($getSkillDetails, 401);
+        $getItemCategoryDetails = $this->ItemCategoryService->show($id);
+        if (!$getItemCategoryDetails['status']) {
+            return $this->jsonResponse($getItemCategoryDetails, 401);
         }
-        return $this->jsonResponse($getSkillDetails, 200);
+        return $this->jsonResponse($getItemCategoryDetails, 200);
     }
 
     /**
@@ -83,10 +83,10 @@ class SkillController extends Controller
      */
     public function destroy(string $id)
     {
-        $deleteSkill = $this->skillService->destroy($id);
-        if (!$deleteSkill['status']) {
-            return $this->jsonResponse($deleteSkill, 401);
+        $deleteItemCategory = $this->ItemCategoryService->destroy($id);
+        if (!$deleteItemCategory['status']) {
+            return $this->jsonResponse($deleteItemCategory, 401);
         }
-        return $this->jsonResponse($deleteSkill, 200);
+        return $this->jsonResponse($deleteItemCategory, 200);
     }
 }

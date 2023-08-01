@@ -39,7 +39,7 @@ class ItemCreateUpdateRequest extends FormRequest
                 }),
             ],
             'price' => 'required',
-            'status' => ['required',Rule::in([1,2])],
+            'status' => ['required',Rule::in([1,0])],
         ];
         if (request()->has('is_vendor')) {
             $rules['is_vendor'] = 'required|numeric';

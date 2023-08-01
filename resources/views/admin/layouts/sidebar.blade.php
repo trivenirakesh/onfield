@@ -15,7 +15,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="{{ route('admin.dashboard')}}" class="nav-link active">
+                            <a href="{{ route('admin.dashboard')}}" class="nav-link {{request()->is('admin') ?'active' : ''}}">
                             <i class="nav-icon fa fa-th-large"></i>
                                 <p> Dashboard</p>
                             </a>
@@ -45,22 +45,28 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a href="#" class="nav-link">
+                            <a href="#" class="nav-link @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/itemcategory')) active @endif">
                             <i class="nav-icon fas fa-user-shield"></i>
 
                                 <p>Configurations <i class="right fas fa-angle-left"></i></p>
                             </a>
-                            <ul class="nav nav-treeview">
+                            <ul class="nav nav-treeview" style="display: @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/itemcategory')) block @else none @endif">
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.skill.index')}}" class="nav-link">
+                                    <a href="{{ route('admin.skill.index')}}" class="nav-link {{request()->is('admin/skill*') ?'active' : ''}}">
                                         <i class="fas fa-circle nav-icon"></i>
                                         <p>Manage Skill</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('admin.addresstype.index')}}" class="nav-link {{request()->is('admin/addresstype*') ?'active' : ''}}">
                                         <i class="fas fa-circle nav-icon"></i>
                                         <p>Manage Address Type</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.itemcategory.index')}}" class="nav-link {{request()->is('admin/itemcategory*') ?'active' : ''}}">
+                                        <i class="fas fa-circle nav-icon"></i>
+                                        <p>Manage Item Category</p>
                                     </a>
                                 </li>
                             </ul>

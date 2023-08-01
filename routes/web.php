@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\HomeController;
-use App\Http\Controllers\Admin\SkillController;
+use App\Http\Controllers\Admin\{AddressTypeController, HomeController, ItemCategoryController, SkillController};
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,5 +30,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin'], 'as' => 'a
 
     // Master module routes 
     Route::resource('skill',SkillController::class)->except(['edit', 'update']);
+    Route::resource('addresstype',AddressTypeController::class)->except(['edit','update']);
+    Route::resource('itemcategory',ItemCategoryController::class)->except(['edit','update']);
 });
 Route::get('logout', [HomeController::class, 'logout'])->name('logout');

@@ -24,3 +24,4 @@
 <!-- Toaster message -->
 <link rel="stylesheet" type="text/css" href="{{ asset('/plugins/toastr/toastr.css') }}">
 <link rel="stylesheet" href="{{ asset('/dist/css/custom.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.18/sweetalert2.min.css" />

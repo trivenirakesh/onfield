@@ -44,6 +44,7 @@
   <script src="{{ asset('/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
   <!-- AdminLTE App -->
   <script src="{{ asset('/dist/js/adminlte.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.18/sweetalert2.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <!-- <script src="{{ asset('/dist/js/demo.js') }}"></script> -->
   <!-- Toaster message -->
