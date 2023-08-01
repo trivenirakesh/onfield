@@ -18,6 +18,13 @@ class Entitymst extends Authenticatable
     const ENTITYCLIENT = 2;
     const ENTITYVENDOR = 3;
 
+    const MEDIA_TYPES = [
+        0 => 'PROFILE',
+        1 => 'RESUME',
+        2 => 'ADDRESS-PROOF',
+        3 => 'ID-PROOF',
+    ];
+
     protected $table = 'entitymst';
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 

@@ -10,7 +10,7 @@
             <h1>Welcome back !</h1>
             <h2>Sign In</h2>
             <p>Welcome Back, Please sign in to continue</p>
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" id="loginFrm" action="{{ route('login') }}">
                 @csrf
 
                 <div class="input-group">
@@ -40,7 +40,7 @@
                 </div>
                 <div class="py-3 text-start">
                     @if($errors->any())
-                    {!! implode('', $errors->all('<div><span class="error text-start" role="alert"><strong>:message</strong> </span></div>')) !!}
+                    {!! implode('', $errors->all('<div><span class="text-danger text-start" role="alert"><strong>:message</strong> </span></div>')) !!}
                     @endif
                 </div>
                 <a class="cm-forgot-password" href="#">Forgot password?</a>

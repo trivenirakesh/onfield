@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\V1;
 
+use App\Helpers\CommonHelper;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -31,6 +32,16 @@ class SignUpRequest extends FormRequest
             'password' => [ 'required', 'min:8','regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/','regex:/[@$!%*#?&]/']
         ];
 
+        if(request('entity_type') == 1){
+            $rules['image'] = 'required|max:2048|mimes:jpg,png,jpeg';
+            $rules['skills.*'] = [
+                'required',
+                Rule::exists('skills','id')->where(function ($query) {
+                    $query->where('status', CommonHelper::getConfigValue('status.active'));
+                }),
+            ];
+        }
+
         return $rules;
     }
 
@@ -54,6 +65,15 @@ class SignUpRequest extends FormRequest
             'password.min' => __('messages.validation.new_password_min'),
             'password.regex' => __('messages.validation.strong_password'),
         ];
+
+        if(request('entity_type') == 1){
+            $messages['image.required'] = __('messages.validation.image');
+            $messages['image.max'] =  __('messages.validation.image-max');
+            $messages['image.mimes'] = __('messages.validation.image-mimes');
+
+            $messages['skills.*.required'] = __('messages.validation.skill_required');
+            $messages['skills.*.exists'] = 'Skill'.__('messages.validation.not_found');
+        }
         
         return $messages;
     }

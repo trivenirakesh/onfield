@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\CommonHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\SkillCreateUpdateRequest;
 use App\Models\Skill;
@@ -35,6 +36,9 @@ class SkillController extends Controller
                 })
                 ->addColumn('action_delete', function ($row) use ($baseurl) {
                     return $this->actionHtml($baseurl, $row->id, true);
+                })
+                ->editColumn('name', function($row){
+                    return CommonHelper::shortString($row->name,30);
                 })
                 ->addColumn('status_text', function ($row) {
                     return $this->statusHtml($row);

@@ -12,6 +12,10 @@ class ServiceCategory extends Model
     
     const FOLDERNAME = "servicecategory/";
 
+    const MEDIA_TYPES = [
+      0 => 'BASE',
+  ];
+
     public function images() {
       return $this->morphMany(Upload::class, 'reference');
     }

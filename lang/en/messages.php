@@ -47,6 +47,7 @@ return [
         'new_password_min' => 'Password must 8 character.',
         'factor_required' => 'Please enter factor',
         'factor_numeric' => 'Factor must be a number or decimal',
+        'skill_required' => 'Please select skill'
     ],
     'service' => [
         'uom_id_required' => 'Please enter unit of measurement id',
@@ -64,6 +65,7 @@ return [
         'token' => 'Token field is required',
         'password_reset_success' => 'Your password has been changed successfully. Please log in to continue.',
         'password_reset_failed' => 'Password reset failed, Something went wrong!!',
+        'account_not_approved' => 'Your account is not active please contact admin.',
     ],
 
     'success' => [

@@ -13,6 +13,10 @@ class Item extends Model
 
     const FOLDERNAME = "item/";
 
+    const MEDIA_TYPES = [
+        0 => 'BASE',
+    ];
+
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = preg_replace('/\s+/', ' ', ucfirst(strtolower($value)));
