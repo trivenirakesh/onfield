@@ -147,8 +147,8 @@ $(document).ready(function () {
                     // Display validation errors in form fields
                     $.each(errors, function (field, messages) {
                         var inputField = $('[name="' + $.trim(field) + '"]');
-                        $(".form-group .error").css("display", "block");
-                        inputField.closest(".form-group").find(".error").text(messages[0]);
+                        $(".form-group .text-danger").css("display", "block");
+                        inputField.closest(".form-group").find(".text-danger").text(messages[0]);
                     });
                     formLoader.hide();
                     formBtn.prop("disabled", false);

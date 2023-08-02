@@ -19,8 +19,10 @@
                             <table id="data_table_main" class="table w-100">
                                 <thead>
                                     <tr>
-                                        <th class="text-center"></th>
+                                        <th class="text-left"></th>
+                                        <th>Image</th>
                                         <th>Name</th>
+                                        <th>Description</th>
                                         <th>Status</th>
                                         <th></th>
                                     </tr>
@@ -33,12 +35,12 @@
         </div>
     </section>
     <input type="hidden" id="page_module" value="{{$title}}">
-    <input type="hidden" id="module_index_url" value="{{ route('admin.addresstype.index') }}">
+    <input type="hidden" id="module_index_url" value="{{ route('admin.servicecategory.index') }}">
 </div>
-@include('admin.addresstype.modal')
+@include('admin.servicecategory.modal')
 <!-- /.content -->
 
 @endsection
 @push('script')
-<script src="{{asset('public/asset/js/addresstype.js')}}"></script>
+<script src="{{asset('public/asset/js/servicecategory.js')}}"></script>
 @endpush

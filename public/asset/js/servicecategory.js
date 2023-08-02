@@ -102,12 +102,18 @@ $(document).ready(function () {
         rules: {
             name: {
                 required: true,
-            },
+            }, 
+            // image : {
+            //     required: true,
+            // },
         },
         messages: {
             name: {
                 required: "Please enter name",
             },
+            // image : {
+            //     required: "Please select image",
+            // }
         },
         submitHandler: function (form, e) {
             e.preventDefault();
@@ -140,13 +146,14 @@ $(document).ready(function () {
                         toastr.error(result.message);
                     }
                 },
-                error: function () {
+                error: function (result) {
                     var errors = result.responseJSON.errors;
                     // Clear previous error messages
                     $(".error-message").text("");
                     // Display validation errors in form fields
                     $.each(errors, function (field, messages) {
                         var inputField = $('[name="' + $.trim(field) + '"]');
+                        console.log(inputField);
                         $(".form-group .text-danger").css("display", "block");
                         inputField.closest(".form-group").find(".text-danger").text(messages[0]);
                     });
@@ -180,8 +187,18 @@ $(document).ready(function () {
                 orderable: false,
             },
             {
+                data: "image",
+                name: "image",
+                searchable: false,
+                orderable: false,
+            },
+            {
                 data: "name",
                 name: "name",
+            },
+            {
+                data: "description",
+                name: "description",
             },
             {
                 data: "status_text",

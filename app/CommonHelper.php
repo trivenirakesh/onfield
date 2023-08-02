@@ -91,15 +91,13 @@ class CommonHelper{
     }
 
     public static function getUploadUrl($model,$id,$path){
-        $imageUrl = '';
+        $imageUrl = 'public/dist/img/no-image.png';
         $linkPath = self::getConfigValue('link_path');
         $getUploadFileDetails = Upload::where('reference_type',$model)->where('reference_id',$id)->first();
         if(!empty($getUploadFileDetails)){
-            $imageUrl = asset($linkPath.$path.''.$getUploadFileDetails->file);
-        }else{
-            $imageUrl = '';
+            $imageUrl = $linkPath.$path.''.$getUploadFileDetails->file;
         }
-        return $imageUrl;
+        return asset($imageUrl);
     }
 
 

@@ -40,5 +40,5 @@
 
 @endsection
 @push('script')
-<script src="{{asset('asset/js/skill.js')}}"></script>
+<script src="{{asset('public/asset/js/skill.js')}}"></script>
 @endpush

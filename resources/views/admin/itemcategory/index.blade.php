@@ -40,5 +40,5 @@
 
 @endsection
 @push('script')
-<script src="{{asset('asset/js/itemcategory.js')}}"></script>
+<script src="{{asset('public/asset/js/itemcategory.js')}}"></script>
 @endpush

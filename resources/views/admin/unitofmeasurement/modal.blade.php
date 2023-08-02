@@ -65,7 +65,7 @@
                                 <div class="form-group">
                                     <label>Name <span class="red">*</span></label>
                                     <input type="text" class="form-control" placeholder="Please enter name" id="name" name="name" value="">
-                                    <label id="name-error" class="error" for="name"></label>
+                                    <label id="name-error" class="text-danger" for="name"></label>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                                 <div class="form-group">
                                     <label>Factor <span class="red">*</span></label>
                                     <input type="text" class="form-control" placeholder="Please enter factor" id="factor" name="factor" value="">
-                                    <label id="factor-error" class="error" for="factor"></label>
+                                    <label id="factor-error" class="text-danger" for="factor"></label>
                                 </div>
                             </div>
                         </div>

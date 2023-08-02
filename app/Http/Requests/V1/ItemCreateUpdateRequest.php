@@ -52,9 +52,7 @@ class ItemCreateUpdateRequest extends FormRequest
             ];
         }
 
-        if (request()->hasFile('image')) {
-            $rules['image'] = 'required|max:2048|mimes:jpg,png,jpeg';
-        }
+        $rules['image'] = ($this->id != null && !request()->hasFile('image')) ? '' : 'required|max:2048|mimes:jpg,png,jpeg';
 
         return $rules;
     }
@@ -70,6 +68,9 @@ class ItemCreateUpdateRequest extends FormRequest
             'price.required' => __('messages.validation.price_required'),
             'status.required' => __('messages.validation.status'),
             'status.in' => __('messages.validation.status_in'),
+            'image.required' => __('messages.validation.image'),
+            'image.max' =>  __('messages.validation.image-max'),
+            'image.mimes' => __('messages.validation.image-mimes'),
         ];
 
         if(request()->has('is_vendor')){
@@ -79,13 +80,6 @@ class ItemCreateUpdateRequest extends FormRequest
             $messages['vendor_id.exists'] = 'Vendor'.__('messages.validation.not_found');
         }
 
-        if (request()->hasFile('image')) {
-            $messages['image.required'] = __('messages.validation.image');
-            $messages['image.max'] =  __('messages.validation.image-max');
-            $messages['image.mimes'] = __('messages.validation.image-mimes');
-        }
-
-        
         return $messages;
     }
 }

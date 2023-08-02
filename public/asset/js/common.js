@@ -52,3 +52,18 @@ function deleteRecordModule(id, url) {
         }
     });
 }
+
+function load_preview_image(input, div = "preview_div",imgDiv = "image_preview") {
+    let imgParentDiv = `#${div}`;
+    let imgPreiwDiv = `#${imgDiv}`;
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $(imgParentDiv).show();
+            $(imgPreiwDiv).attr("src", e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        $(imgParentDiv).hide();
+    }
+}

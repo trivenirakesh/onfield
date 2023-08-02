@@ -42,5 +42,5 @@
 
 @endsection
 @push('script')
-<script src="{{asset('asset/js/unitofmeasurement.js')}}"></script>
+<script src="{{asset('public/asset/js/unitofmeasurement.js')}}"></script>
 @endpush
