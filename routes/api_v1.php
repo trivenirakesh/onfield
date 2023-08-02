@@ -54,7 +54,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
 Route::group(['prefix' => 'user', 'middleware' => ['auth:sanctum']], function () {
     
     Route::post('entitylogout',[AuthController::class,'logout']);
-    Route::resource('skill',SkillController::class)->except(['create','edit']);
+    Route::resource('skill',SkillController::class)->except(['store','update','show','create','edit']);
+    Route::resource('addresstype',AddressTypeController::class)->except(['store','update','show','create','edit']);
 
     // Service category routes
     Route::get('servicecategory',[ServiceCategoryController::class,'index']);

@@ -7,6 +7,7 @@ use App\Models\Skill;
 use App\Traits\CommonTrait;
 use App\Http\Resources\V1\SkillResource;
 use App\Helpers\CommonHelper;
+use App\Models\Entitymst;
 
 class SkillService
 {
@@ -20,7 +21,13 @@ class SkillService
      */
     public function index()
     {
-        $getSkillsData =  SkillResource::collection(Skill::latest('id')->get());
+        $activeStatus = CommonHelper::getConfigValue('status.active');
+        if(auth()->user()->entity_type == Entitymst::ENTITYADMIN){
+            $getSkillsData = Skill::latest('id')->get();
+        }else{
+            $getSkillsData = Skill::where('status',$activeStatus)->latest('id')->get();
+        }
+        $getSkillsData =  SkillResource::collection($getSkillsData);
         return $this->successResponseArr(self::module . __('messages.success.list'), $getSkillsData);
     }
 
