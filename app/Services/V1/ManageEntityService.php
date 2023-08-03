@@ -47,8 +47,7 @@ class ManageEntityService
         $entity->created_by = auth()->user()->id;
         $entity->created_ip = CommonHelper::getUserIp();
         $entity->save();
-        $getEntityDetails = new EntityDetailResource($entity);
-        return $this->successResponseArr(self::module . __('messages.success.create'), $getEntityDetails);
+        return $this->successResponseArr(self::module . __('messages.success.create'), $entity);
     }
 
     /**
@@ -63,7 +62,6 @@ class ManageEntityService
         if ($getEntityData == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        $getEntityData = new EntityDetailResource($getEntityData);
         return $this->successResponseArr(self::module . __('messages.success.details'), $getEntityData);
     }
 

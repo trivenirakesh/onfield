@@ -41,12 +41,11 @@ class AddressTypeService
     public function store(Request $request)
     {
         // Save addressType section
-        $addressType = new AddressType();
-        $addressType->name = $request->name;
-        $addressType->status = $request->status;
-        $addressType->created_by = auth()->user()->id;
-        $addressType->created_ip = CommonHelper::getUserIp();
-        $addressType->save();
+        $input = $request->validated();
+        $input['created_by'] = auth()->user()->id;
+        $input['created_ip'] = CommonHelper::getUserIp();
+
+        $addressType = AddressType::create($input);
         $getAddressTypeDetails = new AddressTypeResource($addressType);
         return $this->successResponseArr(self::module . __('messages.success.create'), $getAddressTypeDetails);
     }
@@ -81,12 +80,11 @@ class AddressTypeService
         if ($addressType == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        $addressType->name = $request->name;
-        $addressType->status = $request->status;
-        $addressType->updated_by = auth()->user()->id;
-        $addressType->updated_ip = CommonHelper::getUserIp();
+        $input = $request->validated();
+        $input['updated_by'] = auth()->user()->id;
+        $input['updated_ip'] = CommonHelper::getUserIp();
 
-        $addressType->update();
+        $addressType->update($input);
         $getAddressTypeDetails = new AddressTypeResource($addressType);
         return $this->successResponseArr(self::module . __('messages.success.update'), $getAddressTypeDetails);
     }

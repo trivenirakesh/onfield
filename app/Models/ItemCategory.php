@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ItemCategory extends Model
 {
     use HasFactory,SoftDeletes;
+    protected $guarded = [];
 
     public function setNameAttribute($value)
     {

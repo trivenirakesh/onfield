@@ -27,7 +27,7 @@ class ServiceCategoryCreateUpdateRequest extends FormRequest
             'status' => ['required',Rule::in([1,0])],
         ];
 
-        $rules['image'] = ($this->id != null && !request()->hasFile('image')) ? '' : 'required|max:2048|mimes:jpg,png,jpeg';
+        $rules['image'] = (!empty($this->id) && !request()->hasFile('image')) ? '' : 'required|max:2048|mimes:jpg,png,jpeg';
         return $rules;
     }
 

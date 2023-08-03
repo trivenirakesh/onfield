@@ -41,7 +41,7 @@ class UsersController extends Controller
                     return $row->first_name.' '.$row->last_name;
                 })
                 ->editColumn('role', function($row){
-                    return $row->role_id;
+                    return isset($row->role['name']) ? $row->role['name'] : '';
                 })
                 ->editColumn('entity_type', function($row){
                     return $row->entity_type;

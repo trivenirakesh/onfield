@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\EntityCreateUpdateRequest;
+use App\Http\Resources\V1\EntityDetailResource;
 use App\Services\V1\ManageEntityService;
 
 class ManageEntityController extends Controller
@@ -53,6 +54,7 @@ class ManageEntityController extends Controller
     public function show($id)
     {
         $getEntityDetails = $this->entityService->show($id);
+        $getEntityDetails['data'] = new EntityDetailResource($getEntityDetails['data']);
         if (!$getEntityDetails['status']) {
             return response()->json($getEntityDetails, 401);
         }

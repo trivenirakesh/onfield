@@ -34,14 +34,11 @@ class UnitOfMeasurementService
     public function store(Request $request)
     {
         // Save unit of measurement section
-        $unitOfMeasurement = new UnitOfMeasurement();
-        $unitOfMeasurement->name = $request->name;
-        $unitOfMeasurement->description = $request->description;
-        $unitOfMeasurement->factor = $request->factor;
-        $unitOfMeasurement->status = $request->status;
-        $unitOfMeasurement->created_by = auth()->user()->id;
-        $unitOfMeasurement->created_ip = CommonHelper::getUserIp();
-        $unitOfMeasurement->save();
+        $input = $request->validated();
+        $input['created_by'] = auth()->user()->id;
+        $input['created_ip'] = CommonHelper::getUserIp();
+
+        $unitOfMeasurement = UnitOfMeasurement::create($input);
         $getUnitOfMeasurementDetails = new UnitOfMeasurementResource($unitOfMeasurement);
         return $this->successResponseArr(self::module . __('messages.success.create'), $getUnitOfMeasurementDetails);
     }
@@ -76,14 +73,11 @@ class UnitOfMeasurementService
         if ($unitOfMeasurement == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        $unitOfMeasurement->name = $request->name;
-        $unitOfMeasurement->description = $request->description;
-        $unitOfMeasurement->factor = $request->factor;
-        $unitOfMeasurement->status = $request->status;
-        $unitOfMeasurement->updated_by = auth()->user()->id;
-        $unitOfMeasurement->updated_ip = CommonHelper::getUserIp();
-        $unitOfMeasurement->update();
-
+        $input = $request->validated();
+        $input['updated_by'] = auth()->user()->id;
+        $input['updated_ip'] = CommonHelper::getUserIp();
+        
+        $unitOfMeasurement->update($input);
         $getUnitOfMeasurementDetails = new UnitOfMeasurementResource($unitOfMeasurement);
         return $this->successResponseArr(self::module . __('messages.success.update'), $getUnitOfMeasurementDetails);
     }

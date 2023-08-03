@@ -24,7 +24,7 @@ class EntityCreateUpdateRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'entity_type' => 'required|digits:1|lte:3',
+            'entity_type' => ['required',Rule::in([0,1,2])],
             'first_name' => 'required|max:200',
             'last_name' => 'required|max:200',
             'status' => ['required',Rule::in([1,0])],
@@ -72,8 +72,7 @@ class EntityCreateUpdateRequest extends FormRequest
             'mobile.digits' => __('messages.validation.mobile_digits'),
             'mobile.unique' => __('messages.validation.mobile_unique'),
             'entity_type.required' => __('messages.validation.entity_type'),
-            'entity_type.digits' => __('messages.validation.entity_type_digits'),
-            'entity_type.lte' => __('messages.validation.entity_type_lte'),
+            'entity_type.in' => __('messages.validation.entity_type_in'),
             'status.required' => __('messages.validation.status'),
             'status.in' => __('messages.validation.status_in'),
             'role_id.required' => __('messages.validation.role_id'),
