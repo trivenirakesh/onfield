@@ -16,7 +16,7 @@
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">
-                            <img src="{{ asset('dist/img/smartphone.svg') }}" alt="mobile">
+                            <img src="{{ asset('public/dist/img/smartphone.svg') }}" alt="mobile">
                         </span>
                     </div>
                     <input id="email" type="text" class="form-control" name="mobile" placeholder="Enter Your Mobile Number" value="{{ old('mobile') }}" autofocus>
@@ -26,7 +26,7 @@
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">
-                            <img src="{{ asset('dist/img/password.svg') }}" alt="mobile">
+                            <img src="{{ asset('public/dist/img/password.svg') }}" alt="mobile">
                         </span>
                     </div>
                     <input id="password" type="password" class="form-control" name="password" placeholder="Enter Your Password">

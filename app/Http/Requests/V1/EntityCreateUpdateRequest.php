@@ -27,7 +27,7 @@ class EntityCreateUpdateRequest extends FormRequest
             'entity_type' => 'required|digits:1|lte:2',
             'first_name' => 'required|max:200',
             'last_name' => 'required|max:200',
-            'status' => ['required',Rule::in([1,2])],
+            'status' => ['required',Rule::in([1,0])],
             'role_id' => [
                 'required',
                 Rule::exists('roles','id')->where(function ($query) {

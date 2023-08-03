@@ -56,14 +56,14 @@ class SkillController extends Controller
     public function store(SkillCreateUpdateRequest $request)
     {
         if (isset($request->id) && $request->id > 0) { //update data
-            $campaignCategory = $this->skillService->update($request, $request->id);
+            $createUpdateSkill = $this->skillService->update($request, $request->id);
         } else { //add data
-            $campaignCategory  = $this->skillService->store($request);
+            $createUpdateSkill  = $this->skillService->store($request);
         }
-        if (!$campaignCategory['status']) {
-            return response()->json($campaignCategory, 401);
+        if (!$createUpdateSkill['status']) {
+            return $this->jsonResponse($createUpdateSkill, 401);
         }
-        return response()->json($campaignCategory, 200);
+        return $this->jsonResponse($createUpdateSkill, 200);
     }
 
     /**
@@ -71,11 +71,11 @@ class SkillController extends Controller
      */
     public function show(string $id)
     {
-        $campaignCategory = $this->skillService->show($id);
-        if (!$campaignCategory['status']) {
-            return response()->json($campaignCategory, 401);
+        $getSkillDetails = $this->skillService->show($id);
+        if (!$getSkillDetails['status']) {
+            return $this->jsonResponse($getSkillDetails, 401);
         }
-        return response()->json($campaignCategory, 200);
+        return $this->jsonResponse($getSkillDetails, 200);
     }
 
     /**
@@ -83,10 +83,10 @@ class SkillController extends Controller
      */
     public function destroy(string $id)
     {
-        $campaignCategory = $this->skillService->destroy($id);
-        if (!$campaignCategory['status']) {
-            return response()->json($campaignCategory, 401);
+        $deleteSkill = $this->skillService->destroy($id);
+        if (!$deleteSkill['status']) {
+            return $this->jsonResponse($deleteSkill, 401);
         }
-        return response()->json($campaignCategory, 200);
+        return $this->jsonResponse($deleteSkill, 200);
     }
 }

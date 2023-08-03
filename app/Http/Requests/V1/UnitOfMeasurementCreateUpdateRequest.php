@@ -25,7 +25,7 @@ class UnitOfMeasurementCreateUpdateRequest extends FormRequest
         $rules =  [
             'name' => 'required|max:200',
             'factor' => 'required|numeric|between:0,99.99',
-            'status' => ['required',Rule::in([1,2])],
+            'status' => ['required',Rule::in([1,0])],
         ];
 
         return $rules;

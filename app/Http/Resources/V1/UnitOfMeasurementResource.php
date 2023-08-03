@@ -20,7 +20,8 @@ class UnitOfMeasurementResource extends JsonResource
             'name' => $this->name,
             'description' => ($this->description != NULL) ? $this->description : '',
             'factor' => $this->factor,
-            'status' => ($this->status == 1 ? 'Active' : 'Deactive'),
+            'status' => $this->status,
+            'status_text' => ($this->status == 1 ? 'Active' : 'Deactive'),
             'created_at' => CommonHelper::getConvertedDateTime($this->created_at)
         ];
     }

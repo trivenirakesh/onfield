@@ -7,6 +7,7 @@ use App\Models\AddressType;
 use App\Traits\CommonTrait;
 use App\Http\Resources\V1\AddressTypeResource;
 use App\Helpers\CommonHelper;
+use App\Models\Entitymst;
 
 class AddressTypeService
 {
@@ -20,7 +21,13 @@ class AddressTypeService
      */
     public function index()
     {
-        $getSkillsData =  AddressTypeResource::collection(AddressType::latest('id')->get());
+        $activeStatus = CommonHelper::getConfigValue('status.active');
+        if(auth()->user()->entity_type == Entitymst::ENTITYADMIN){
+            $getAddressTypeData = AddressType::where('id','!=',1)->latest('id')->get();
+        }else{
+            $getAddressTypeData = AddressType::where('id','!=',1)->where('status',$activeStatus)->latest('id')->get();
+        }
+        $getSkillsData =  AddressTypeResource::collection($getAddressTypeData);
         return $this->successResponseArr(self::module . __('messages.success.list'), $getSkillsData);
     }
 

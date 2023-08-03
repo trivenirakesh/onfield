@@ -24,13 +24,10 @@ class ServiceCategoryCreateUpdateRequest extends FormRequest
     {
         $rules =  [
             'name' => 'required|max:200',
-            'status' => ['required',Rule::in([1,2])],
+            'status' => ['required',Rule::in([1,0])],
         ];
 
-        if (request()->hasFile('image')) {
-            $rules['image'] = 'required|max:2048|mimes:jpg,png,jpeg';
-        }
-
+        $rules['image'] = ($this->id != null && !request()->hasFile('image')) ? '' : 'required|max:2048|mimes:jpg,png,jpeg';
         return $rules;
     }
 
@@ -41,13 +38,11 @@ class ServiceCategoryCreateUpdateRequest extends FormRequest
             'name.max' => __('messages.validation.max'),
             'status.required' => __('messages.validation.status'),
             'status.in' => __('messages.validation.status_in'),
+            'image.required' => __('messages.validation.image'),
+            'image.max' =>  __('messages.validation.image-max'),
+            'image.mimes' => __('messages.validation.image-mimes'),
         ];
         
-        if (request()->hasFile('image')) {
-            $messages['image.required'] = __('messages.validation.image');
-            $messages['image.max'] =  __('messages.validation.image-max');
-            $messages['image.mimes'] = __('messages.validation.image-mimes');
-        }
         return $messages;
     }
 }
