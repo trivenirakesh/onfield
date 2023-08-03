@@ -37,11 +37,11 @@ class EntityCreateUpdateRequest extends FormRequest
         ];
 
         if ($this->id != null) {
-            $rules['email'] = 'required|email|unique:entitymst,email,' . $this->id . ',id,deleted_at,NULL';
-            $rules['mobile'] = 'required|numeric|digits:10|unique:entitymst,mobile,' . $this->id . ',id,deleted_at,NULL';
+            $rules['email'] = 'required|email|unique:users,email,' . $this->id . ',id,deleted_at,NULL';
+            $rules['mobile'] = 'required|numeric|digits:10|unique:users,mobile,' . $this->id . ',id,deleted_at,NULL';
         } else {
-            $rules['email'] = 'required|email|unique:entitymst,email,NULL,id,deleted_at,NULL';
-            $rules['mobile'] = 'required|numeric|digits:10|unique:entitymst,mobile,NULL,id,deleted_at,NULL';
+            $rules['email'] = 'required|email|unique:users,email,NULL,id,deleted_at,NULL';
+            $rules['mobile'] = 'required|numeric|digits:10|unique:users,mobile,NULL,id,deleted_at,NULL';
         }
         
         if (request()->has('password') || request()->has('id') ) {

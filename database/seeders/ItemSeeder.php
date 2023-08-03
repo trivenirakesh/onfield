@@ -16,7 +16,7 @@ class ItemSeeder extends Seeder
         Item::create([
             'name' => 'Laptop',
             'description' => 'Laptop',
-            'uom_id' => 1,
+            'unit_of_measurement_id' => 1,
             'item_category_id' => 1,
             'price' => 100,
             'status' => 1

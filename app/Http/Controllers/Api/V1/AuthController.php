@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Helpers\CommonHelper;
-use App\Models\Entitymst;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\EntityResource;
@@ -25,12 +25,12 @@ class AuthController extends Controller
     /**
      * Create Entity
      * @param Request $request
-     * @return Entitymst 
+     * @return User 
      */
     public function createEntity(SignUpRequest $request)
     {
         try {
-            $user = Entitymst::create([
+            $user = User::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
@@ -55,17 +55,17 @@ class AuthController extends Controller
                 // save engineer profile 
                 if ($request->hasFile('image')) {
                     $image = $request->file('image');
-                    $data = CommonHelper::uploadImages($image,Entitymst::FOLDERNAME,1);
+                    $data = CommonHelper::uploadImages($image,User::FOLDERNAME,1);
                     if (!empty($data)) {
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
                         $saveUploads['thumb_file'] = $data['filename'];
                         $saveUploads['transaction_type'] = 'ENTITY';
-                        $saveUploads['media_type'] = Entitymst::MEDIA_TYPES[0];
+                        $saveUploads['media_type'] = User::MEDIA_TYPES[0];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();
                         $saveUploads['reference_id'] = $lastId;
-                        $saveUploads['reference_type'] = Entitymst::class;
+                        $saveUploads['reference_type'] = User::class;
                         $saveUploads->save();
                     }
                 }
@@ -73,17 +73,17 @@ class AuthController extends Controller
                 // save engineer address proof 
                 if ($request->hasFile('addressproof')) {
                     $addressProof = $request->file('addressproof');
-                    $data = CommonHelper::uploadImages($addressProof,Entitymst::FOLDERNAME,1);
+                    $data = CommonHelper::uploadImages($addressProof,User::FOLDERNAME,1);
                     if (!empty($data)) {
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
                         $saveUploads['thumb_file'] = $data['filename'];
                         $saveUploads['transaction_type'] = 'ENTITY';
-                        $saveUploads['media_type'] = Entitymst::MEDIA_TYPES[2];
+                        $saveUploads['media_type'] = User::MEDIA_TYPES[2];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();
                         $saveUploads['reference_id'] = $lastId;
-                        $saveUploads['reference_type'] = Entitymst::class;
+                        $saveUploads['reference_type'] = User::class;
                         $saveUploads->save();
                     }
                 }
@@ -91,17 +91,17 @@ class AuthController extends Controller
                 // save engineer id proof 
                 if ($request->hasFile('idproof')) {
                     $IdProof = $request->file('idproof');
-                    $data = CommonHelper::uploadImages($IdProof,Entitymst::FOLDERNAME,1);
+                    $data = CommonHelper::uploadImages($IdProof,User::FOLDERNAME,1);
                     if (!empty($data)) {
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
                         $saveUploads['thumb_file'] = $data['filename'];
                         $saveUploads['transaction_type'] = 'ENTITY';
-                        $saveUploads['media_type'] = Entitymst::MEDIA_TYPES[3];
+                        $saveUploads['media_type'] = User::MEDIA_TYPES[3];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();
                         $saveUploads['reference_id'] = $lastId;
-                        $saveUploads['reference_type'] = Entitymst::class;
+                        $saveUploads['reference_type'] = User::class;
                         $saveUploads->save();
                     }
                 }
@@ -109,16 +109,16 @@ class AuthController extends Controller
                 // save engineer resume 
                 if ($request->hasFile('resume')) {
                     $resume = $request->file('resume');
-                    $data = CommonHelper::uploadFile($resume,Entitymst::FOLDERNAME);
+                    $data = CommonHelper::uploadFile($resume,User::FOLDERNAME);
                     if (!empty($data)) {
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
                         $saveUploads['transaction_type'] = 'ENTITY';
-                        $saveUploads['media_type'] = Entitymst::MEDIA_TYPES[1];
+                        $saveUploads['media_type'] = User::MEDIA_TYPES[1];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();
                         $saveUploads['reference_id'] = $lastId;
-                        $saveUploads['reference_type'] = Entitymst::class;
+                        $saveUploads['reference_type'] = User::class;
                         $saveUploads->save();
                     }
                 }
@@ -146,7 +146,7 @@ class AuthController extends Controller
     /**
      * Login The Entity
      * @param Request $request
-     * @return Entitymst
+     * @return User
      */
     public function loginEntity(Request $request)
     {
@@ -170,7 +170,7 @@ class AuthController extends Controller
             if(!Auth::attempt($request->only(['mobile', 'password']))){
                 return $this->errorResponse(__('messages.validation.mobile_password_wrong'),401);
             }
-            $user = Entitymst::where('mobile', $request->mobile)->first();
+            $user = User::where('mobile', $request->mobile)->first();
             // $user->tokens()->delete();
             if($user->status == 0){
                 return $this->errorResponse(__('messages.auth.account_not_approved'),404);
@@ -203,7 +203,7 @@ class AuthController extends Controller
             if($validateUser->fails()){
                 return $this->errorResponse($validateUser->errors(), 401);
             }
-            $user = Entitymst::find($request->id);
+            $user = User::find($request->id);
             if(!$user){
                 return $this->errorResponse(__('messages.success.user_not_found'), 404);
             }

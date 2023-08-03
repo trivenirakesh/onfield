@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Entitymst;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +19,7 @@ class AdminAuth
     {
         $user = Auth::user();
         if ($user != null) {
-            if ($user->entity_type != Entitymst::ENTITYADMIN) {
+            if ($user->entity_type != User::ENTITYADMIN) {
                 return redirect('/');
             }
         }
