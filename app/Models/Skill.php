@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Skill extends Model
 {
     use HasFactory,SoftDeletes;
+    protected $guarded = [];
 
     public function setNameAttribute($value)
     {

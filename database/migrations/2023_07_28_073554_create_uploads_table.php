@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('uploads', function (Blueprint $table) {
             $table->id();
             $table->morphs('reference');
-            $table->string('transaction_type');
             $table->string('media_type');
             $table->string('image_type');
             $table->string('file');

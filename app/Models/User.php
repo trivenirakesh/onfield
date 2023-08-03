@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Entitymst extends Authenticatable
+class User extends Authenticatable
 {
     const ENTITYADMIN = 0;
     const ENTITYENGINEER = 1;
@@ -27,7 +27,6 @@ class Entitymst extends Authenticatable
 
     const FOLDERNAME = "entity/";
 
-    protected $table = 'entitymst';
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**

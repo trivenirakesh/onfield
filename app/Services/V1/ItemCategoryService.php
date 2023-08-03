@@ -33,12 +33,11 @@ class ItemCategoryService
     public function store(Request $request)
     {
         // Save item category section
-        $itemCategory = new ItemCategory();
-        $itemCategory->name = $request->name;
-        $itemCategory->status = $request->status;
-        $itemCategory->created_by = auth()->user()->id;
-        $itemCategory->created_ip = CommonHelper::getUserIp();
-        $itemCategory->save();
+        $input = $request->validated();
+        $input['created_by'] = auth()->user()->id;
+        $input['created_ip'] = CommonHelper::getUserIp();
+        $itemCategory = ItemCategory::create($input);
+        
         $getItemCategoryDetails = new ItemCategoryResource($itemCategory);
         return $this->successResponseArr(self::module . __('messages.success.create'), $getItemCategoryDetails);
     }
@@ -73,12 +72,11 @@ class ItemCategoryService
         if ($itemCategory == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        $itemCategory->name = $request->name;
-        $itemCategory->status = $request->status;
-        $itemCategory->updated_by = auth()->user()->id;
-        $itemCategory->updated_ip = CommonHelper::getUserIp();
-        $itemCategory->update();
+        $input = $request->validated();
+        $input['updated_by'] = auth()->user()->id;
+        $input['updated_ip'] = CommonHelper::getUserIp();
 
+        $itemCategory->update($input);
         $getItemCategoryDetails = new ItemCategoryResource($itemCategory);
         return $this->successResponseArr(self::module . __('messages.success.update'), $getItemCategoryDetails);
     }

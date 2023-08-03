@@ -27,8 +27,8 @@ class SignUpRequest extends FormRequest
             'entity_type' => ['required',Rule::in([1,2])],
             'first_name' => 'required|max:200',
             'last_name' => 'required|max:200',
-            'email' => 'required|email|unique:entitymst,email,NULL,id,deleted_at,NULL',
-            'mobile' => 'required|numeric|digits:10|unique:entitymst,mobile,NULL,id,deleted_at,NULL',
+            'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
+            'mobile' => 'required|numeric|digits:10|unique:users,mobile,NULL,id,deleted_at,NULL',
             'password' => [ 'required', 'min:8','regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/','regex:/[@$!%*#?&]/']
         ];
 

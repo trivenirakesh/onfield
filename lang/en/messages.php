@@ -49,7 +49,7 @@ return [
         'factor_numeric' => 'Factor must be a number or decimal',
         'skill_required' => 'Please select skill'
     ],
-    'service' => [
+    'item' => [
         'uom_id_required' => 'Please enter unit of measurement id',
         'item_category_id_required' => 'Please enter item category id',
         'price_required' => 'Please enter Price',

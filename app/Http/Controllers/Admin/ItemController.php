@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\CommonHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\ItemCreateUpdateRequest;
-use App\Models\Entitymst;
+use App\Models\User;
 use App\Models\Item;
 use App\Models\ItemCategory;
 use App\Models\UnitOfMeasurement;
@@ -63,7 +63,7 @@ class ItemController extends Controller
         $title =  'Item';
         $getItemCategoryData = CommonHelper::getTableWiseData(ItemCategory::class);
         $getUomData = CommonHelper::getTableWiseData(UnitOfMeasurement::class);
-        $getVendorsData = CommonHelper::getTableWiseData(Entitymst::class,array('entity_type'=>Entitymst::ENTITYVENDOR));
+        $getVendorsData = CommonHelper::getTableWiseData(User::class,array('entity_type'=>User::ENTITYVENDOR));
         return view('admin.item.index', compact('title','getItemCategoryData','getUomData','getVendorsData'));
     }
 

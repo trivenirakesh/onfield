@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\CommonHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\EntityCreateUpdateRequest;
-use App\Models\Entitymst;
+use App\Models\User;
 use App\Services\V1\ManageEntityService;
 use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $baseurl = route('admin.users.index');
-            $data = Entitymst::where('id','!=',Auth::user()->id)->latest()->get();
+            $data = User::where('id','!=',Auth::user()->id)->latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action_edit', function ($row) use ($baseurl) {
@@ -41,7 +41,7 @@ class UsersController extends Controller
                     return $row->first_name.' '.$row->last_name;
                 })
                 ->editColumn('role', function($row){
-                    return $row->role_id;
+                    return isset($row->role['name']) ? $row->role['name'] : '';
                 })
                 ->editColumn('entity_type', function($row){
                     return $row->entity_type;

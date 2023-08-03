@@ -1,11 +1,14 @@
 let module = $("#page_module").val();
 let module_index_url = $("#module_index_url").val();
 
-function addModel() {
+function removeValidationErrors(){
     var alert = $("#module_form");
     alert.validate().resetForm();
     alert.find(".error").removeClass("error");
     alert.find(".text-danger").text("");
+}
+function addModel() {
+    removeValidationErrors();
     $("#module_form")[0].reset();
     $("#modal-add-update").modal("show");
     $("#id").val(0);
@@ -62,6 +65,7 @@ $(document).ready(function () {
 
     // edit resource
     $(document).on("click", ".module_edit_record", function () {
+        removeValidationErrors();
         const id = $(this).parent().data("id");
         const url = $(this).parent().data("url");
         $("#modal_title").text(`Edit ${module}`);
@@ -113,6 +117,9 @@ $(document).ready(function () {
             price: {
                 required: true,
             },
+            // image : {
+            //     required: true,
+            // },
         },
         messages: {
             name: {
@@ -127,8 +134,12 @@ $(document).ready(function () {
             price: {
                 required: "Please enter price",
             },
+            // image : {
+            //     required: "Please select image",
+            // },
         },
         submitHandler: function (form, e) {
+            $(".text-danger").text("");
             e.preventDefault();
             const formBtn = $("#module_form_btn");
             const formLoader = $("#module_form_loader");

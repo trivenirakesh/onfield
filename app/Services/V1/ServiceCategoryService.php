@@ -7,7 +7,7 @@ use App\Models\ServiceCategory;
 use App\Traits\CommonTrait;
 use App\Http\Resources\V1\ServiceCategoryResource;
 use App\Helpers\CommonHelper;
-use App\Models\Entitymst;
+use App\Models\User;
 use App\Models\Upload;
 
 class ServiceCategoryService
@@ -23,7 +23,7 @@ class ServiceCategoryService
     public function index()
     {
         $activeStatus = CommonHelper::getConfigValue('status.active');
-        if(auth()->user()->entity_type == Entitymst::ENTITYADMIN){
+        if(auth()->user()->entity_type == User::ENTITYADMIN){
             $getCategoryData = ServiceCategory::latest('id')->get();
         }else{
             $getCategoryData = ServiceCategory::where('status',$activeStatus)->latest('id')->get();

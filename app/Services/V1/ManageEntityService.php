@@ -3,7 +3,7 @@
 namespace App\Services\V1;
 
 use Illuminate\Http\Request;
-use App\Models\Entitymst;
+use App\Models\User;
 use App\Traits\CommonTrait;
 use App\Http\Resources\V1\EntityResource;
 use App\Http\Resources\V1\EntityDetailResource;
@@ -22,7 +22,7 @@ class ManageEntityService
      */
     public function index()
     {
-        $getItemCategoryData =  EntityResource::collection(Entitymst::latest('id')->get());
+        $getItemCategoryData =  EntityResource::collection(User::latest('id')->get());
         return $this->successResponseArr(self::module . __('messages.success.list'), $getItemCategoryData);
     }
 
@@ -35,7 +35,7 @@ class ManageEntityService
     public function store(Request $request)
     {
         // Save entity section
-        $entity = new Entitymst;
+        $entity = new User;
         $entity->first_name = $request->first_name;
         $entity->last_name = $request->last_name;
         $entity->email = str_replace(' ', '',$request->email);
@@ -47,8 +47,7 @@ class ManageEntityService
         $entity->created_by = auth()->user()->id;
         $entity->created_ip = CommonHelper::getUserIp();
         $entity->save();
-        $getEntityDetails = new EntityDetailResource($entity);
-        return $this->successResponseArr(self::module . __('messages.success.create'), $getEntityDetails);
+        return $this->successResponseArr(self::module . __('messages.success.create'), $entity);
     }
 
     /**
@@ -59,11 +58,10 @@ class ManageEntityService
      */
     public function show($id)
     {
-        $getEntityData = Entitymst::where('id', $id)->first();
+        $getEntityData = User::where('id', $id)->first();
         if ($getEntityData == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        $getEntityData = new EntityDetailResource($getEntityData);
         return $this->successResponseArr(self::module . __('messages.success.details'), $getEntityData);
     }
 
@@ -77,7 +75,7 @@ class ManageEntityService
     public function update(Request $request, $id)
     {
 
-        $entity = Entitymst::where('id', $id)->first();
+        $entity = User::where('id', $id)->first();
         if ($entity == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
@@ -103,7 +101,7 @@ class ManageEntityService
      */
     public function destroy($id)
     {
-        $entity =  Entitymst::where('id', $id)->first();
+        $entity =  User::where('id', $id)->first();
         if ($entity == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }

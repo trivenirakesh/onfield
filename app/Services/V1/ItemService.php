@@ -33,7 +33,7 @@ class ItemService
      */
     public function store(Request $request)
     {
-        // Save item category section
+        // Save item  section
         $saveItem = new Item;
         $saveItem->name = $request->name;
         $saveItem->description = $request->description;
@@ -96,15 +96,24 @@ class ItemService
     public function update(Request $request, $id)
     {
 
-        $itemCategory = Item::where('id', $id)->first();
-        if ($itemCategory == null) {
+        $updateItem = Item::where('id', $id)->first();
+        if ($updateItem == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        $itemCategory->name = $request->name;
-        $itemCategory->status = $request->status;
-        $itemCategory->updated_by = auth()->user()->id;
-        $itemCategory->updated_ip = CommonHelper::getUserIp();
-        $itemCategory->update();
+        $updateItem->name = $request->name;
+        $updateItem->status = $request->status;
+        $updateItem->name = $request->name;
+        $updateItem->description = $request->description;
+        $updateItem->uom_id = $request->uom_id;
+        $updateItem->item_category_id = $request->item_category_id;
+        $updateItem->price = $request->price;
+        if($request->has('is_vendor') && $request->has('vendor_id')){
+            $updateItem->is_vendor = $request->is_vendor;
+            $updateItem->vendor_id = $request->vendor_id;
+        }
+        $updateItem->updated_by = auth()->user()->id;
+        $updateItem->updated_ip = CommonHelper::getUserIp();
+        $updateItem->update();
 
         // Update file
         if ($request->hasFile('image')) {
@@ -126,7 +135,7 @@ class ItemService
                 $updateUploads->update();
             }
         }
-        $getItemDetails = new ItemResource($itemCategory);
+        $getItemDetails = new ItemResource($updateItem);
         return $this->successResponseArr(self::module . __('messages.success.update'), $getItemDetails);
     }
 
@@ -138,17 +147,17 @@ class ItemService
      */
     public function destroy($id)
     {
-        $itemCategory =  Item::where('id', $id)->first();
-        if ($itemCategory == null) {
+        $item =  Item::where('id', $id)->first();
+        if ($item == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
 
-        // Delete itemCategory
-        $itemCategory->deleted_by = auth()->user()->id;
-        $itemCategory->deleted_ip = CommonHelper::getUserIp();
-        $itemCategory->update();
-        $deleteItemCategory = $itemCategory->delete();
-        if ($deleteItemCategory) {
+        // Delete item
+        $item->deleted_by = auth()->user()->id;
+        $item->deleted_ip = CommonHelper::getUserIp();
+        $item->update();
+        $deleteItem = $item->delete();
+        if ($deleteItem) {
             return $this->successResponseArr(self::module . __('messages.success.delete'));
         }
     }

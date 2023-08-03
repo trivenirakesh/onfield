@@ -103,20 +103,15 @@ $(document).ready(function () {
         rules: {
             name: {
                 required: true,
-            }, 
-            // image : {
-            //     required: true,
-            // },
+            },
         },
         messages: {
             name: {
                 required: "Please enter name",
             },
-            // image : {
-            //     required: "Please select image",
-            // }
         },
         submitHandler: function (form, e) {
+            $(".text-danger").text("");
             e.preventDefault();
             const formBtn = $("#module_form_btn");
             const formLoader = $("#module_form_loader");

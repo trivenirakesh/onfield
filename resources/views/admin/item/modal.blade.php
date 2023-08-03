@@ -13,6 +13,9 @@
                         <div class="col-12">
                             <div class="card card-primary card-outline">
                                 <div class="card-body box-profile">
+                                    <div class="text-center">
+                                        <img id="info_image" width="100" height="100" class="profile-img img-circle" src="" alt="picture">
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label class="col-form-label"><b>Name</b></label><br>
@@ -116,7 +119,7 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Is Vendor item</label>
-                                    <input type="checkbox" name="is_vendor">
+                                    <input type="checkbox" value="1" name="is_vendor">
                                 </div>
                             </div>
                             <div class="col-sm-3">
@@ -130,6 +133,7 @@
                                             @endforeach
                                         @endif
                                     </select>
+                                    <label id="vendor_id-error" class="text-danger" for="vendor_id"></label>
                                 </div>
                             </div>
                             <div class="col-sm-4">

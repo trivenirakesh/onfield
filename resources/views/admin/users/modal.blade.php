@@ -14,9 +14,21 @@
                             <div class="card card-primary card-outline">
                                 <div class="card-body box-profile">
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <label class="col-form-label"><b>Name</b></label><br>
-                                            <p id="info_name"></p>
+                                        <div class="col-md-6">
+                                            <label class="col-form-label"><b>First name</b></label><br>
+                                            <p id="info_first_name"></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="col-form-label"><b>Last name</b></label><br>
+                                            <p id="info_last_name"></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="col-form-label"><b>Email</b></label><br>
+                                            <p id="info_email"></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="col-form-label"><b>Mobile</b></label><br>
+                                            <p id="info_mobile"></p>
                                         </div>
                                         <div class="col-md-12">
                                             <label class="col-form-label"><b>Status</b></label><br>
@@ -106,7 +118,7 @@
                                     <label id="name-error" class="text-danger" for="name"></label>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-6 password-section">
                                 <div class="form-group">
                                     <label>Password <span class="red">*</span></label>
                                     <input type="password" class="form-control" placeholder="Please enter password" id="password" name="password" value="">

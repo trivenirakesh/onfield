@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('reference_id')->nullable();
-            $table->foreign('reference_id')->references('id')->on('entitymst');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('address_type_id')->nullable();
             $table->foreign('address_type_id')->references('id')->on('address_types');
             $table->text('address');
             $table->unsignedBigInteger('state_id')->nullable();
             $table->foreign('state_id')->references('id')->on('states');
-            $table->text('city');
+            $table->string('city',200);
             $table->string('pincode',10)->nullable();
             $table->string('longitude',50)->nullable();
             $table->string('latitude',50)->nullable();
