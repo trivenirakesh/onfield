@@ -7,6 +7,7 @@ use App\Models\Skill;
 use App\Traits\CommonTrait;
 use App\Http\Resources\V1\SkillResource;
 use App\Helpers\CommonHelper;
+use App\Models\User;
 
 class SkillService
 {
@@ -20,7 +21,13 @@ class SkillService
      */
     public function index()
     {
-        $getSkillsData =  SkillResource::collection(Skill::latest('id')->get());
+        $activeStatus = CommonHelper::getConfigValue('status.active');
+        if(auth()->user()->entity_type == User::ENTITYADMIN){
+            $getSkillsData = Skill::latest('id')->get();
+        }else{
+            $getSkillsData = Skill::where('status',$activeStatus)->latest('id')->get();
+        }
+        $getSkillsData =  SkillResource::collection($getSkillsData);
         return $this->successResponseArr(self::module . __('messages.success.list'), $getSkillsData);
     }
 
@@ -34,12 +41,10 @@ class SkillService
     public function store(Request $request)
     {
         // Save skill section
-        $skill = new Skill;
-        $skill->name = $request->name;
-        $skill->status = $request->status;
-        $skill->created_by = auth()->user()->id;
-        $skill->created_ip = CommonHelper::getUserIp();
-        $skill->save();
+        $input = $request->validated();
+        $input['created_by'] = auth()->user()->id;
+        $input['created_ip'] = CommonHelper::getUserIp();
+        $skill = Skill::create($input);
         $getSkillDetails = new SkillResource($skill);
         return $this->successResponseArr(self::module . __('messages.success.create'), $getSkillDetails);
     }
@@ -74,12 +79,11 @@ class SkillService
         if ($skill == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        $skill->name = $request->name;
-        $skill->status = $request->status;
-        $skill->updated_by = auth()->user()->id;
-        $skill->updated_ip = CommonHelper::getUserIp();
+        $input = $request->validated();
+        $input['updated_by'] = auth()->user()->id;
+        $input['updated_ip'] = CommonHelper::getUserIp();
 
-        $skill->update();
+        $skill->update($input);
         $getSkillDetails = new SkillResource($skill);
         return $this->successResponseArr(self::module . __('messages.success.update'), $getSkillDetails);
     }

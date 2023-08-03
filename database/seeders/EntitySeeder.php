@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Entitymst;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class EntitySeeder extends Seeder
@@ -14,7 +14,7 @@ class EntitySeeder extends Seeder
      */
     public function run(): void
     {
-        Entitymst::create([
+        User::create([
             'first_name' => 'Admin',
             'last_name' => 'Admin',
             'email' => 'onfield@admin.com',

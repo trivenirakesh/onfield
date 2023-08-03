@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Helpers\CommonHelper;
-use App\Models\Entitymst;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Api\{ClientRegisterRequest, ClientLoginRequest, ForgotPasswordRequest, VerifyOtpRequest, ResetPasswordRequest, UserSocialLoginRequest};
@@ -12,8 +12,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\CommonTrait;
 use App\Models\EngineerSkill;
+<<<<<<< HEAD
 use Carbon\Carbon;
 use Exception;
+=======
+use App\Models\State;
+use App\Models\Upload;
+use App\Http\Resources\V1\StateResource;
+use App\Models\Address;
+>>>>>>> 3c1b336103aeb9466b2e8dee2686fb08f2593777
 
 class AuthController extends Controller
 {
@@ -132,6 +139,89 @@ class AuthController extends Controller
                     if (!empty($skills)) {
                         EngineerSkill::insert($skills);
                     }
+                }
+
+                // save engineer profile 
+                if ($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    $data = CommonHelper::uploadImages($image,User::FOLDERNAME,1);
+                    if (!empty($data)) {
+                        $saveUploads = new Upload();
+                        $saveUploads['file'] = $data['filename'];
+                        $saveUploads['thumb_file'] = $data['filename'];
+                        $saveUploads['transaction_type'] = 'ENTITY';
+                        $saveUploads['media_type'] = User::MEDIA_TYPES[0];
+                        $saveUploads['image_type'] = $data['filetype'];
+                        $saveUploads['created_ip'] = CommonHelper::getUserIp();
+                        $saveUploads['reference_id'] = $lastId;
+                        $saveUploads['reference_type'] = User::class;
+                        $saveUploads->save();
+                    }
+                }
+
+                // save engineer address proof 
+                if ($request->hasFile('addressproof')) {
+                    $addressProof = $request->file('addressproof');
+                    $data = CommonHelper::uploadImages($addressProof,User::FOLDERNAME,1);
+                    if (!empty($data)) {
+                        $saveUploads = new Upload();
+                        $saveUploads['file'] = $data['filename'];
+                        $saveUploads['thumb_file'] = $data['filename'];
+                        $saveUploads['transaction_type'] = 'ENTITY';
+                        $saveUploads['media_type'] = User::MEDIA_TYPES[2];
+                        $saveUploads['image_type'] = $data['filetype'];
+                        $saveUploads['created_ip'] = CommonHelper::getUserIp();
+                        $saveUploads['reference_id'] = $lastId;
+                        $saveUploads['reference_type'] = User::class;
+                        $saveUploads->save();
+                    }
+                }
+
+                // save engineer id proof 
+                if ($request->hasFile('idproof')) {
+                    $IdProof = $request->file('idproof');
+                    $data = CommonHelper::uploadImages($IdProof,User::FOLDERNAME,1);
+                    if (!empty($data)) {
+                        $saveUploads = new Upload();
+                        $saveUploads['file'] = $data['filename'];
+                        $saveUploads['thumb_file'] = $data['filename'];
+                        $saveUploads['transaction_type'] = 'ENTITY';
+                        $saveUploads['media_type'] = User::MEDIA_TYPES[3];
+                        $saveUploads['image_type'] = $data['filetype'];
+                        $saveUploads['created_ip'] = CommonHelper::getUserIp();
+                        $saveUploads['reference_id'] = $lastId;
+                        $saveUploads['reference_type'] = User::class;
+                        $saveUploads->save();
+                    }
+                }
+
+                // save engineer resume 
+                if ($request->hasFile('resume')) {
+                    $resume = $request->file('resume');
+                    $data = CommonHelper::uploadFile($resume,User::FOLDERNAME);
+                    if (!empty($data)) {
+                        $saveUploads = new Upload();
+                        $saveUploads['file'] = $data['filename'];
+                        $saveUploads['transaction_type'] = 'ENTITY';
+                        $saveUploads['media_type'] = User::MEDIA_TYPES[1];
+                        $saveUploads['image_type'] = $data['filetype'];
+                        $saveUploads['created_ip'] = CommonHelper::getUserIp();
+                        $saveUploads['reference_id'] = $lastId;
+                        $saveUploads['reference_type'] = User::class;
+                        $saveUploads->save();
+                    }
+                }
+
+                // Save engineer address
+                if ($request->has('state_id')) {
+                    $saveAddress = new Address();
+                    $saveAddress->reference_id = $lastId;
+                    $saveAddress->address_type_id = 1; // By default current address 
+                    $saveAddress->address = $request->address;
+                    $saveAddress->state_id = $request->state_id;
+                    $saveAddress->city = $request->city;
+                    $saveAddress->created_ip = CommonHelper::getUserIp();
+                    $saveAddress->save();
                 }
             }
             $getUserDetails = new EntityResource($user);

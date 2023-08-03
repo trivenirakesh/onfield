@@ -35,6 +35,6 @@ class Item extends Model
     }
 
     public function entity(){
-        return $this->belongsTo(Entitymst::class,'vendor_id')->where('status',CommonHelper::getConfigValue('status.active'));
+        return $this->belongsTo(User::class,'vendor_id')->where('status',CommonHelper::getConfigValue('status.active'));
     }
 }

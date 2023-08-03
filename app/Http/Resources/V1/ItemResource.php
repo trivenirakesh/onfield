@@ -21,13 +21,16 @@ class ItemResource extends JsonResource
             'name' => $this->name,
             'description' => ($this->description != NULL) ? $this->description : '',
             'price' => $this->price,
+            'uom_id' => $this->uom_id,
             'unit_of_measurement' => isset($this->unitOfMeasurement['name']) ? $this->unitOfMeasurement['name'] : '',
+            'item_category_id' => $this->item_category_id,
             'item_category' => isset($this->itemCategory['name']) ? $this->itemCategory['name'] : '',
             'is_vendor' => $this->is_vendor == 1 ? true : false,
             'vendor' => isset($this->entity['first_name']) ? $this->entity['first_name'].' '.$this->entity['last_name'] : '',
-            'status' => ($this->status == 1 ? 'Active' : 'Deactive'),
+            'vendor_id' => $this->vendor_id,
+            'status' => $this->status,
+            'status_text' => ($this->status == 1 ? 'Active' : 'Deactive'),
             'image' => CommonHelper::getUploadUrl(Item::class,$this->id,Item::FOLDERNAME),
-            'image22' => !empty($this->image) ? CommonHelper::getImageUrl($this->image['file'],Item::FOLDERNAME,0) : '',
             'created_at' => CommonHelper::getConvertedDateTime($this->created_at)
         ];
     }

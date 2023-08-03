@@ -27,13 +27,19 @@ class SignUpRequest extends FormRequest
             'entity_type' => ['required',Rule::in([1,2])],
             'first_name' => 'required|max:200',
             'last_name' => 'required|max:200',
-            'email' => 'required|email|unique:entitymst,email,NULL,id,deleted_at,NULL',
-            'mobile' => 'required|numeric|digits:10|unique:entitymst,mobile,NULL,id,deleted_at,NULL',
+            'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
+            'mobile' => 'required|numeric|digits:10|unique:users,mobile,NULL,id,deleted_at,NULL',
             'password' => [ 'required', 'min:8','regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/','regex:/[@$!%*#?&]/']
         ];
 
         if(request('entity_type') == 1){
             $rules['image'] = 'required|max:2048|mimes:jpg,png,jpeg';
+            $rules['addressproof'] = 'required|max:2048|mimes:jpg,png,jpeg';
+            $rules['idproof'] = 'required|max:2048|mimes:jpg,png,jpeg';
+            $rules['resume'] = 'required|max:2048|mimes:pdf';
+            $rules['state_id'] = ['required',Rule::exists('states','id')];
+            $rules['city'] = 'required';
+            $rules['address'] = 'required';
             $rules['skills.*'] = [
                 'required',
                 Rule::exists('skills','id')->where(function ($query) {
@@ -71,6 +77,19 @@ class SignUpRequest extends FormRequest
             $messages['image.max'] =  __('messages.validation.image-max');
             $messages['image.mimes'] = __('messages.validation.image-mimes');
 
+            $messages['addressproof.required'] = __('messages.signup.addressproof');
+            $messages['addressproof.max'] =  __('messages.signup.addressproof-max');
+            $messages['addressproof.mimes'] = __('messages.signup.addressproof-mimes');
+            $messages['idproof.required'] = __('messages.signup.idproof');
+            $messages['idproof.max'] =  __('messages.signup.idproof-max');
+            $messages['idproof.mimes'] = __('messages.signup.idproof-mimes');
+            $messages['resume.required'] = __('messages.signup.resume');
+            $messages['resume.max'] =  __('messages.signup.resume-max');
+            $messages['resume.mimes'] = __('messages.signup.resume-mimes');
+            $messages['state_id.required'] =  __('messages.signup.state_id');
+            $messages['state_id.exists'] = 'State'.__('messages.validation.not_found');
+            $messages['city.required'] = __('messages.signup.city');
+            $messages['address.required'] = __('messages.signup.address');
             $messages['skills.*.required'] = __('messages.validation.skill_required');
             $messages['skills.*.exists'] = 'Skill'.__('messages.validation.not_found');
         }

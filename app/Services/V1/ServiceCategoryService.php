@@ -7,6 +7,7 @@ use App\Models\ServiceCategory;
 use App\Traits\CommonTrait;
 use App\Http\Resources\V1\ServiceCategoryResource;
 use App\Helpers\CommonHelper;
+use App\Models\User;
 use App\Models\Upload;
 
 class ServiceCategoryService
@@ -21,7 +22,13 @@ class ServiceCategoryService
      */
     public function index()
     {
-        $getServiceCategoryData =  ServiceCategoryResource::collection(ServiceCategory::latest('id')->get());
+        $activeStatus = CommonHelper::getConfigValue('status.active');
+        if(auth()->user()->entity_type == User::ENTITYADMIN){
+            $getCategoryData = ServiceCategory::latest('id')->get();
+        }else{
+            $getCategoryData = ServiceCategory::where('status',$activeStatus)->latest('id')->get();
+        }
+        $getServiceCategoryData =  ServiceCategoryResource::collection($getCategoryData);
         return $this->successResponseArr(self::module . __('messages.success.list'), $getServiceCategoryData);
     }
 

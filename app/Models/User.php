@@ -11,14 +11,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-// use Laravel\Sanctum\HasApiTokens;
 use Laravel\Passport\Client as OClient;
 use Laravel\Passport\HasApiTokens;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Hash;
 
 
-class Entitymst extends Authenticatable
+class User extends Authenticatable
 {
     const ENTITYADMIN = 0;
     const ENTITYENGINEER = 1;
@@ -32,7 +30,8 @@ class Entitymst extends Authenticatable
         3 => 'ID-PROOF',
     ];
 
-    protected $table = 'entitymst';
+    const FOLDERNAME = "entity/";
+
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**

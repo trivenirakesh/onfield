@@ -5,8 +5,7 @@
         <div class="container-fluid d-flex justify-content-between  align-items-center">
             <h2 class="theme_primary_text d-inline-block">{{$title}}</h2>
             <div class="text-right d-inline-block">
-                <!-- <button class="theme_primary_btn btn btn-sm float-right  ml-2" onclick="addModel()"><i class="fa fa-plus" aria-hidden="true"></i> Add {{$title}}</button> -->
-                <a href="javascript:void(0)" onclick="addModel()"class="btn btn-primary fa fa-plus"> ADD SKILL</a>
+                <button class="btn btn-primary btn-sm float-right  ml-2" onclick="addModel()"><i class="fa fa-plus" aria-hidden="true"></i> Add {{$title}}</button>
             </div>
         </div>
     </div>
@@ -41,5 +40,5 @@
 
 @endsection
 @push('script')
-<script src="{{asset('asset/js/skill.js')}}"></script>
+<script src="{{asset('public/asset/js/skill.js')}}"></script>
 @endpush

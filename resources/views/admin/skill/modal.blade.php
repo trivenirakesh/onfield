@@ -65,6 +65,7 @@
                                 <div class="form-group">
                                     <label>Name <span class="red">*</span></label>
                                     <input type="text" class="form-control" placeholder="Please enter name" id="name" name="name" value="">
+                                    <label id="name-error" class="text-danger" for="name"></label>
                                 </div>
                             </div>
                         </div>

@@ -10,7 +10,7 @@ class Role extends Model
 {
     use HasFactory,SoftDeletes;
 
-    public function entitymst(){
-        return $this->hasOne(Entitymst::class);
+    public function user(){
+        return $this->hasOne(User::class);
     }
 }

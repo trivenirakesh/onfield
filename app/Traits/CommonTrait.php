@@ -78,4 +78,9 @@ trait CommonTrait
 		$status = "<span class='text-md badge badge-pill $statusClass'>$statusText</span>";
 		return $status;
 	}
+
+	public function jsonResponse($message = null, $code = 401)
+	{
+		return response()->json($message, $code);
+	}
 }

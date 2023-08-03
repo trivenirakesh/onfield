@@ -14,7 +14,7 @@ class AddressTypeSeeder extends Seeder
     public function run(): void
     {
         AddressType::create([
-            'name' => 'Home',
+            'name' => 'Current Address',
             'status' => 1
         ]);
     }

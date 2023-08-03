@@ -49,13 +49,27 @@ return [
         'factor_numeric' => 'Factor must be a number or decimal',
         'skill_required' => 'Please select skill'
     ],
-    'service' => [
+    'item' => [
         'uom_id_required' => 'Please enter unit of measurement id',
         'item_category_id_required' => 'Please enter item category id',
         'price_required' => 'Please enter Price',
         'is_vendor_required' => 'Please enter is vendor',
         'is_vendor_numeric' => 'Is vendor value must be numeric',
         'vendor_id_required' => 'Please enter vendor id',
+    ],
+    'signup' => [
+        'addressproof' => 'Please select addressproff',
+        'addressproof-max' => 'Please select below 2 MB images',
+        'addressproof-mimes' => 'Please select only jpg, png, jpeg files',
+        'idproof' => 'Please select idproof',
+        'idproof-max' => 'Please select below 2 MB images',
+        'idproof-mimes' => 'Please select only jpg, png, jpeg files',
+        'resume' => 'Please select resume',
+        'resume-max' => 'Please select below 2 MB file',
+        'resume-mimes' => 'Please select only pdf files',
+        'state_id' => 'Please enter state_id',
+        'address' => 'Please enter address',
+        'city' => 'Please enter city',
     ],
     'auth' => [
         'login_failed' => 'These credentials do not match our records.',

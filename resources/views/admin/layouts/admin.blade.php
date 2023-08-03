@@ -72,7 +72,7 @@
                     <!-- header user panel (optional) -->
                     <div class="user-panel d-flex">
                         <div class="image">
-                            <img src="{{ asset('dist/img/avatar.png') }}" class="img-circle" alt="User Image">
+                            <img src="{{ asset('public/dist/img/avatar.png') }}" class="img-circle" alt="User Image">
                         </div>
                         <div class="info">
                             <a href="#" class="d-block">@if(!empty(Auth::user())) {{ Auth::user()->first_name.' '.Auth::user()->first_name}} @endif 
@@ -107,6 +107,13 @@
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
+    <!-- Add, Update Modal -->
+    <div class="modal fade" id="globalCrudModal" tabindex="-1" role="dialog" aria-labelledby="globalCrudModal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content createupdatemodal">
+        </div>
+      </div>
+    </div>
     @include('admin.layouts.script')
     @stack('scripts')
 </body>
