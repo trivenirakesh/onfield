@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\{AddressTypeController, HomeController, ItemCategoryController, ServiceCategoryController, SkillController, UnitOfMeasurementController};
+use App\Http\Controllers\Admin\{AddressTypeController, HomeController, ItemCategoryController, ItemController, ServiceCategoryController, SkillController, UnitOfMeasurementController, UsersController};
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,5 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin'], 'as' => 'a
     Route::resource('itemcategory',ItemCategoryController::class)->except(['edit','update']);
     Route::resource('unitofmeasurement',UnitOfMeasurementController::class)->except(['edit','update']);
     Route::resource('servicecategory',ServiceCategoryController::class)->except(['edit','update']);
+    Route::resource('users',UsersController::class)->except(['edit','update']);
+    Route::resource('item',ItemController::class)->except(['edit','update']);
 });
 Route::get('logout', [HomeController::class, 'logout'])->name('logout');

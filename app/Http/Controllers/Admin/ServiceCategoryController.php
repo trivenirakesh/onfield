@@ -63,14 +63,14 @@ class ServiceCategoryController extends Controller
     public function store(ServiceCategoryCreateUpdateRequest $request)
     {
         if (isset($request->id) && $request->id > 0) { //update data
-            $createUpdateItemUom = $this->serviceCategoryService->update($request, $request->id);
+            $createUpdateServiceCategory = $this->serviceCategoryService->update($request, $request->id);
         } else { //add data
-            $createUpdateItemUom  = $this->serviceCategoryService->store($request);
+            $createUpdateServiceCategory  = $this->serviceCategoryService->store($request);
         }
-        if (!$createUpdateItemUom['status']) {
-            return $this->jsonResponse($createUpdateItemUom, 401);
+        if (!$createUpdateServiceCategory['status']) {
+            return $this->jsonResponse($createUpdateServiceCategory, 401);
         }
-        return $this->jsonResponse($createUpdateItemUom, 200);
+        return $this->jsonResponse($createUpdateServiceCategory, 200);
     }
 
     /**
@@ -78,11 +78,11 @@ class ServiceCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $getUnitOfMeasurementDetails = $this->serviceCategoryService->show($id);
-        if (!$getUnitOfMeasurementDetails['status']) {
-            return $this->jsonResponse($getUnitOfMeasurementDetails, 401);
+        $getServiceCategoryDetails = $this->serviceCategoryService->show($id);
+        if (!$getServiceCategoryDetails['status']) {
+            return $this->jsonResponse($getServiceCategoryDetails, 401);
         }
-        return $this->jsonResponse($getUnitOfMeasurementDetails, 200);
+        return $this->jsonResponse($getServiceCategoryDetails, 200);
     }
 
     /**
@@ -90,10 +90,10 @@ class ServiceCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $deleteUnitOfMeasurement = $this->serviceCategoryService->destroy($id);
-        if (!$deleteUnitOfMeasurement['status']) {
-            return $this->jsonResponse($deleteUnitOfMeasurement, 401);
+        $deleteServiceCategory = $this->serviceCategoryService->destroy($id);
+        if (!$deleteServiceCategory['status']) {
+            return $this->jsonResponse($deleteServiceCategory, 401);
         }
-        return $this->jsonResponse($deleteUnitOfMeasurement, 200);
+        return $this->jsonResponse($deleteServiceCategory, 200);
     }
 }

@@ -24,7 +24,7 @@ class EntityCreateUpdateRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'entity_type' => 'required|digits:1|lte:2',
+            'entity_type' => 'required|digits:1|lte:3',
             'first_name' => 'required|max:200',
             'last_name' => 'required|max:200',
             'status' => ['required',Rule::in([1,0])],

@@ -38,7 +38,7 @@ class ItemCreateUpdateRequest extends FormRequest
                     $query->where('status', CommonHelper::getConfigValue('status.active'));
                 }),
             ],
-            'price' => 'required',
+            'price' => 'required|numeric',
             'status' => ['required',Rule::in([1,0])],
         ];
         if (request()->has('is_vendor')) {

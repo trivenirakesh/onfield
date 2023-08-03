@@ -26,6 +26,12 @@
                                 <p> Calls</p>
                             </a>
                         </li>
+                        <li class="nav-item ">
+                            <a href="{{route('admin.users.index')}}" class="nav-link @if(request()->is('admin/users')) active @endif">
+                            <i class="nav-icon fas fa-users"></i>
+                                <p> Users</p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-user"></i>
@@ -42,6 +48,12 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p> Clients</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.item.index')}}" class="nav-link @if(request()->is('admin/item')) active @endif">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <p> Items</p>
                             </a>
                         </li>
                         <li class="nav-item ">

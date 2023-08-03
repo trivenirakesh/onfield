@@ -130,4 +130,13 @@ class CommonHelper{
         $out = strlen($string) > $len ? mb_substr($string,0,$len)."..." : $string;
         return $out;
     }
+
+    public static function getTableWiseData($model,$where = []){
+        $activeStatus = self::getConfigValue('status.active');
+        $getData =  $model::where('status',$activeStatus);
+        if(!empty($where)){
+            $getData = $getData->where($where);
+        }
+        return $getData->latest()->get();
+    }
 }
