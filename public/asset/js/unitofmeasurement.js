@@ -5,6 +5,7 @@ function addModel() {
     var alert = $("#module_form");
     alert.validate().resetForm();
     alert.find(".error").removeClass("error");
+    alert.find(".text-danger").text("");
     $("#module_form")[0].reset();
     $("#modal-add-update").modal("show");
     $("#id").val(0);

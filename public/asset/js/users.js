@@ -5,7 +5,6 @@ function addModel() {
     var alert = $("#module_form");
     alert.validate().resetForm();
     alert.find(".error").removeClass("error");
-    alert.find(".text-danger").text("");
     $("#module_form")[0].reset();
     $("#modal-add-update").modal("show");
     $("#id").val(0);
@@ -103,18 +102,18 @@ $(document).ready(function () {
         rules: {
             name: {
                 required: true,
-            }, 
-            // image : {
-            //     required: true,
-            // },
+            },
+            factor: {
+                required: true,
+            },
         },
         messages: {
             name: {
                 required: "Please enter name",
             },
-            // image : {
-            //     required: "Please select image",
-            // }
+            factor: {
+                required: "Please enter factor",
+            },
         },
         submitHandler: function (form, e) {
             e.preventDefault();
@@ -154,7 +153,6 @@ $(document).ready(function () {
                     // Display validation errors in form fields
                     $.each(errors, function (field, messages) {
                         var inputField = $('[name="' + $.trim(field) + '"]');
-                        console.log(inputField);
                         $(".form-group .text-danger").css("display", "block");
                         inputField.closest(".form-group").find(".text-danger").text(messages[0]);
                     });
@@ -188,18 +186,24 @@ $(document).ready(function () {
                 orderable: false,
             },
             {
-                data: "image",
-                name: "image",
-                searchable: false,
-                orderable: false,
+                data: "username",
+                name: "username",
             },
             {
-                data: "name",
-                name: "name",
+                data: "email",
+                name: "email",
             },
             {
-                data: "description",
-                name: "description",
+                data: "mobile",
+                name: "mobile",
+            },
+            {
+                data: "role",
+                name: "role",
+            },
+            {
+                data: "entity_type",
+                name: "entity_type",
             },
             {
                 data: "status_text",

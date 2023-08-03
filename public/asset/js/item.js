@@ -103,18 +103,30 @@ $(document).ready(function () {
         rules: {
             name: {
                 required: true,
-            }, 
-            // image : {
-            //     required: true,
-            // },
+            },
+            uom_id: {
+                required: true,
+            },
+            item_category_id: {
+                required: true,
+            },
+            price: {
+                required: true,
+            },
         },
         messages: {
             name: {
                 required: "Please enter name",
             },
-            // image : {
-            //     required: "Please select image",
-            // }
+            uom_id: {
+                required: "Please select unit of measurement",
+            },
+            item_category_id: {
+                required: "Please select item category",
+            },
+            price: {
+                required: "Please enter price",
+            },
         },
         submitHandler: function (form, e) {
             e.preventDefault();
@@ -154,7 +166,6 @@ $(document).ready(function () {
                     // Display validation errors in form fields
                     $.each(errors, function (field, messages) {
                         var inputField = $('[name="' + $.trim(field) + '"]');
-                        console.log(inputField);
                         $(".form-group .text-danger").css("display", "block");
                         inputField.closest(".form-group").find(".text-danger").text(messages[0]);
                     });
@@ -190,8 +201,6 @@ $(document).ready(function () {
             {
                 data: "image",
                 name: "image",
-                searchable: false,
-                orderable: false,
             },
             {
                 data: "name",
@@ -200,6 +209,18 @@ $(document).ready(function () {
             {
                 data: "description",
                 name: "description",
+            },
+            {
+                data: "uom",
+                name: "uom",
+            },
+            {
+                data: "item_category",
+                name: "item_category",
+            },
+            {
+                data: "price",
+                name: "price",
             },
             {
                 data: "status_text",
