@@ -4,58 +4,62 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Helpers\CommonHelper;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\V1\UserResource;
+use App\Http\Requests\V1\Api\{ClientRegisterRequest, ClientLoginRequest, ForgotPasswordRequest, ResendOtpRequest, VerifyOtpRequest, ResetPasswordRequest};
+use App\Http\Requests\V1\SignUpRequest;
+use App\Http\Resources\V1\EntityResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use App\Traits\CommonTrait;
-use Illuminate\Support\Facades\Log;
-use App\Http\Requests\V1\SignUpRequest;
 use App\Models\EngineerSkill;
-use App\Models\State;
 use App\Models\Upload;
-use App\Http\Resources\V1\StateResource;
 use App\Models\Address;
+use App\Models\PasswordReset;
+use App\Models\Role;
+use App\Notifications\ForgotPasswordNotification;
+use App\Notifications\VerifyAccountOTP;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Support\Facades\Request;
 
 class AuthController extends Controller
 {
     use CommonTrait;
-    /**
-     * Create User
-     * @param Request $request
-     * @return User 
-     */
-    public function createUser(SignUpRequest $request)
+
+
+    public function engineerRegister(SignUpRequest $request)
     {
+
         try {
-            $user = User::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'email' => $request->email,
-                'mobile' => $request->mobile,
-                'user_type' => $request->user_type,
-                'status' => 0,
-                'created_ip' => CommonHelper::getUserIp(),
-                'password' => Hash::make($request->password)
-            ]);
-            $lastId = $user->id;
-            if($request->user_type == 1){
+            $inputs = $request->validated();
+            $input['entity_type'] = User::ENTITYCLIENT;
+            $input['status'] = 0;
+            $input['password'] = Hash::make($inputs->password);
+            $user = User::create($inputs);
+            $userId = $user->id;
+            $skills = [];
+            $datetime = now()->format('Y-m-d H:i:s');
+            if ($request->entity_type == 1) {
                 if ($request->has('skills')) {
-                    foreach($request->skills as $key => $val){
-                        $saveEngineerSkills = new EngineerSkill();
-                        $saveEngineerSkills->user_id = $lastId;
-                        $saveEngineerSkills->skill_id = $val;
-                        $saveEngineerSkills->created_ip =  CommonHelper::getUserIp();
-                        $saveEngineerSkills->save();
+                    foreach ($request->skills as $key => $val) {
+                        $skillArr = [
+                            'engineer_entity_id' => $userId,
+                            'skill_id' => $val,
+                            'created_ip' =>  CommonHelper::getUserIp(),
+                            'created_at' => $datetime,
+                            'updated_at' => $datetime,
+                        ];
+                        $skills[] = $skillArr;
+                    }
+                    if (!empty($skills)) {
+                        EngineerSkill::insert($skills);
                     }
                 }
 
                 // save engineer profile 
                 if ($request->hasFile('image')) {
                     $image = $request->file('image');
-                    $data = CommonHelper::uploadImages($image,User::FOLDERNAME,1);
+                    $data = CommonHelper::uploadImages($image, User::FOLDERNAME, 1);
                     if (!empty($data)) {
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
@@ -72,7 +76,7 @@ class AuthController extends Controller
                 // save engineer address proof 
                 if ($request->hasFile('addressproof')) {
                     $addressProof = $request->file('addressproof');
-                    $data = CommonHelper::uploadImages($addressProof,User::FOLDERNAME,1);
+                    $data = CommonHelper::uploadImages($addressProof, User::FOLDERNAME, 1);
                     if (!empty($data)) {
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
@@ -89,7 +93,7 @@ class AuthController extends Controller
                 // save engineer id proof 
                 if ($request->hasFile('idproof')) {
                     $IdProof = $request->file('idproof');
-                    $data = CommonHelper::uploadImages($IdProof,User::FOLDERNAME,1);
+                    $data = CommonHelper::uploadImages($IdProof, User::FOLDERNAME, 1);
                     if (!empty($data)) {
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
@@ -106,7 +110,7 @@ class AuthController extends Controller
                 // save engineer resume 
                 if ($request->hasFile('resume')) {
                     $resume = $request->file('resume');
-                    $data = CommonHelper::uploadFile($resume,User::FOLDERNAME);
+                    $data = CommonHelper::uploadFile($resume, User::FOLDERNAME);
                     if (!empty($data)) {
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
@@ -131,90 +135,182 @@ class AuthController extends Controller
                     $saveAddress->save();
                 }
             }
-            $getUserDetails = new UserResource($user);
-            return $this->successResponse($getUserDetails,'User registered successfully',201);
+            $getUserDetails = new EntityResource($user);
+            return $this->successResponse($getUserDetails, 'User registered successfully', 201);
         } catch (\Throwable $th) {
-            Log::error($th->getMessage());
-            return $this->errorResponse($th->getMessage(),500);
+            return $this->errorResponse($th->getMessage(), 500);
         }
     }
 
-    /**
-     * Login The User
-     * @param Request $request
-     * @return User
-     */
-    public function loginUser(Request $request)
+    public function clientRegister(ClientRegisterRequest $request)
+    {
+
+        try {
+            $inputs = $request->validated();
+            $inputs['entity_type'] = User::ENTITYCLIENT;
+            $inputs['status'] = 1;
+            $inputs['role_id'] = Role::USERROLE;
+            $inputs['password'] = Hash::make($inputs['password']);
+            $otp = 123456;  //dummy otp will rmeove after actual sms integration setup
+            // $otp =  User::generateOtp();
+            $inputs['otp'] = $otp;
+            $user = User::create($inputs);
+            if ($request->city != null) {
+                $addrInputData = [
+                    'user_id' => $user->id,
+                    'address_type_id' => 1,
+                    'state_id' => $request->state_id,
+                    'address' => "-",
+                    'city' => $request->city,
+                    'created_ip' => CommonHelper::getUserIp(),
+                ];
+                Address::create($addrInputData);
+            }
+            $getUserDetails = new EntityResource($user);
+
+            //send opt  user mobile
+            $user->notify(new VerifyAccountOTP($otp));
+            //send opt  user mobile end
+
+            return $this->successResponse(__('messages.success.register_successfully'), $getUserDetails, 200);
+        } catch (\Throwable $th) {
+            return $this->errorResponse($th->getMessage(), 500);
+        }
+    }
+
+    public function resendVerificationOtp(ResendOtpRequest $request)
     {
         try {
-            $validateUser = Validator::make($request->all(), 
-            [
-                'mobile' => 'required|numeric|digits:10',
-                'password' => 'required'
-            ],
-            [
-                'mobile.required' => __('messages.validation.mobile'),
-                'mobile.numeric' => 'Mobile' . __('messages.validation.must_numeric'),
-                'mobile.digits' => __('messages.validation.mobile_digits'),
-                'password.required'    => __('messages.validation.password'),
-            ]);
 
-            if($validateUser->fails()){
-                return $this->errorResponse($validateUser->errors(), 401);
+            $user = User::where('mobile', $request->mobile)->first();
+            if ($user == null) {
+                return $this->errorResponse('User ' . __('messages.validation.not_found'), 404);
+            }
+            if ($user->is_otp_verify == 1) {
+                return response()->json(['status' => false, 'message' => __('messages.auth.account_already_verified')], 401);
+            }
+            // $otp =  User::generateOtp();
+            $otp = 123456;  //dummy otp will rmeove after actual sms integration setup
+            $user->update(['otp' => $otp]);
+
+            //send opt  user mobile
+            $user->notify(new VerifyAccountOTP($otp));
+            //send opt  user mobile end
+        } catch (Exception $e) {
+            return $this->errorResponse(__('messages.failed.general'), 500);
+        }
+        return $this->successResponse(__('messages.success.verification_otp_Send_successfully'), 200);
+    }
+
+    public function otpVerification(VerifyOtpRequest $request)
+    {
+        try {
+            $user = User::where('mobile', $request->mobile)->first();
+            if ($user == null) {
+                return $this->errorResponse('User ' . __('messages.validation.not_found'), 404);
+            }
+            if ($user->is_otp_verify == 1) {
+                return response()->json(['status' => false, 'message' => __('messages.auth.account_already_verified')], 401);
+            }
+            if ($user->otp != $request->otp) {
+                return $this->errorResponse(__('messages.auth.invalid_otp'), 401);
+            }
+            $user->update(['is_otp_verify' => 1, 'otp_verified_at' => now()->format('Y-m-d H:i:s')]);
+        } catch (Exception $e) {
+            return $this->errorResponse(__('messages.failed.general'), 500);
+        }
+        return $this->successResponse(__('messages.success.account_verified'), 200);
+    }
+
+    public function forgotPasaword(ForgotPasswordRequest $request)
+    {
+        try {
+            $user = User::where('mobile', $request->mobile)->first();
+            if ($user == null) {
+                return $this->errorResponse('User ' . __('messages.validation.not_found'), 404);
             }
 
-            if(!Auth::attempt($request->only(['mobile', 'password']))){
-                return $this->errorResponse(__('messages.validation.mobile_password_wrong'),401);
+            $otp = 123456; //dummy otp will rmeove after actual sms integration setup
+            // $otp = PasswordReset::GenerateOtp();
+            $expireTime = Carbon::now()->subMinute(PasswordReset::EXPIRE)->toDateTimeString();
+            PasswordReset::where('email', $request->email) //delete expired token
+                ->where('created_at', '<', $expireTime)
+                ->delete();
+            PasswordReset::create(['email' => $request->mobile, 'token' => $otp]);
+            $mailData = [
+                'name'      =>  $user->first_name . ' ' . $user->last_name,
+                'otp'       => $otp,
+                'expire'    => PasswordReset::EXPIRE,
+            ];
+            $user->notify(new ForgotPasswordNotification($mailData));
+
+            return $this->successResponse(__('messages.success.forgot_password_otp'));
+        } catch (Exception $e) {
+            return $this->errorResponse(__('messages.failed.general'), 500);
+        }
+    }
+
+
+    public function resetPassword(ResetPasswordRequest $request)
+    {
+        try {
+            $validData = $request->validated();
+            $user = User::where('mobile', $validData['mobile'])->first();
+            if ($user == null) {
+                return $this->errorResponse('User ' . __('messages.validation.not_found'), 404);
+            }
+            $otpVerified = PasswordReset::checkOtp($validData);
+            if (!$otpVerified) {
+                return $this->errorResponse(__('messages.auth.invalid_otp'), 401);
+            }
+            $udateData = ['password' => bcrypt($validData['password'])];
+            $user->update($udateData);
+            PasswordReset::where('email', $validData['mobile'])->delete();
+            return $this->successResponse(__('messages.success.password_reset'));
+        } catch (Exception $th) {
+            return $this->errorResponse(__('messages.failed.general'), 500);
+        }
+    }
+
+    public function login(ClientLoginRequest $request)
+    {
+        try {
+            $validData = $request->validated();
+            if (!Auth::attempt($request->only(['mobile', 'password']))) {
+                return $this->errorResponse(__('messages.validation.mobile_password_wrong'), 401);
             }
             $user = User::where('mobile', $request->mobile)->first();
-            // $user->tokens()->delete();
-            if($user->status == 0){
-                return $this->errorResponse(__('messages.auth.account_not_approved'),404);
+            if ($user->status == 0) {
+                return $this->errorResponse(__('messages.auth.account_not_approved'), 401);
             }
-            $getUserDetails['id'] = $user->id;
-            $getUserDetails['username'] = $user->first_name.' '.$user->last_name;
-            $getUserDetails['email'] = $user->email;
-            $getUserDetails['mobile'] = $user->mobile;
-            $getUserDetails['status'] = ($user->status == 1 ? 'Active' : 'Deactive');
-            $getUserDetails['token'] = $user->createToken("api")->plainTextToken;
-            
-            return $this->successResponse($getUserDetails, __('messages.success.user_login'),200);
-
-        } catch (\Throwable $th) {
-            Log::error($th->getMessage());
-            return $this->errorResponse($th->getMessage(),500);
+            if ($user->is_otp_verify == 0) {
+                return $this->errorResponse(__('messages.auth.account_not_verified'), 401);
+            }
+            $getUserDetails  = $user->loginResponse();
+            $objToken = $user->createToken('API Access');
+            $expiration = $objToken->token->expires_at->diffInSeconds(Carbon::now());
+            $tokenBody =  [
+                'expires_in' => $expiration,
+                'access_token' => $objToken->accessToken
+            ];
+            $response = [
+                'auth_token' => $tokenBody,
+                'user' => $getUserDetails,
+            ];
+            return  $this->successResponse(__('messages.success.user_login'), $response);
+        } catch (Exception $th) {
+            return $this->errorResponse(__('messages.failed.general'), 500);
         }
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         try {
-            $validateUser = Validator::make($request->all(), [
-                'id' => 'required|numeric',
-            ],
-            [
-             'id.required'    => 'Please enter id',
-             'id.numeric'    => 'Id must be numeric',
-            ]);
-
-            if($validateUser->fails()){
-                return $this->errorResponse($validateUser->errors(), 401);
-            }
-            $user = User::find($request->id);
-            if(!$user){
-                return $this->errorResponse(__('messages.success.user_not_found'), 404);
-            }
-            $user->tokens()->delete();
-            if($user){
-                return $this->successResponse([],__('messages.success.user_logout'),200);
-            }
-        } catch (\Throwable $th) {
-            Log::error($th->getMessage());
-            return $this->errorResponse($th->getMessage(),500);
+            $user = Auth::user()->token();
+            $user->revoke();
+            return  $this->successResponse('Account logout successfully.');
+        } catch (Exception $th) {
+            return $this->errorResponse(__('messages.failed.general'), 500);
         }
-    }
-
-    public function getStates(){
-        $getStateData = StateResource::collection(State::latest('id')->get());
-        return $this->successResponse($getStateData,__('messages.success.user_logout'),200);
     }
 }

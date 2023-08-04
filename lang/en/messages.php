@@ -47,7 +47,7 @@ return [
         'new_password_min' => 'Password must 8 character.',
         'factor_required' => 'Please enter factor',
         'factor_numeric' => 'Factor must be a number or decimal',
-        'skill_required' => 'Please select skill'
+        'skill_required' => 'Please select skill',
     ],
     'item' => [
         'uom_id_required' => 'Please enter unit of measurement id',
@@ -80,6 +80,9 @@ return [
         'password_reset_success' => 'Your password has been changed successfully. Please log in to continue.',
         'password_reset_failed' => 'Password reset failed, Something went wrong!!',
         'account_not_approved' => 'Your account is not active please contact admin.',
+        'invalid_otp' => "Invalid otp or opt expired",
+        'account_not_verified' => "Account is not verified, Please verfiy you account.",
+        'account_already_verified' => "Account already verified",
     ],
 
     'success' => [
@@ -92,6 +95,11 @@ return [
         'user_logout' => 'User logout successfully',
         'user_login' => 'User successfully logged in',
         'list' => ' list fetch successfully',
+        'password_reset' => "Passowrd reset successfully.",
+        'forgot_password_otp' => 'Forgot password OTP sent on your email.',
+        'account_verified' => 'Congratulations! Your account has been successfully verified',
+        'verification_otp_Send_successfully' => 'Verification otp send successfully on registered email',
+        'register_successfully' => 'Your registration was successful! Please verify your email using the sent OTP',
     ],
     'failed' => [
         'general' => 'Something went wrong!!',
