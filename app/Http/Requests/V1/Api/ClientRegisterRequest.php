@@ -32,8 +32,8 @@ class ClientRegisterRequest extends FormRequest
             'last_name' => 'required|max:200',
             'city' => 'required_with:state|max:200',
             'state' => 'required_with:city|exists:states,id',
-            'email' => 'required|email|unique:entitymst,email,NULL,id,deleted_at,NULL',
-            'mobile' => 'required|numeric|digits:10|unique:entitymst,mobile,NULL,id,deleted_at,NULL',
+            'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
+            'mobile' => 'required|numeric|digits:10|unique:users,mobile,NULL,id,deleted_at,NULL',
             'password' => [
                 'required',
                 Password::min(8)

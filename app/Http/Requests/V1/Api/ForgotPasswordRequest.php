@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ForgotPasswordRequest extends FormRequest
 {
-   
+
 
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,7 @@ class ForgotPasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' =>  ['required', 'email', 'exists:users,email', 'max:255'],
+            'mobile' => ['required', 'numeric', 'digits:10', 'exists:users,mobile,deleted_at,NULL'],
         ];
     }
 }

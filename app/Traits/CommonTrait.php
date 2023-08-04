@@ -5,10 +5,10 @@ namespace App\Traits;
 trait CommonTrait
 {
 
-	public function successResponse($data, $message = null, $code = 200)
+	public function successResponse($message = null, $data = [], $code = 200)
 	{
 		return response()->json([
-			'status' => $code,
+			'status' => true,
 			'message' => $message,
 			'data' => $data
 		], $code);
@@ -17,7 +17,7 @@ trait CommonTrait
 	public function errorResponse($message = null, $code = 401)
 	{
 		return response()->json([
-			'status' => $code,
+			'status' => false,
 			'message' => $message,
 			'data' => []
 		], $code);

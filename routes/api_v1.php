@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\V1\{
+use App\Http\Controllers\Api\V1\{
     AuthController,
     ItemController,
     ServiceCategoryController
@@ -18,19 +18,28 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-// Route::post('/entity/register', [AuthController::class, 'createEntity']);
-// Route::post('/entity/login', [AuthController::class, 'loginEntity']);
 
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
-// Route::post('forgot-password', [AuthController::class, 'ForgotPasword']);
-// Route::post('verify-otp', [AuthController::class, 'verifyOtp']);
-// Route::post('reset-password', [AuthController::class, 'resetPassword']);
-// Route::post('resend-activation', [AuthController::class, 'resendActivation']);
 
-Route::group(['middleware' => ['auth:api']], function () {
-    Route::get('logout', [AuthController::class, 'logout']);
+Route::group(['prefix' => 'client'], function () {
+
+    // Auth routes
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('login', 'login');
+        Route::post('register', 'clientRegister');
+        Route::post('verification', 'otpVerification');
+        Route::post('resend-otp', 'resendVerificationOtp');
+        Route::post('forgot-password', 'forgotPasaword');
+        Route::post('verify-otp', 'verifyOtp');
+        Route::post('reset-password', 'resetPassword');
+        Route::post('resend-activation', 'resendActivation');
+    });
+
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('logout', [AuthController::class, 'logout']);
+    });
 });
+
+
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function () {
     Route::post('entitylogout', [AuthController::class, 'logout']);
@@ -63,13 +72,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
 // });
 
 Route::group(['prefix' => 'user', 'middleware' => ['auth:sanctum']], function () {
-    
-    Route::post('entitylogout',[AuthController::class,'logout']);
-    Route::resource('skill',SkillController::class)->except(['store','update','show','create','edit']);
-    Route::resource('addresstype',AddressTypeController::class)->except(['store','update','show','create','edit']);
+
+    Route::post('entitylogout', [AuthController::class, 'logout']);
+    Route::resource('skill', SkillController::class)->except(['store', 'update', 'show', 'create', 'edit']);
+    Route::resource('addresstype', AddressTypeController::class)->except(['store', 'update', 'show', 'create', 'edit']);
 
     // Service category routes
-    Route::get('servicecategory',[ServiceCategoryController::class,'index']);
-    Route::get('servicecategory/{id}',[ServiceCategoryController::class,'show']);
-    Route::get('states',[AuthController::class,'getStates']);
+    Route::get('servicecategory', [ServiceCategoryController::class, 'index']);
+    Route::get('servicecategory/{id}', [ServiceCategoryController::class, 'show']);
+    Route::get('states', [AuthController::class, 'getStates']);
 });

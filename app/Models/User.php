@@ -40,7 +40,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'mobile', 'entity_type', 'password', 'status'
+        'first_name', 'last_name', 'email', 'mobile', 'entity_type', 'password', 'status', 'otp','is_otp_verify','otp_verified_at'
     ];
 
     /**
@@ -82,6 +82,16 @@ class User extends Authenticatable
     public function item()
     {
         return $this->hasOne(Item::class);
+    }
+
+    public static function generateOtp()
+    {
+        $otp = rand(100000, 999999);
+        $token = self::where('otp', $otp)->first();
+        if ($token != null) {
+            self::generateOtp();
+        }
+        return $otp;
     }
 
     public static function getTokenAndRefreshToken($mobile, $password)
