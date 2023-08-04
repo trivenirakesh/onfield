@@ -41,6 +41,9 @@ $(document).ready(function () {
                 if (response.status) {
                     $.each(response.data, function (key, value) {
                         $(`#info_${key}`).text(value);
+                        if (key == "status") {
+                            $(`#info_${key}`).text(value == 1 ? 'Active' : 'Deactive');
+                        }
                         if (key == "image") {
                             $(`#info_${key}`).attr("src", value);
                         }
@@ -87,6 +90,7 @@ $(document).ready(function () {
                         if (key == "image") {
                             $("#image_preview").attr("src", value);
                         } else {
+                            console.log(key+'---'+value);
                             $(`#${key}`).val(value);
                         }
                     });
@@ -115,6 +119,7 @@ $(document).ready(function () {
             },
         },
         submitHandler: function (form, e) {
+            $(".text-danger").text("");
             e.preventDefault();
             const formBtn = $("#module_form_btn");
             const formLoader = $("#module_form_loader");

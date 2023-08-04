@@ -40,7 +40,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'mobile', 'entity_type', 'password', 'status', 'otp','is_otp_verify','otp_verified_at'
+        'first_name', 'last_name', 'email', 'mobile', 'user_type', 'password', 'status', 'otp','is_otp_verify','otp_verified_at'
     ];
 
     /**
@@ -128,8 +128,8 @@ class User extends Authenticatable
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'email' => $this->email,
-            'mobile' => $this->image,
-            'image' => $this->image,
+            'mobile' => $this->mobile,
+            'image' => '',
             'status' => $this->status == 1 ? 'Active' : 'Deactive'
         ];
     }

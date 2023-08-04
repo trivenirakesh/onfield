@@ -38,7 +38,7 @@ return new class extends Migration
         
         // Call seeder
         Artisan::call('db:seed', [
-            '--class' => 'UserSeeder',
+            '--class' => 'AdminSeeder',
         ]);
     }
 

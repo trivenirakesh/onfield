@@ -57,29 +57,4 @@ class ItemCreateUpdateRequest extends FormRequest
         return $rules;
     }
 
-    public function messages()
-    {
-        $messages = [
-            'name.required' => __('messages.validation.name'),
-            'unit_of_measurement_id.required' => __('messages.item.uom_id_required'),
-            'unit_of_measurement_id.exists' => 'Unit of Measurement'.__('messages.validation.not_found'),
-            'item_category_id.required' => __('messages.item.item_category_id_required'),
-            'item_category_id.exists' => 'Item Category'.__('messages.validation.not_found'),
-            'price.required' => __('messages.item.price_required'),
-            'status.required' => __('messages.validation.status'),
-            'status.in' => __('messages.validation.status_in'),
-            'image.required' => __('messages.validation.image'),
-            'image.max' =>  __('messages.validation.image-max'),
-            'image.mimes' => __('messages.validation.image-mimes'),
-        ];
-
-        if(request()->has('is_vendor')){
-            $messages['is_vendor.required'] = __('messages.item.is_vendor_required');
-            $messages['is_vendor.numeric'] = 'Is vendor'.__('messages.validation.must_numeric');
-            $messages['user_id.required'] = __('messages.item.user_id_required');
-            $messages['user_id.exists'] = 'Vendor'.__('messages.validation.not_found');
-        }
-
-        return $messages;
-    }
 }

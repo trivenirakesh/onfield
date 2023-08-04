@@ -38,6 +38,9 @@ $(document).ready(function () {
                 if (response.status) {
                     $.each(response.data, function (key, value) {
                         $(`#info_${key}`).text(value);
+                        if (key == "status") {
+                            $(`#info_${key}`).text(value == 1 ? 'Active' : 'Deactive');
+                        }
                         if (key == "image") {
                             $(`#info_${key}`).attr("src", value);
                         }

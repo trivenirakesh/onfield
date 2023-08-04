@@ -14,7 +14,7 @@
                             <div class="card card-primary card-outline">
                                 <div class="card-body box-profile">
                                     <div class="text-center">
-                                        <img id="info_image" width="200" height="200" class="profile-img img-circle" src="" alt="picture">
+                                        <img id="info_image" width="100" height="100" class="profile-img img-circle" src="" alt="picture">
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
@@ -27,7 +27,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label class="col-form-label"><b>Status</b></label><br>
-                                            <p id="info_status_text"></p>
+                                            <p id="info_status"></p>
                                         </div>
                                         <div class="col-md-12">
                                             <label class="col-form-label"><b>Created At</b></label><br>

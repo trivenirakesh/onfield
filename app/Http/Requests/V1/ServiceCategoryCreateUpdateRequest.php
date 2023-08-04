@@ -31,18 +31,4 @@ class ServiceCategoryCreateUpdateRequest extends FormRequest
         return $rules;
     }
 
-    public function messages()
-    {
-        $messages = [
-            'name.required' => __('messages.validation.name'),
-            'name.max' => __('messages.validation.max'),
-            'status.required' => __('messages.validation.status'),
-            'status.in' => __('messages.validation.status_in'),
-            'image.required' => __('messages.validation.image'),
-            'image.max' =>  __('messages.validation.image-max'),
-            'image.mimes' => __('messages.validation.image-mimes'),
-        ];
-        
-        return $messages;
-    }
 }

@@ -19,8 +19,16 @@
                                             <p id="info_name"></p>
                                         </div>
                                         <div class="col-md-12">
+                                            <label class="col-form-label"><b>Description</b></label><br>
+                                            <p id="info_description"></p>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="col-form-label"><b>Factor</b></label><br>
+                                            <p id="info_factor"></p>
+                                        </div>
+                                        <div class="col-md-12">
                                             <label class="col-form-label"><b>Status</b></label><br>
-                                            <p id="info_status_text"></p>
+                                            <p id="info_status"></p>
                                         </div>
                                         <div class="col-md-12">
                                             <label class="col-form-label"><b>Created At</b></label><br>

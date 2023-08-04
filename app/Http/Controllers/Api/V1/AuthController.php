@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Api\{ClientRegisterRequest, ClientLoginRequest, ForgotPasswordRequest, ResendOtpRequest, VerifyOtpRequest, ResetPasswordRequest};
 use App\Http\Requests\V1\SignUpRequest;
-use App\Http\Resources\V1\EntityResource;
+use App\Http\Resources\V1\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\CommonTrait;
@@ -32,7 +32,7 @@ class AuthController extends Controller
 
         try {
             $inputs = $request->validated();
-            $input['entity_type'] = User::ENTITYCLIENT;
+            $input['entity_type'] = User::USERENGINEER;
             $input['status'] = 0;
             $input['password'] = Hash::make($inputs->password);
             $user = User::create($inputs);
@@ -67,7 +67,7 @@ class AuthController extends Controller
                         $saveUploads['media_type'] = User::MEDIA_TYPES[0];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();
-                        $saveUploads['reference_id'] = $lastId;
+                        $saveUploads['reference_id'] = $userId;
                         $saveUploads['reference_type'] = User::class;
                         $saveUploads->save();
                     }
@@ -84,7 +84,7 @@ class AuthController extends Controller
                         $saveUploads['media_type'] = User::MEDIA_TYPES[2];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();
-                        $saveUploads['reference_id'] = $lastId;
+                        $saveUploads['reference_id'] = $userId;
                         $saveUploads['reference_type'] = User::class;
                         $saveUploads->save();
                     }
@@ -101,7 +101,7 @@ class AuthController extends Controller
                         $saveUploads['media_type'] = User::MEDIA_TYPES[3];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();
-                        $saveUploads['reference_id'] = $lastId;
+                        $saveUploads['reference_id'] = $userId;
                         $saveUploads['reference_type'] = User::class;
                         $saveUploads->save();
                     }
@@ -117,7 +117,7 @@ class AuthController extends Controller
                         $saveUploads['media_type'] = User::MEDIA_TYPES[1];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();
-                        $saveUploads['reference_id'] = $lastId;
+                        $saveUploads['reference_id'] = $userId;
                         $saveUploads['reference_type'] = User::class;
                         $saveUploads->save();
                     }
@@ -126,7 +126,7 @@ class AuthController extends Controller
                 // Save engineer address
                 if ($request->has('state_id')) {
                     $saveAddress = new Address();
-                    $saveAddress->reference_id = $lastId;
+                    $saveAddress->reference_id = $userId;
                     $saveAddress->address_type_id = 1; // By default current address 
                     $saveAddress->address = $request->address;
                     $saveAddress->state_id = $request->state_id;
@@ -135,7 +135,7 @@ class AuthController extends Controller
                     $saveAddress->save();
                 }
             }
-            $getUserDetails = new EntityResource($user);
+            $getUserDetails = new UserResource($user);
             return $this->successResponse($getUserDetails, 'User registered successfully', 201);
         } catch (\Throwable $th) {
             return $this->errorResponse($th->getMessage(), 500);
@@ -147,7 +147,7 @@ class AuthController extends Controller
 
         try {
             $inputs = $request->validated();
-            $inputs['entity_type'] = User::ENTITYCLIENT;
+            $inputs['user_type'] = User::USERCLIENT;
             $inputs['status'] = 1;
             $inputs['role_id'] = Role::USERROLE;
             $inputs['password'] = Hash::make($inputs['password']);
@@ -166,7 +166,7 @@ class AuthController extends Controller
                 ];
                 Address::create($addrInputData);
             }
-            $getUserDetails = new EntityResource($user);
+            $getUserDetails = new UserResource($user);
 
             //send opt  user mobile
             $user->notify(new VerifyAccountOTP($otp));

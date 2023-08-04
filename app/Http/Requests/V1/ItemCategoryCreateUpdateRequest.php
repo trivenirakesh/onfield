@@ -30,15 +30,4 @@ class ItemCategoryCreateUpdateRequest extends FormRequest
         return $rules;
     }
 
-    public function messages()
-    {
-        $messages = [
-            'name.required' => __('messages.validation.name'),
-            'name.max' => __('messages.validation.max'),
-            'status.required' => __('messages.validation.status'),
-            'status.in' => __('messages.validation.status_in'),
-        ];
-        
-        return $messages;
-    }
 }
