@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\UnitOfMeasurementCreateUpdateRequest;
+use App\Http\Resources\V1\UnitOfMeasurementResource;
 use App\Services\V1\UnitOfMeasurementService;
 
 class UnitOfMeasurementController extends Controller
@@ -23,6 +24,7 @@ class UnitOfMeasurementController extends Controller
     public function index()
     {
         $getUnitOfMeasurement =  $this->unitOfMeasurementService->index() ?? [];
+        $getUnitOfMeasurement['data'] = UnitOfMeasurementResource::collection($getUnitOfMeasurement);
         if (!$getUnitOfMeasurement['status']) {
             return response()->json($getUnitOfMeasurement, 401);
         }
@@ -38,6 +40,7 @@ class UnitOfMeasurementController extends Controller
     public function store(UnitOfMeasurementCreateUpdateRequest $request)
     {
         $saveUnitOfMeasurement  = $this->unitOfMeasurementService->store($request);
+        $saveUnitOfMeasurement['data'] = new UnitOfMeasurementResource($saveUnitOfMeasurement);
         if (!$saveUnitOfMeasurement['status']) {
             return response()->json($saveUnitOfMeasurement, 401);
         }
@@ -53,6 +56,7 @@ class UnitOfMeasurementController extends Controller
     public function show($id)
     {
         $getUnitOfMeasurementDetails = $this->unitOfMeasurementService->show($id);
+        $getUnitOfMeasurementDetails['data'] = new UnitOfMeasurementResource($getUnitOfMeasurementDetails);
         if (!$getUnitOfMeasurementDetails['status']) {
             return response()->json($getUnitOfMeasurementDetails, 401);
         }
@@ -69,6 +73,7 @@ class UnitOfMeasurementController extends Controller
     public function update(UnitOfMeasurementCreateUpdateRequest $request, $id)
     {
         $updateUnitOfMeasurement = $this->unitOfMeasurementService->update($request, $id);
+        $updateUnitOfMeasurement['data'] = new UnitOfMeasurementResource($updateUnitOfMeasurement);
         if (!$updateUnitOfMeasurement['status']) {
             return response()->json($updateUnitOfMeasurement, 401);
         }

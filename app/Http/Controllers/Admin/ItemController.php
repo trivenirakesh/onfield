@@ -57,13 +57,13 @@ class ItemController extends Controller
                 ->addColumn('status_text', function ($row) {
                     return $this->statusHtml($row);
                 })
-                ->rawColumns(['action_edit', 'action_delete', 'image','name','uom', 'item_category','price','entity_type','status_text'])
+                ->rawColumns(['action_edit', 'action_delete', 'image','name','uom', 'item_category','price','status_text'])
                 ->make(true);
         }
         $title =  'Item';
         $getItemCategoryData = CommonHelper::getTableWiseData(ItemCategory::class);
         $getUomData = CommonHelper::getTableWiseData(UnitOfMeasurement::class);
-        $getVendorsData = CommonHelper::getTableWiseData(User::class,array('entity_type'=>User::ENTITYVENDOR));
+        $getVendorsData = CommonHelper::getTableWiseData(User::class,array('user_type'=>User::USERVENDOR));
         return view('admin.item.index', compact('title','getItemCategoryData','getUomData','getVendorsData'));
     }
 

@@ -7,7 +7,7 @@ use App\Helpers\CommonHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
-class EntityResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

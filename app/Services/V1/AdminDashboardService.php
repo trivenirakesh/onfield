@@ -15,8 +15,8 @@ class AdminDashboardService
 
     public function index(){
         $activeStatus = CommonHelper::getConfigValue('status.active');
-        $getClientCount = User::where('status',$activeStatus)->where('entity_type',User::ENTITYCLIENT)->count();
-        $getEngineerCount = User::where('status',$activeStatus)->where('entity_type',User::ENTITYENGINEER)->count();
+        $getClientCount = User::where('status',$activeStatus)->where('user_type',User::USERCLIENT)->count();
+        $getEngineerCount = User::where('status',$activeStatus)->where('user_type',User::USERENGINEER)->count();
         $getItemCount = Item::where('status',$activeStatus)->count();
         $data['getTotalClient'] = (!empty($getClientCount)) ? $getClientCount : 0;
         $data['getTotalEngineer'] = (!empty($getEngineerCount)) ? $getEngineerCount : 0;

@@ -3,7 +3,7 @@
 namespace App\Http\Requests\V1;
 
 use App\Helpers\CommonHelper;
-use App\Models\Users;
+use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -26,7 +26,7 @@ class ItemCreateUpdateRequest extends FormRequest
     {
         $rules =  [
             'name' => 'required',
-            'uom_id' => [
+            'unit_of_measurement_id' => [
                 'required',
                 Rule::exists('unit_of_measurements','id')->where(function ($query) {
                     $query->where('status', CommonHelper::getConfigValue('status.active'));
@@ -43,11 +43,11 @@ class ItemCreateUpdateRequest extends FormRequest
         ];
         if (request()->has('is_vendor')) {
             $rules['is_vendor'] = 'required|numeric';
-            $rules['vendor_id'] = [
+            $rules['user_id'] = [
                 'required',
-                Rule::exists('Users','id')->where(function ($query) {
+                Rule::exists('users','id')->where(function ($query) {
                     $query->where('status', CommonHelper::getConfigValue('status.active'));
-                    $query->where('entity_type', Users::ENTITYVENDOR);
+                    $query->where('user_type', User::USERVENDOR);
                 }),
             ];
         }
@@ -61,8 +61,8 @@ class ItemCreateUpdateRequest extends FormRequest
     {
         $messages = [
             'name.required' => __('messages.validation.name'),
-            'uom_id.required' => __('messages.item.uom_id_required'),
-            'uom_id.exists' => 'Unit of Measurement'.__('messages.validation.not_found'),
+            'unit_of_measurement_id.required' => __('messages.item.uom_id_required'),
+            'unit_of_measurement_id.exists' => 'Unit of Measurement'.__('messages.validation.not_found'),
             'item_category_id.required' => __('messages.item.item_category_id_required'),
             'item_category_id.exists' => 'Item Category'.__('messages.validation.not_found'),
             'price.required' => __('messages.item.price_required'),
@@ -76,8 +76,8 @@ class ItemCreateUpdateRequest extends FormRequest
         if(request()->has('is_vendor')){
             $messages['is_vendor.required'] = __('messages.item.is_vendor_required');
             $messages['is_vendor.numeric'] = 'Is vendor'.__('messages.validation.must_numeric');
-            $messages['vendor_id.required'] = __('messages.item.vendor_id_required');
-            $messages['vendor_id.exists'] = 'Vendor'.__('messages.validation.not_found');
+            $messages['user_id.required'] = __('messages.item.user_id_required');
+            $messages['user_id.exists'] = 'Vendor'.__('messages.validation.not_found');
         }
 
         return $messages;

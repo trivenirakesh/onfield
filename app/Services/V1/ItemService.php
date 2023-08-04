@@ -37,13 +37,13 @@ class ItemService
         $saveItem = new Item;
         $saveItem->name = $request->name;
         $saveItem->description = $request->description;
-        $saveItem->uom_id = $request->uom_id;
+        $saveItem->unit_of_measurement_id = $request->unit_of_measurement_id;
         $saveItem->item_category_id = $request->item_category_id;
         $saveItem->price = $request->price;
         $saveItem->status = $request->status;
-        if($request->has('is_vendor') && $request->has('vendor_id')){
+        if($request->has('is_vendor') && $request->has('user_id')){
             $saveItem->is_vendor = $request->is_vendor;
-            $saveItem->vendor_id = $request->vendor_id;
+            $saveItem->user_id = $request->user_id;
         }
         $saveItem->created_by = auth()->user()->id;
         $saveItem->created_ip = CommonHelper::getUserIp();
@@ -56,7 +56,6 @@ class ItemService
             if (!empty($data)) {
                 $saveUploads = new Upload();
                 $saveUploads['file'] = $data['filename'];
-                $saveUploads['transaction_type'] = 'ITEM';
                 $saveUploads['media_type'] = Item::MEDIA_TYPES[0];
                 $saveUploads['image_type'] = $data['filetype'];
                 $saveUploads['created_by'] = auth()->user()->id;
@@ -107,9 +106,9 @@ class ItemService
         $updateItem->uom_id = $request->uom_id;
         $updateItem->item_category_id = $request->item_category_id;
         $updateItem->price = $request->price;
-        if($request->has('is_vendor') && $request->has('vendor_id')){
+        if($request->has('is_vendor') && $request->has('user_id')){
             $updateItem->is_vendor = $request->is_vendor;
-            $updateItem->vendor_id = $request->vendor_id;
+            $updateItem->user_id = $request->user_id;
         }
         $updateItem->updated_by = auth()->user()->id;
         $updateItem->updated_ip = CommonHelper::getUserIp();

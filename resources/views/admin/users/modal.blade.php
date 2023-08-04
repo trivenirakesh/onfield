@@ -108,8 +108,8 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Entity type <span class="red">*</span></label>
-                                    <select name="entity_type" id="" class="form-control">
+                                    <label>User type <span class="red">*</span></label>
+                                    <select name="user_type" id="" class="form-control">
                                         <option value="0">Back office</option>
                                         <option value="1">Engineer</option>
                                         <option value="2">Client</option>

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->tinyInteger('is_vendor')->default(0)->comment('0 - Item, 1 - Vendor Item');;
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->decimal('price', 8, 2);
+            $table->decimal('price', 12, 2);
             $table->tinyInteger('status')->comment('0 - Deactive, 1 - Active');
             $this->timestampColumns($table);
         });

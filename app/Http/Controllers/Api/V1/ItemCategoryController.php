@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\ItemCategoryCreateUpdateRequest;
+use App\Http\Resources\V1\ItemCategoryResource;
 use App\Services\V1\ItemCategoryService;
+use Database\Seeders\ItemCategorySeeder;
 
 class ItemCategoryController extends Controller
 {
@@ -23,6 +25,7 @@ class ItemCategoryController extends Controller
     public function index()
     {
         $getItemCategory =  $this->itemCategoryService->index() ?? [];
+        $getItemCategory['data'] = ItemCategoryResource::collection($getItemCategory);
         if (!$getItemCategory['status']) {
             return response()->json($getItemCategory, 401);
         }
@@ -38,6 +41,7 @@ class ItemCategoryController extends Controller
     public function store(ItemCategoryCreateUpdateRequest $request)
     {
         $saveItemCategory  = $this->itemCategoryService->store($request);
+        $saveItemCategory['data'] = new ItemCategoryResource($saveItemCategory);
         if (!$saveItemCategory['status']) {
             return response()->json($saveItemCategory, 401);
         }
@@ -53,6 +57,7 @@ class ItemCategoryController extends Controller
     public function show($id)
     {
         $getItemCategoryDetails = $this->itemCategoryService->show($id);
+        $getItemCategoryDetails['data'] = new ItemCategorySeeder($getItemCategoryDetails);
         if (!$getItemCategoryDetails['status']) {
             return response()->json($getItemCategoryDetails, 401);
         }
@@ -69,6 +74,7 @@ class ItemCategoryController extends Controller
     public function update(ItemCategoryCreateUpdateRequest $request, $id)
     {
         $updateItemCategory = $this->itemCategoryService->update($request, $id);
+        $updateItemCategory = new ItemCategoryResource($updateItemCategory);
         if (!$updateItemCategory['status']) {
             return response()->json($updateItemCategory, 401);
         }

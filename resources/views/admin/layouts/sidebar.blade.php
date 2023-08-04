@@ -56,6 +56,12 @@
                                 <p> Items</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.service.index')}}" class="nav-link @if(request()->is('admin/service*')) active @endif">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <p> Service</p>
+                            </a>
+                        </li>
                         <li class="nav-item ">
                             <a href="#" class="nav-link @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/itemcategory') || request()->is('admin/unitofmeasurement') || request()->is('admin/servicecategory')) active @endif">
                             <i class="nav-icon fas fa-user-shield"></i>

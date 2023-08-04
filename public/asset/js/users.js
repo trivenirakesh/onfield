@@ -210,8 +210,8 @@ $(document).ready(function () {
                 name: "role",
             },
             {
-                data: "entity_type",
-                name: "entity_type",
+                data: "user_type",
+                name: "user_type",
             },
             {
                 data: "status_text",

@@ -5,14 +5,13 @@ namespace App\Http\Controllers\API\V1;
 use App\Helpers\CommonHelper;
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\Api\{ClientRegisterRequest, ClientLoginRequest, ForgotPasswordRequest, ResendOtpRequest, VerifyOtpRequest, ResetPasswordRequest, UserSocialLoginRequest};
+use App\Http\Requests\V1\Api\{ClientRegisterRequest, ClientLoginRequest, ForgotPasswordRequest, ResendOtpRequest, VerifyOtpRequest, ResetPasswordRequest};
 use App\Http\Requests\V1\SignUpRequest;
 use App\Http\Resources\V1\EntityResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\CommonTrait;
 use App\Models\EngineerSkill;
-use App\Models\State;
 use App\Models\Upload;
 use App\Models\Address;
 use App\Models\PasswordReset;
@@ -65,7 +64,6 @@ class AuthController extends Controller
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
                         $saveUploads['thumb_file'] = $data['filename'];
-                        $saveUploads['transaction_type'] = 'ENTITY';
                         $saveUploads['media_type'] = User::MEDIA_TYPES[0];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();
@@ -83,7 +81,6 @@ class AuthController extends Controller
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
                         $saveUploads['thumb_file'] = $data['filename'];
-                        $saveUploads['transaction_type'] = 'ENTITY';
                         $saveUploads['media_type'] = User::MEDIA_TYPES[2];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();
@@ -101,7 +98,6 @@ class AuthController extends Controller
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
                         $saveUploads['thumb_file'] = $data['filename'];
-                        $saveUploads['transaction_type'] = 'ENTITY';
                         $saveUploads['media_type'] = User::MEDIA_TYPES[3];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();
@@ -118,7 +114,6 @@ class AuthController extends Controller
                     if (!empty($data)) {
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
-                        $saveUploads['transaction_type'] = 'ENTITY';
                         $saveUploads['media_type'] = User::MEDIA_TYPES[1];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();

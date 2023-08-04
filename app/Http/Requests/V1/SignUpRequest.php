@@ -24,7 +24,7 @@ class SignUpRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'entity_type' => ['required',Rule::in([1,2])],
+            'user_type' => ['required',Rule::in([1,2])],
             'first_name' => 'required|max:200',
             'last_name' => 'required|max:200',
             'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
@@ -32,7 +32,7 @@ class SignUpRequest extends FormRequest
             'password' => [ 'required', 'min:8','regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/','regex:/[@$!%*#?&]/']
         ];
 
-        if(request('entity_type') == 1){
+        if(request('user_type') == 1){
             $rules['image'] = 'required|max:2048|mimes:jpg,png,jpeg';
             $rules['addressproof'] = 'required|max:2048|mimes:jpg,png,jpeg';
             $rules['idproof'] = 'required|max:2048|mimes:jpg,png,jpeg';
@@ -65,14 +65,14 @@ class SignUpRequest extends FormRequest
             'mobile.numeric' => 'Mobile' . __('messages.validation.must_numeric'),
             'mobile.digits' => __('messages.validation.mobile_digits'),
             'mobile.unique' => __('messages.validation.mobile_unique'),
-            'entity_type.required' => __('messages.validation.entity_type'),
-            'entity_type.in' => __('messages.validation.entity_type_in'),
+            'user_type.required' => __('messages.validation.user_type'),
+            'user_type.in' => __('messages.validation.user_type_in'),
             'password.required' => __('messages.validation.password'),
             'password.min' => __('messages.validation.new_password_min'),
             'password.regex' => __('messages.validation.strong_password'),
         ];
 
-        if(request('entity_type') == 1){
+        if(request('user_type') == 1){
             $messages['image.required'] = __('messages.validation.image');
             $messages['image.max'] =  __('messages.validation.image-max');
             $messages['image.mimes'] = __('messages.validation.image-mimes');
