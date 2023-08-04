@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Helpers\CommonHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class EntityDetailResource extends JsonResource
+class UserDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -25,15 +25,15 @@ class EntityDetailResource extends JsonResource
             'otp_verified_at' => !empty($this->otp_verified_at) ? $this->otp_verified_at : '',
             'is_email_verify' => $this->is_email_verify,
             'email_verified_at' => !empty($this->email_verified_at) ? $this->email_verified_at : '',
-            'entity_type' => $this->entity_type,
-            'entity_name' => $this->getEntityName($this->entity_type),
+            'user_type' => $this->user_type,
+            'user_type_name' => $this->getUserTypeName($this->user_type),
             'role_id' => ($this->role_id != NULL) ? (string)$this->role_id : '',
             'role_name' => isset($this->role['name']) ? $this->role['name'] : '',
             'created_at' => CommonHelper::getConvertedDateTime($this->created_at)
         ];
     }
 
-    public function getEntityName($type){
+    public function getUserTypeName($type){
         $str = '';
         if($type == 0){
             $str = 'Back Office';

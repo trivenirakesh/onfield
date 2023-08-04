@@ -34,7 +34,7 @@
 
                     <div class="input-group-append">
                         <span class="input-group-text">
-                            <i class="far fa-eye"></i>
+                            <i class="far fa-eye-slash"></i>
                         </span>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                     {!! implode('', $errors->all('<div><span class="text-danger text-start" role="alert"><strong>:message</strong> </span></div>')) !!}
                     @endif
                 </div>
-                <a class="cm-forgot-password" href="#">Forgot password?</a>
+                <a class="cm-forgot-password" href="{{route('password.request')}}">Forgot password?</a>
                 <button type="submit" class="btn btn-primary cm-login-btn">
                     {{ __('Login') }}
                 </button>

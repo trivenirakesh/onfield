@@ -6,7 +6,7 @@ use App\Helpers\CommonHelper;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\V1\EntityResource;
+use App\Http\Resources\V1\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -23,11 +23,11 @@ class AuthController extends Controller
 {
     use CommonTrait;
     /**
-     * Create Entity
+     * Create User
      * @param Request $request
      * @return User 
      */
-    public function createEntity(SignUpRequest $request)
+    public function createUser(SignUpRequest $request)
     {
         try {
             $user = User::create([
@@ -35,17 +35,17 @@ class AuthController extends Controller
                 'last_name' => $request->last_name,
                 'email' => $request->email,
                 'mobile' => $request->mobile,
-                'entity_type' => $request->entity_type,
+                'user_type' => $request->user_type,
                 'status' => 0,
                 'created_ip' => CommonHelper::getUserIp(),
                 'password' => Hash::make($request->password)
             ]);
             $lastId = $user->id;
-            if($request->entity_type == 1){
+            if($request->user_type == 1){
                 if ($request->has('skills')) {
                     foreach($request->skills as $key => $val){
                         $saveEngineerSkills = new EngineerSkill();
-                        $saveEngineerSkills->engineer_entity_id = $lastId;
+                        $saveEngineerSkills->user_id = $lastId;
                         $saveEngineerSkills->skill_id = $val;
                         $saveEngineerSkills->created_ip =  CommonHelper::getUserIp();
                         $saveEngineerSkills->save();
@@ -60,7 +60,6 @@ class AuthController extends Controller
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
                         $saveUploads['thumb_file'] = $data['filename'];
-                        $saveUploads['transaction_type'] = 'ENTITY';
                         $saveUploads['media_type'] = User::MEDIA_TYPES[0];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();
@@ -78,7 +77,6 @@ class AuthController extends Controller
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
                         $saveUploads['thumb_file'] = $data['filename'];
-                        $saveUploads['transaction_type'] = 'ENTITY';
                         $saveUploads['media_type'] = User::MEDIA_TYPES[2];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();
@@ -96,7 +94,6 @@ class AuthController extends Controller
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
                         $saveUploads['thumb_file'] = $data['filename'];
-                        $saveUploads['transaction_type'] = 'ENTITY';
                         $saveUploads['media_type'] = User::MEDIA_TYPES[3];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();
@@ -113,7 +110,6 @@ class AuthController extends Controller
                     if (!empty($data)) {
                         $saveUploads = new Upload();
                         $saveUploads['file'] = $data['filename'];
-                        $saveUploads['transaction_type'] = 'ENTITY';
                         $saveUploads['media_type'] = User::MEDIA_TYPES[1];
                         $saveUploads['image_type'] = $data['filetype'];
                         $saveUploads['created_ip'] = CommonHelper::getUserIp();
@@ -135,7 +131,7 @@ class AuthController extends Controller
                     $saveAddress->save();
                 }
             }
-            $getUserDetails = new EntityResource($user);
+            $getUserDetails = new UserResource($user);
             return $this->successResponse($getUserDetails,'User registered successfully',201);
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
@@ -144,11 +140,11 @@ class AuthController extends Controller
     }
 
     /**
-     * Login The Entity
+     * Login The User
      * @param Request $request
      * @return User
      */
-    public function loginEntity(Request $request)
+    public function loginUser(Request $request)
     {
         try {
             $validateUser = Validator::make($request->all(), 

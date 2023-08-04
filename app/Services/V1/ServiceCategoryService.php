@@ -23,7 +23,7 @@ class ServiceCategoryService
     public function index()
     {
         $activeStatus = CommonHelper::getConfigValue('status.active');
-        if(auth()->user()->entity_type == User::ENTITYADMIN){
+        if(auth()->user()->user_type == User::USERADMIN){
             $getCategoryData = ServiceCategory::latest('id')->get();
         }else{
             $getCategoryData = ServiceCategory::where('status',$activeStatus)->latest('id')->get();
@@ -57,7 +57,6 @@ class ServiceCategoryService
             if (!empty($data)) {
                 $saveUploads = new Upload();
                 $saveUploads['file'] = $data['filename'];
-                $saveUploads['transaction_type'] = 'SERVICE_CATEGORY';
                 $saveUploads['media_type'] = ServiceCategory::MEDIA_TYPES[0];
                 $saveUploads['image_type'] = $data['filetype'];
                 $saveUploads['created_by'] = auth()->user()->id;

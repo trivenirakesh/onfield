@@ -26,7 +26,7 @@ return new class extends Migration
             $table->timestamp('otp_verified_at')->nullable();
             $table->tinyInteger('is_email_verify')->comment('0 - Not Verify, 1 - Verify')->default('0');
             $table->timestamp('email_verified_at')->nullable();
-            $table->tinyInteger('entity_type')->comment("0 - Back Office, 1 - Engineer, 2 - Client, 3 - Vendor");
+            $table->tinyInteger('user_type')->comment("0 - Back Office, 1 - Engineer, 2 - Client, 3 - Vendor");
             $table->tinyInteger('status')->comment('0 - Deactive, 1 - Active');
             $table->integer('role_id')->nullable();
             $table->string('longitude',50)->nullable();
@@ -38,7 +38,7 @@ return new class extends Migration
         
         // Call seeder
         Artisan::call('db:seed', [
-            '--class' => 'EntitySeeder',
+            '--class' => 'UserSeeder',
         ]);
     }
 
