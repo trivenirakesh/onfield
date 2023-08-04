@@ -26,7 +26,7 @@ class ItemResource extends JsonResource
             'item_category_id' => $this->item_category_id,
             'item_category' => isset($this->itemCategory['name']) ? $this->itemCategory['name'] : '',
             'is_vendor' => $this->is_vendor == 1 ? true : false,
-            'vendor' => isset($this->entity['first_name']) ? $this->entity['first_name'].' '.$this->entity['last_name'] : '',
+            'vendor' => isset($this->user['first_name']) ? $this->user['first_name'].' '.$this->user['last_name'] : '',
             'vendor_id' => $this->vendor_id,
             'status' => $this->status,
             'status_text' => ($this->status == 1 ? 'Active' : 'Deactive'),

@@ -22,7 +22,7 @@ class SkillService
     public function index()
     {
         $activeStatus = CommonHelper::getConfigValue('status.active');
-        if(auth()->user()->entity_type == User::ENTITYADMIN){
+        if(auth()->user()->user_type == User::USERADMIN){
             $getSkillsData = Skill::latest('id')->get();
         }else{
             $getSkillsData = Skill::where('status',$activeStatus)->latest('id')->get();

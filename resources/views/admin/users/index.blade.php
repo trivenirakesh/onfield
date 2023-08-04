@@ -24,7 +24,7 @@
                                         <th>Email</th>
                                         <th>Mobile</th>
                                         <th>Role</th>
-                                        <th>Entity Type</th>
+                                        <th>User Type</th>
                                         <th>Status</th>
                                         <th></th>
                                     </tr>

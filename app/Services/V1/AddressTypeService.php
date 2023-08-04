@@ -22,7 +22,7 @@ class AddressTypeService
     public function index()
     {
         $activeStatus = CommonHelper::getConfigValue('status.active');
-        if(auth()->user()->entity_type == User::ENTITYADMIN){
+        if(auth()->user()->user_type == User::USERADMIN){
             $getAddressTypeData = AddressType::where('id','!=',1)->latest('id')->get();
         }else{
             $getAddressTypeData = AddressType::where('id','!=',1)->where('status',$activeStatus)->latest('id')->get();

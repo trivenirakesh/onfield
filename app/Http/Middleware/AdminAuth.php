@@ -19,7 +19,7 @@ class AdminAuth
     {
         $user = Auth::user();
         if ($user != null) {
-            if ($user->entity_type != User::ENTITYADMIN) {
+            if ($user->user_type != User::USERADMIN) {
                 return redirect('/');
             }
         }

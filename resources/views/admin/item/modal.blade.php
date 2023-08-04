@@ -84,7 +84,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Unit of measurement </label>
-                                    <select name="uom_id" id="uom_id" class="form-control">
+                                    <select name="unit_of_measurement_id" id="unit_of_measurement_id" class="form-control">
                                         <option value="">Select</option>
                                         @if(!empty($getUomData))
                                             @foreach($getUomData as $key => $value)
@@ -125,7 +125,7 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Vendor</label>
-                                    <select name="vendor_id" id="vendor_id" class="form-control">
+                                    <select name="user_id" id="user_id" class="form-control">
                                     <option value="">Select</option>
                                         @if(!empty($getVendorsData))
                                             @foreach($getVendorsData as $key => $value)
@@ -133,7 +133,7 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                    <label id="vendor_id-error" class="text-danger" for="vendor_id"></label>
+                                    <label id="user_id-error" class="text-danger" for="user_id"></label>
                                 </div>
                             </div>
                             <div class="col-sm-4">

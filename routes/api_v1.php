@@ -18,18 +18,18 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::post('/entity/register', [AuthController::class, 'createEntity']);
-Route::post('/entity/login', [AuthController::class, 'loginEntity']);
+Route::post('/user/register', [AuthController::class, 'createUser']);
+Route::post('/user/login', [AuthController::class, 'loginUser']);
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function () {
-    Route::post('entitylogout',[AuthController::class,'logout']);
+    Route::post('userlogout',[AuthController::class,'logout']);
     
     // Master module routes
     Route::resource('skill',SkillController::class)->except(['create','edit']);
     Route::resource('addresstype',AddressTypeController::class)->except(['create','edit']);
     Route::resource('itemcategory',ItemCategoryController::class)->except(['create','edit']);
     Route::resource('unitofmeasurment',UnitOfMeasurementController::class)->except(['create','edit']);
-    Route::resource('entityuser',ManageEntityController::class)->except(['create','edit']);
+    Route::resource('useruser',ManageUserController::class)->except(['create','edit']);
 
     // Service category routes
     Route::get('servicecategory',[ServiceCategoryController::class,'index']);
@@ -53,7 +53,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
 
 Route::group(['prefix' => 'user', 'middleware' => ['auth:sanctum']], function () {
     
-    Route::post('entitylogout',[AuthController::class,'logout']);
+    Route::post('userlogout',[AuthController::class,'logout']);
     Route::resource('skill',SkillController::class)->except(['store','update','show','create','edit']);
     Route::resource('addresstype',AddressTypeController::class)->except(['store','update','show','create','edit']);
 

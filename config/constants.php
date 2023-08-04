@@ -10,7 +10,7 @@ return [
         'active' => 1,
         'deactive' => 0,
     ],
-    'entity_type' => [
+    'user_type' => [
         'back_office' => 0,
         'engineer' => 1,
         'client' => 2,

@@ -13,10 +13,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    const ENTITYADMIN = 0;
-    const ENTITYENGINEER = 1;
-    const ENTITYCLIENT = 2;
-    const ENTITYVENDOR = 3;
+    const USERADMIN = 0;
+    const USERENGINEER = 1;
+    const USERCLIENT = 2;
+    const USERVENDOR = 3;
 
     const MEDIA_TYPES = [
         0 => 'PROFILE',
@@ -25,7 +25,7 @@ class User extends Authenticatable
         3 => 'ID-PROOF',
     ];
 
-    const FOLDERNAME = "entity/";
+    const FOLDERNAME = "user/";
 
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
@@ -35,7 +35,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_name','last_name', 'email','mobile', 'entity_type','password', 'status'
+        'first_name','last_name', 'email','mobile', 'user_type','password', 'status'
     ];
 
     /**

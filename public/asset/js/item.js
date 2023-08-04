@@ -108,7 +108,7 @@ $(document).ready(function () {
             name: {
                 required: true,
             },
-            uom_id: {
+            unit_of_measurement_id: {
                 required: true,
             },
             item_category_id: {
@@ -125,7 +125,7 @@ $(document).ready(function () {
             name: {
                 required: "Please enter name",
             },
-            uom_id: {
+            unit_of_measurement_id: {
                 required: "Please select unit of measurement",
             },
             item_category_id: {

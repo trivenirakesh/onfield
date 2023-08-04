@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\CommonHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\EntityCreateUpdateRequest;
+use App\Http\Requests\V1\UserCreateUpdateRequest;
 use App\Models\User;
-use App\Services\V1\ManageEntityService;
+use App\Services\V1\ManageUserService;
 use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +17,7 @@ class UsersController extends Controller
     use CommonTrait;
     protected $userService;
 
-    public function __construct(ManageEntityService $userService)
+    public function __construct(ManageUserService $userService)
     {
         $this->userService = $userService;
     }
@@ -43,13 +43,13 @@ class UsersController extends Controller
                 ->editColumn('role', function($row){
                     return isset($row->role['name']) ? $row->role['name'] : '';
                 })
-                ->editColumn('entity_type', function($row){
-                    return $row->entity_type;
+                ->editColumn('user_type', function($row){
+                    return $row->user_type;
                 })
                 ->addColumn('status_text', function ($row) {
                     return $this->statusHtml($row);
                 })
-                ->rawColumns(['action_edit', 'action_delete', 'username','email','mobile', 'role','entity_type','status_text'])
+                ->rawColumns(['action_edit', 'action_delete', 'username','email','mobile', 'role','user_type','status_text'])
                 ->make(true);
         }
         $title =  'Users';
@@ -59,7 +59,7 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(EntityCreateUpdateRequest $request)
+    public function store(UserCreateUpdateRequest $request)
     {
         if (isset($request->id) && $request->id > 0) { //update data
             $createUpdateUser = $this->userService->update($request, $request->id);
