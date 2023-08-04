@@ -5,7 +5,6 @@ namespace App\Services\V1;
 use Illuminate\Http\Request;
 use App\Models\AddressType;
 use App\Traits\CommonTrait;
-use App\Http\Resources\V1\AddressTypeResource;
 use App\Helpers\CommonHelper;
 use App\Models\User;
 
@@ -27,8 +26,7 @@ class AddressTypeService
         }else{
             $getAddressTypeData = AddressType::where('id','!=',1)->where('status',$activeStatus)->latest('id')->get();
         }
-        $getSkillsData =  AddressTypeResource::collection($getAddressTypeData);
-        return $this->successResponseArr(self::module . __('messages.success.list'), $getSkillsData);
+        return $this->successResponseArr(self::module . __('messages.success.list'), $getAddressTypeData);
     }
 
 
@@ -46,8 +44,7 @@ class AddressTypeService
         $input['created_ip'] = CommonHelper::getUserIp();
 
         $addressType = AddressType::create($input);
-        $getAddressTypeDetails = new AddressTypeResource($addressType);
-        return $this->successResponseArr(self::module . __('messages.success.create'), $getAddressTypeDetails);
+        return $this->successResponseArr(self::module . __('messages.success.create'), $addressType);
     }
 
     /**
@@ -62,7 +59,6 @@ class AddressTypeService
         if ($getAddressTypeData == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        $getAddressTypeData = new AddressTypeResource($getAddressTypeData);
         return $this->successResponseArr(self::module . __('messages.success.details'), $getAddressTypeData);
     }
 
@@ -85,8 +81,7 @@ class AddressTypeService
         $input['updated_ip'] = CommonHelper::getUserIp();
 
         $addressType->update($input);
-        $getAddressTypeDetails = new AddressTypeResource($addressType);
-        return $this->successResponseArr(self::module . __('messages.success.update'), $getAddressTypeDetails);
+        return $this->successResponseArr(self::module . __('messages.success.update'), $addressType);
     }
 
     /**

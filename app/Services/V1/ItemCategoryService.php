@@ -5,7 +5,6 @@ namespace App\Services\V1;
 use Illuminate\Http\Request;
 use App\Models\ItemCategory;
 use App\Traits\CommonTrait;
-use App\Http\Resources\V1\ItemCategoryResource;
 use App\Helpers\CommonHelper;
 
 class ItemCategoryService
@@ -20,7 +19,7 @@ class ItemCategoryService
      */
     public function index()
     {
-        $getItemCategoryData =  ItemCategoryResource::collection(ItemCategory::latest('id')->get());
+        $getItemCategoryData = ItemCategory::latest('id')->get();
         return $this->successResponseArr(self::module . __('messages.success.list'), $getItemCategoryData);
     }
 
@@ -38,8 +37,7 @@ class ItemCategoryService
         $input['created_ip'] = CommonHelper::getUserIp();
         $itemCategory = ItemCategory::create($input);
         
-        $getItemCategoryDetails = new ItemCategoryResource($itemCategory);
-        return $this->successResponseArr(self::module . __('messages.success.create'), $getItemCategoryDetails);
+        return $this->successResponseArr(self::module . __('messages.success.create'), $itemCategory);
     }
 
     /**
@@ -54,7 +52,6 @@ class ItemCategoryService
         if ($getItemCategoryData == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        $getItemCategoryData = new ItemCategoryResource($getItemCategoryData);
         return $this->successResponseArr(self::module . __('messages.success.details'), $getItemCategoryData);
     }
 
@@ -77,8 +74,7 @@ class ItemCategoryService
         $input['updated_ip'] = CommonHelper::getUserIp();
 
         $itemCategory->update($input);
-        $getItemCategoryDetails = new ItemCategoryResource($itemCategory);
-        return $this->successResponseArr(self::module . __('messages.success.update'), $getItemCategoryDetails);
+        return $this->successResponseArr(self::module . __('messages.success.update'), $itemCategory);
     }
 
     /**

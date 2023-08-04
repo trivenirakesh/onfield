@@ -1,6 +1,6 @@
 // Login form validation 
 $("#loginFrm").validate({
-    
+
     rules: {
         mobile: {
             required: true,
@@ -16,32 +16,32 @@ $("#loginFrm").validate({
         mobile: {
             required: "Please enter mobile",
             number: "Please enter numbers only",
-            minlength : "Mobile should be minimum 10 characters",
-            maxlength : "Mobile should be max 10 characters",
+            minlength: "Mobile should be minimum 10 characters",
+            maxlength: "Mobile should be max 10 characters",
         },
         password: {
             required: "Please enter password",
         },
     },
-    errorPlacement: function ( error, element ) {
+    errorPlacement: function (error, element) {
 
-        if(element.parent().hasClass('input-group')){
-          error.insertAfter( element.parent() );
-        }else{
-          	error.insertAfter( element );
+        if (element.parent().hasClass('input-group')) {
+            error.insertAfter(element.parent());
+        } else {
+            error.insertAfter(element);
         }
 
-},
-    
+    },
+
 });
 
-$("body").on('click', '.input-group-text .far', function() {
-    $(this).toggleClass("fa-eye fa-eye-slash");
+$("body").on('click', '.input-group-text .far', function () {
+    $(this).toggleClass("fa-eye");
     var input = $("#password");
     if (input.attr("type") === "password") {
-      input.attr("type", "text");
+        input.attr("type", "text");
     } else {
-      input.attr("type", "password");
+        input.attr("type", "password");
     }
-  
-  });
+
+});

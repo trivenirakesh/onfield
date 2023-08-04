@@ -5,7 +5,6 @@ namespace App\Services\V1;
 use Illuminate\Http\Request;
 use App\Models\UnitOfMeasurement;
 use App\Traits\CommonTrait;
-use App\Http\Resources\V1\UnitOfMeasurementResource;
 use App\Helpers\CommonHelper;
 
 class UnitOfMeasurementService
@@ -20,7 +19,7 @@ class UnitOfMeasurementService
      */
     public function index()
     {
-        $getUnitOfMeasurementData =  UnitOfMeasurementResource::collection(UnitOfMeasurement::latest('id')->get());
+        $getUnitOfMeasurementData = UnitOfMeasurement::latest('id')->get();
         return $this->successResponseArr(self::module . __('messages.success.list'), $getUnitOfMeasurementData);
     }
 
@@ -39,8 +38,7 @@ class UnitOfMeasurementService
         $input['created_ip'] = CommonHelper::getUserIp();
 
         $unitOfMeasurement = UnitOfMeasurement::create($input);
-        $getUnitOfMeasurementDetails = new UnitOfMeasurementResource($unitOfMeasurement);
-        return $this->successResponseArr(self::module . __('messages.success.create'), $getUnitOfMeasurementDetails);
+        return $this->successResponseArr(self::module . __('messages.success.create'), $unitOfMeasurement);
     }
 
     /**
@@ -55,7 +53,6 @@ class UnitOfMeasurementService
         if ($getUnitOfMeasurementData == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        $getUnitOfMeasurementData = new UnitOfMeasurementResource($getUnitOfMeasurementData);
         return $this->successResponseArr(self::module . __('messages.success.details'), $getUnitOfMeasurementData);
     }
 
@@ -78,8 +75,7 @@ class UnitOfMeasurementService
         $input['updated_ip'] = CommonHelper::getUserIp();
         
         $unitOfMeasurement->update($input);
-        $getUnitOfMeasurementDetails = new UnitOfMeasurementResource($unitOfMeasurement);
-        return $this->successResponseArr(self::module . __('messages.success.update'), $getUnitOfMeasurementDetails);
+        return $this->successResponseArr(self::module . __('messages.success.update'), $unitOfMeasurement);
     }
 
     /**

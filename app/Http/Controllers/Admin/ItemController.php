@@ -57,7 +57,7 @@ class ItemController extends Controller
                 ->addColumn('status_text', function ($row) {
                     return $this->statusHtml($row);
                 })
-                ->rawColumns(['action_edit', 'action_delete', 'image','name','uom', 'item_category','price','user_type','status_text'])
+                ->rawColumns(['action_edit', 'action_delete', 'image','name','uom', 'item_category','price','status_text'])
                 ->make(true);
         }
         $title =  'Item';

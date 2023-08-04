@@ -27,7 +27,7 @@ class Item extends Model
     }
 
     public function unitOfMeasurement(){
-        return $this->belongsTo(UnitOfMeasurement::class,'uom_id')->where('status',CommonHelper::getConfigValue('status.active'));
+        return $this->belongsTo(UnitOfMeasurement::class,'unit_of_measurement_id')->where('status',CommonHelper::getConfigValue('status.active'));
     }
 
     public function itemCategory(){

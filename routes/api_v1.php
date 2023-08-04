@@ -29,7 +29,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
     Route::resource('addresstype',AddressTypeController::class)->except(['create','edit']);
     Route::resource('itemcategory',ItemCategoryController::class)->except(['create','edit']);
     Route::resource('unitofmeasurment',UnitOfMeasurementController::class)->except(['create','edit']);
-    Route::resource('useruser',ManageUserController::class)->except(['create','edit']);
+    Route::resource('user',ManageUserController::class)->except(['create','edit']);
 
     // Service category routes
     Route::get('servicecategory',[ServiceCategoryController::class,'index']);

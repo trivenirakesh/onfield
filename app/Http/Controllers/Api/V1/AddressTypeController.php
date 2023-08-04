@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\AddressTypeCreateUpdateRequest;
+use App\Http\Resources\V1\AddressTypeResource;
+use App\Models\AddressType;
 use App\Services\V1\AddressTypeService;
 
 class AddressTypeController extends Controller
@@ -23,6 +25,7 @@ class AddressTypeController extends Controller
     public function index()
     {
         $getAddressType =  $this->addressTypeService->index() ?? [];
+        $getAddressType['data'] = AddressTypeResource::collection($getAddressType['data']);
         if (!$getAddressType['status']) {
             return response()->json($getAddressType, 401);
         }
@@ -38,6 +41,7 @@ class AddressTypeController extends Controller
     public function store(AddressTypeCreateUpdateRequest $request)
     {
         $saveAddressType  = $this->addressTypeService->store($request);
+        $saveAddressType['data'] = new AddressTypeResource($saveAddressType['data']);
         if (!$saveAddressType['status']) {
             return response()->json($saveAddressType, 401);
         }
@@ -53,6 +57,7 @@ class AddressTypeController extends Controller
     public function show($id)
     {
         $getAddressTypeDetails = $this->addressTypeService->show($id);
+        $getAddressTypeDetails = new AddressTypeResource($getAddressTypeDetails);
         if (!$getAddressTypeDetails['status']) {
             return response()->json($getAddressTypeDetails, 401);
         }
@@ -69,6 +74,7 @@ class AddressTypeController extends Controller
     public function update(AddressTypeCreateUpdateRequest $request, $id)
     {
         $updateAddressType = $this->addressTypeService->update($request, $id);
+        $updateAddressType = new AddressTypeResource($updateAddressType);
         if (!$updateAddressType['status']) {
             return response()->json($updateAddressType, 401);
         }

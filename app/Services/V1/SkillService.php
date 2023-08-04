@@ -5,7 +5,6 @@ namespace App\Services\V1;
 use Illuminate\Http\Request;
 use App\Models\Skill;
 use App\Traits\CommonTrait;
-use App\Http\Resources\V1\SkillResource;
 use App\Helpers\CommonHelper;
 use App\Models\User;
 
@@ -27,7 +26,6 @@ class SkillService
         }else{
             $getSkillsData = Skill::where('status',$activeStatus)->latest('id')->get();
         }
-        $getSkillsData =  SkillResource::collection($getSkillsData);
         return $this->successResponseArr(self::module . __('messages.success.list'), $getSkillsData);
     }
 
@@ -45,8 +43,7 @@ class SkillService
         $input['created_by'] = auth()->user()->id;
         $input['created_ip'] = CommonHelper::getUserIp();
         $skill = Skill::create($input);
-        $getSkillDetails = new SkillResource($skill);
-        return $this->successResponseArr(self::module . __('messages.success.create'), $getSkillDetails);
+        return $this->successResponseArr(self::module . __('messages.success.create'), $skill);
     }
 
     /**
@@ -61,7 +58,6 @@ class SkillService
         if ($getSkillData == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        $getSkillData = new SkillResource($getSkillData);
         return $this->successResponseArr(self::module . __('messages.success.details'), $getSkillData);
     }
 
@@ -84,8 +80,7 @@ class SkillService
         $input['updated_ip'] = CommonHelper::getUserIp();
 
         $skill->update($input);
-        $getSkillDetails = new SkillResource($skill);
-        return $this->successResponseArr(self::module . __('messages.success.update'), $getSkillDetails);
+        return $this->successResponseArr(self::module . __('messages.success.update'), $skill);
     }
 
     /**
