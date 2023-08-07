@@ -10,6 +10,8 @@ class Upload extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $guarded = ['id'];
+
     public function reference() {
         return $this->morphTo();
       }

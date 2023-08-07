@@ -3,7 +3,9 @@
 use App\Http\Controllers\Api\V1\{
     AuthController,
     ItemController,
-    ServiceCategoryController
+    ProfileController,
+    ServiceCategoryController,
+    StaticPageController
 };
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::get('static-page/{slug}',[StaticPageController::class,'index']);
 Route::group(['prefix' => 'client'], function () {
 
     // Auth routes
@@ -28,8 +30,26 @@ Route::group(['prefix' => 'client'], function () {
         Route::post('register', 'clientRegister');
         Route::post('verification', 'otpVerification');
         Route::post('resend-otp', 'resendVerificationOtp');
+        Route::post('resend-activation', 'resendActivation');
         Route::post('forgot-password', 'forgotPasaword');
-        Route::post('verify-otp', 'verifyOtp');
+        Route::post('reset-password', 'resetPassword');
+    });
+
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('profile', [ProfileController::class, 'profile']);
+        Route::post('profile', [ProfileController::class, 'profileUpdate']);
+        Route::post('change-password', [ProfileController::class, 'changePassword']);
+        Route::get('logout', [AuthController::class, 'logout']);
+    });
+});
+
+Route::group(['prefix' => 'engineer'], function () {
+
+    // Auth routes
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('login', 'login');
+        Route::post('register', 'engineerRegister');
+        Route::post('forgot-password', 'forgotPasaword');
         Route::post('reset-password', 'resetPassword');
         Route::post('resend-activation', 'resendActivation');
     });
@@ -38,6 +58,7 @@ Route::group(['prefix' => 'client'], function () {
         Route::get('logout', [AuthController::class, 'logout']);
     });
 });
+
 
 
 

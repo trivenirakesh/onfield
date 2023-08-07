@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
 use Laravel\Passport\Client as OClient;
 use Laravel\Passport\HasApiTokens;
 use GuzzleHttp\Client;
@@ -40,7 +39,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'mobile', 'entity_type', 'password', 'status', 'otp','is_otp_verify','otp_verified_at'
+        'first_name', 'last_name', 'email', 'mobile', 'user_type', 'password', 'status', 'otp', 'is_otp_verify', 'otp_verified_at'
     ];
 
     /**
@@ -62,6 +61,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function findForPassport($username)
+    {
+        return self::where('mobile', $username)->first(); // change column name whatever you use in credentials
+    }
 
     public function role()
     {
@@ -92,45 +96,5 @@ class User extends Authenticatable
             self::generateOtp();
         }
         return $otp;
-    }
-
-    public static function getTokenAndRefreshToken($mobile, $password)
-    {
-        try {
-            //code...
-
-            $oClient = OClient::where('password_client', 1)->first();
-            if (empty($oClient)) {
-                throw new Exception('password_client not found');
-            }
-            $http = new Client();
-            $response = $http->request('POST', url('oauth/token'), [
-                'form_params' => [
-                    'grant_type' => 'client_credentials',
-                    'client_id' => $oClient->id,
-                    'client_secret' => $oClient->secret,
-                    'username' => $mobile,
-                    'password' => $password,
-                    'scope' => '*',
-                ],
-                'verify' => false,
-            ]);
-        } catch (\Throwable $th) {
-            throw new Exception('password_client not found');
-        }
-        return json_decode((string) $response->getBody(), true);
-    }
-
-    public function loginResponse()
-    {
-        return [
-            'id' => $this->id,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'email' => $this->email,
-            'mobile' => $this->image,
-            'image' => $this->image,
-            'status' => $this->status == 1 ? 'Active' : 'Deactive'
-        ];
     }
 }
