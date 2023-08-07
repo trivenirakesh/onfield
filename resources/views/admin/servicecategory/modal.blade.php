@@ -71,13 +71,13 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Name <span class="red">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Please enter name" id="name" name="name" value="">
+                                    <input type="text" class="form-control letter-accept" placeholder="Please enter name" id="name" name="name" value="">
                                     <label id="name-error" class="text-danger" for="name"></label>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Description <span class="red">*</span></label>
+                                    <label>Description </label>
                                     <textarea class="form-control" placeholder="Description" name="description" id="description" rows="3"></textarea>
                                 </div>
                             </div>

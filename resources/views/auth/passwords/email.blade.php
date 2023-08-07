@@ -10,7 +10,12 @@
             <h1>Welcome back !</h1>
             <h2>Forgot Password</h2>
             <p>Please enter mobile no to continue</p>
-            <form method="POST" action="">
+            @if (session('status'))
+            <div class="alert alert-success" role="alert">
+                {{ session('status') }}
+            </div>
+            @endif
+            <form method="POST" id="forgotPasswordFrm" action="{{ route('password.email') }}">
                 @csrf
 
                 <div class="input-group">
@@ -19,7 +24,7 @@
                             <img src="{{ asset('public/dist/img/smartphone.svg') }}" alt="mobile">
                         </span>
                     </div>
-                    <input id="mobile" type="text" class="form-control" name="mobile" placeholder="Enter Your Mobile Number" value="{{ old('mobile') }}" autofocus>
+                    <input id="mobile" type="text" class="form-control numbers-accept" name="mobile" placeholder="Enter Your Mobile Number" value="{{ old('mobile') }}" autofocus>
 
                 </div>
                 <div class="text-start">

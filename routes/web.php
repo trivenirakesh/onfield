@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\{AddressTypeController, HomeController, ItemCategoryController, ItemController, ServiceCategoryController, ServiceController, SkillController, StaticPageController, UnitOfMeasurementController, UsersController};
+use App\Http\Controllers\Admin\{AddressTypeController, HomeController, ItemCategoryController, ItemController, ProfileController, ServiceCategoryController, ServiceController, SkillController, StaticPageController, UnitOfMeasurementController, UsersController};
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,5 +40,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin'], 'as' => 'a
 
     Route::get('static-page/{slug}', [StaticPageController::class, 'index'])->name('static_page');
     Route::post('update-static-page', [StaticPageController::class, 'store'])->name('static_page_update');
+
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile');
+    Route::post('profile', [ProfileController::class, 'update'])->name('profile-update');
+    Route::post('update-password', [ProfileController::class, 'updatePassword'])->name('update-password');
 });
 Route::get('logout', [HomeController::class, 'logout'])->name('logout');

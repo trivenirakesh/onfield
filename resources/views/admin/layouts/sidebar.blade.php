@@ -122,6 +122,12 @@
                             </ul>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('admin.profile')}}" class="nav-link {{request()->is('admin/profile*') ?'active' : ''}}">
+                                <i class="nav-icon fas fa-sign-out-alt"></i>
+                                <p> Update Profile</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('logout') }}" class="nav-link">
                                 <i class="nav-icon fas fa-sign-out-alt"></i>
                                 <p> Logout</p>
