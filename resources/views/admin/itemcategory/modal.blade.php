@@ -20,7 +20,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label class="col-form-label"><b>Status</b></label><br>
-                                            <p id="info_status_text"></p>
+                                            <p id="info_status"></p>
                                         </div>
                                         <div class="col-md-12">
                                             <label class="col-form-label"><b>Created At</b></label><br>
@@ -48,7 +48,7 @@
                 <h4 class="modal-title" id="modal_title">Large Modal</h4>
                 <button type="button" class="close" style="font-size: 20px;" data-dismiss="modal" aria-label="Close">&times;</button>
             </div>
-            <form class="form-horizontal" id="module_form" action="{{route('admin.itemcategory.store')}}" name="module_form" novalidate="novalidate">
+            <form class="form-horizontal" id="module_form" action="{{route('admin.productcategory.store')}}" name="module_form" novalidate="novalidate">
                 <div class="modal-body">
                     <div class="card-body">
                         <input type="hidden" name="id" id="id" value="">
@@ -64,7 +64,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Name <span class="red">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Please enter name" id="name" name="name" value="">
+                                    <input type="text" class="form-control letter-accept" placeholder="Please enter name" id="name" name="name" value="">
                                     <label id="name-error" class="text-danger" for="name"></label>
                                 </div>
                             </div>

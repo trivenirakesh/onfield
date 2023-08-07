@@ -83,9 +83,9 @@ class User extends Authenticatable
         $this->attributes['last_name'] = preg_replace('/\s+/', ' ', ucfirst(strtolower($value)));
     }
 
-    public function item()
+    public function product()
     {
-        return $this->hasOne(Item::class);
+        return $this->hasOne(Product::class);
     }
 
     public static function generateOtp()
@@ -96,5 +96,45 @@ class User extends Authenticatable
             self::generateOtp();
         }
         return $otp;
+    }
+
+    public static function getTokenAndRefreshToken($mobile, $password)
+    {
+        try {
+            //code...
+
+            $oClient = OClient::where('password_client', 1)->first();
+            if (empty($oClient)) {
+                throw new Exception('password_client not found');
+            }
+            $http = new Client();
+            $response = $http->request('POST', url('oauth/token'), [
+                'form_params' => [
+                    'grant_type' => 'client_credentials',
+                    'client_id' => $oClient->id,
+                    'client_secret' => $oClient->secret,
+                    'username' => $mobile,
+                    'password' => $password,
+                    'scope' => '*',
+                ],
+                'verify' => false,
+            ]);
+        } catch (\Throwable $th) {
+            throw new Exception('password_client not found');
+        }
+        return json_decode((string) $response->getBody(), true);
+    }
+
+    public function loginResponse()
+    {
+        return [
+            'id' => $this->id,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'email' => $this->email,
+            'mobile' => $this->mobile,
+            'image' => '',
+            'status' => $this->status == 1 ? 'Active' : 'Deactive'
+        ];
     }
 }

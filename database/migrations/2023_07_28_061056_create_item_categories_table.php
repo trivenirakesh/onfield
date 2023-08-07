@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('item_categories', function (Blueprint $table) {
+        Schema::create('product_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name',200);
             $table->tinyInteger('status')->comment('0 - Deactive, 1 - Active');
@@ -23,7 +23,7 @@ return new class extends Migration
         
         // Call seeder
         Artisan::call('db:seed', [
-            '--class' => 'ItemCategorySeeder',
+            '--class' => 'ProductCategorySeeder',
         ]);
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('item_categories');
+        Schema::dropIfExists('product_categories');
     }
 };

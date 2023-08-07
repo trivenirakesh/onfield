@@ -233,7 +233,7 @@ class AuthController extends Controller
         return $this->successResponse(__('messages.success.account_verified'), 200);
     }
 
-    public function forgotPasaword(ForgotPasswordRequest $request)
+    public function forgotPassword(ForgotPasswordRequest $request)
     {
         try {
             $user = User::where('mobile', $request->mobile)->first();

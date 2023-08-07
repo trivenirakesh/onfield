@@ -19,10 +19,10 @@
                             <table id="data_table_main" class="table w-100">
                                 <thead>
                                     <tr>
-                                        <th class="text-center"></th>
+                                        <th width="80" class="text-center"></th>
                                         <th>Name</th>
                                         <th>Status</th>
-                                        <th></th>
+                                        <th width="20"></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -33,12 +33,12 @@
         </div>
     </section>
     <input type="hidden" id="page_module" value="{{$title}}">
-    <input type="hidden" id="module_index_url" value="{{ route('admin.itemcategory.index') }}">
+    <input type="hidden" id="module_index_url" value="{{ route('admin.productcategory.index') }}">
 </div>
-@include('admin.itemcategory.modal')
+@include('admin.productcategory.modal')
 <!-- /.content -->
 
 @endsection
 @push('script')
-<script src="{{asset('public/asset/js/itemcategory.js')}}"></script>
+<script src="{{asset('public/asset/js/productcategory.js')}}"></script>
 @endpush

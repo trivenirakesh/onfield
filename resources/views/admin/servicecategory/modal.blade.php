@@ -14,7 +14,7 @@
                             <div class="card card-primary card-outline">
                                 <div class="card-body box-profile">
                                     <div class="text-center">
-                                        <img id="info_image" width="200" height="200" class="profile-img img-circle" src="" alt="picture">
+                                        <img id="info_image" width="100" height="100" class="profile-img img-circle" src="" alt="picture">
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
@@ -27,7 +27,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label class="col-form-label"><b>Status</b></label><br>
-                                            <p id="info_status_text"></p>
+                                            <p id="info_status"></p>
                                         </div>
                                         <div class="col-md-12">
                                             <label class="col-form-label"><b>Created At</b></label><br>
@@ -71,13 +71,13 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Name <span class="red">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Please enter name" id="name" name="name" value="">
+                                    <input type="text" class="form-control letter-accept" placeholder="Please enter name" id="name" name="name" value="">
                                     <label id="name-error" class="text-danger" for="name"></label>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Description <span class="red">*</span></label>
+                                    <label>Description </label>
                                     <textarea class="form-control" placeholder="Description" name="description" id="description" rows="3"></textarea>
                                 </div>
                             </div>

@@ -23,7 +23,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label class="col-form-label"><b>Status</b></label><br>
-                                            <p id="info_status_text"></p>
+                                            <p id="info_status"></p>
                                         </div>
                                         <div class="col-md-12">
                                             <label class="col-form-label"><b>Created At</b></label><br>
@@ -67,7 +67,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Name <span class="red">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Please enter name" id="name" name="name" value="">
+                                    <input type="text" class="form-control letter-accept" placeholder="Please enter name" id="name" name="name" value="">
                                     <label id="name-error" class="text-danger" for="name"></label>
                                 </div>
                             </div>
@@ -96,11 +96,11 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Item category </label>
-                                    <select name="item_category_id" id="item_category_id" class="form-control">
+                                    <label>Product category </label>
+                                    <select name="product_category_id" id="product_category_id" class="form-control">
                                         <option value="">Select</option>
-                                        @if(!empty($getItemCategoryData))
-                                            @foreach($getItemCategoryData as $key => $value)
+                                        @if(!empty($getProductCategoryData))
+                                            @foreach($getProductCategoryData as $key => $value)
                                                 <option value="{{$value->id}}">{{$value->name}}</option>
                                             @endforeach
                                         @endif
@@ -118,7 +118,7 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label>Is Vendor item</label>
+                                    <label>Is Vendor product</label>
                                     <input type="checkbox" value="1" name="is_vendor">
                                 </div>
                             </div>

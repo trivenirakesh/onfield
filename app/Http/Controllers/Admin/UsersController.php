@@ -43,13 +43,10 @@ class UsersController extends Controller
                 ->editColumn('role', function($row){
                     return isset($row->role['name']) ? $row->role['name'] : '';
                 })
-                ->editColumn('user_type', function($row){
-                    return $row->user_type;
-                })
                 ->addColumn('status_text', function ($row) {
                     return $this->statusHtml($row);
                 })
-                ->rawColumns(['action_edit', 'action_delete', 'username','email','mobile', 'role','user_type','status_text'])
+                ->rawColumns(['action_edit', 'action_delete', 'username','email','mobile', 'role','status_text'])
                 ->make(true);
         }
         $title =  'Users';

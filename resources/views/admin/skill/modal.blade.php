@@ -20,7 +20,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label class="col-form-label"><b>Status</b></label><br>
-                                            <p id="info_status_text"></p>
+                                            <p id="info_status"></p>
                                         </div>
                                         <div class="col-md-12">
                                             <label class="col-form-label"><b>Created At</b></label><br>
@@ -64,7 +64,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Name <span class="red">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Please enter name" id="name" name="name" value="">
+                                    <input type="text" class="form-control letter-accept" placeholder="Please enter name" id="name" name="name" value="">
                                     <label id="name-error" class="text-danger" for="name"></label>
                                 </div>
                             </div>

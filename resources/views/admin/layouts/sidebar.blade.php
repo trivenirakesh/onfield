@@ -39,36 +39,56 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route('admin.service.index')}}" class="nav-link @if(request()->is('admin/service*')) active @endif">
                                 <i class="nav-icon fas fa-pencil-ruler"></i>
                                 <p> Service</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p> Clients</p>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
-                            <a href="{{route('admin.item.index')}}" class="nav-link @if(request()->is('admin/item')) active @endif">
+                            <a href="{{route('admin.product.index')}}" class="nav-link @if(request()->is('admin/product')) active @endif">
                                 <i class="fas fa-circle nav-icon"></i>
-                                <p> Items</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('admin.service.index')}}" class="nav-link @if(request()->is('admin/service*')) active @endif">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <p> Service</p>
+                                <p> Products</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a href="#" class="nav-link @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/itemcategory') || request()->is('admin/unitofmeasurement') || request()->is('admin/servicecategory')) active @endif">
+                        <a href="#" class="nav-link {{request()->is('admin/static-page*') ?'active' : ''}}">
+                            <i class="nav-iconfas fas fa-file-alt"></i>
+                            <p>Static Page <i class="right fas fa-angle-left"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview" style="display: {{request()->is('admin/static-page*') ? 'block' : 'none'}}">
+                            <li class="nav-item">
+                                <a href="{{route('admin.static_page',['about-us'])}}" class="nav-link {{request()->is('admin/static-page/about-us*') ?'active' : ''}}">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <p>About Us</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.static_page',['privacy-policy'])}}" class="nav-link {{request()->is('admin/static-page/privacy-policy*') ?'active' : ''}}">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <p>Privacy Policy</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.static_page',['terms-condition'])}}" class="nav-link {{request()->is('admin/static-page/terms-condition*') ?'active' : ''}}">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <p>Terms & Condition</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                        <li class="nav-item ">
+                            <a href="#" class="nav-link @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/productcategory') || request()->is('admin/unitofmeasurement') || request()->is('admin/servicecategory')) active @endif">
                             <i class="nav-icon fas fa-user-shield"></i>
 
                                 <p>Configurations <i class="right fas fa-angle-left"></i></p>
                             </a>
-                            <ul class="nav nav-treeview" style="display: @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/itemcategory') || request()->is('admin/unitofmeasurement') || request()->is('admin/servicecategory')) block @else none @endif">
+                            <ul class="nav nav-treeview" style="display: @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/productcategory') || request()->is('admin/unitofmeasurement') || request()->is('admin/servicecategory')) block @else none @endif">
                                 <li class="nav-item">
                                     <a href="{{ route('admin.skill.index')}}" class="nav-link {{request()->is('admin/skill*') ?'active' : ''}}">
                                         <i class="fas fa-circle nav-icon"></i>
@@ -82,9 +102,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.itemcategory.index')}}" class="nav-link {{request()->is('admin/itemcategory*') ?'active' : ''}}">
+                                    <a href="{{ route('admin.productcategory.index')}}" class="nav-link {{request()->is('admin/productcategory*') ?'active' : ''}}">
                                         <i class="fas fa-circle nav-icon"></i>
-                                        <p>Manage Item Category</p>
+                                        <p>Manage Product Category</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -100,6 +120,12 @@
                                     </a>
                                 </li>
                             </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.profile')}}" class="nav-link {{request()->is('admin/profile*') ?'active' : ''}}">
+                                <i class="nav-icon fas fa-sign-out-alt"></i>
+                                <p> Update Profile</p>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('logout') }}" class="nav-link">

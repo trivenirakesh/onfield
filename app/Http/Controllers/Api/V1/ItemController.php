@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\ItemCreateUpdateRequest;
-use App\Services\V1\ItemService;
+use App\Http\Requests\V1\ProductCreateUpdateRequest;
+use App\Services\V1\ProductService;
 
-class ItemController extends Controller
+class ProductController extends Controller
 {
-    private $itemService;
+    private $productService;
 
-    public function __construct(ItemService $itemService)
+    public function __construct(ProductService $productService)
     {
-        $this->itemService = $itemService;
+        $this->productService = $productService;
     }
 
     /**
@@ -22,11 +22,11 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $getItems =  $this->itemService->index() ?? [];
-        if (!$getItems['status']) {
-            return response()->json($getItems, 401);
+        $getProducts =  $this->productService->index() ?? [];
+        if (!$getProducts['status']) {
+            return response()->json($getProducts, 401);
         }
-        return response()->json($getItems, 200);
+        return response()->json($getProducts, 200);
     }
 
     /**
@@ -35,13 +35,13 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ItemCreateUpdateRequest $request)
+    public function store(ProductCreateUpdateRequest $request)
     {
-        $saveItem  = $this->itemService->store($request);
-        if (!$saveItem['status']) {
-            return response()->json($saveItem, 401);
+        $saveProduct  = $this->productService->store($request);
+        if (!$saveProduct['status']) {
+            return response()->json($saveProduct, 401);
         }
-        return response()->json($saveItem, 200);
+        return response()->json($saveProduct, 200);
     }
 
     /**
@@ -52,11 +52,11 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        $getItemDetails = $this->itemService->show($id);
-        if (!$getItemDetails['status']) {
-            return response()->json($getItemDetails, 401);
+        $getProductDetails = $this->productService->show($id);
+        if (!$getProductDetails['status']) {
+            return response()->json($getProductDetails, 401);
         }
-        return response()->json($getItemDetails, 200);
+        return response()->json($getProductDetails, 200);
     }
 
     /**
@@ -66,13 +66,13 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ItemCreateUpdateRequest $request, $id)
+    public function update(ProductCreateUpdateRequest $request, $id)
     {
-        $updateItem = $this->itemService->update($request, $id);
-        if (!$updateItem['status']) {
-            return response()->json($updateItem, 401);
+        $updateProduct = $this->productService->update($request, $id);
+        if (!$updateProduct['status']) {
+            return response()->json($updateProduct, 401);
         }
-        return response()->json($updateItem, 200);
+        return response()->json($updateProduct, 200);
     }
 
     /**
@@ -83,10 +83,10 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        $deleteItem = $this->itemService->destroy($id);
-        if (!$deleteItem['status']) {
-            return response()->json($deleteItem, 401);
+        $deleteProduct = $this->productService->destroy($id);
+        if (!$deleteProduct['status']) {
+            return response()->json($deleteProduct, 401);
         }
-        return response()->json($deleteItem, 200);
+        return response()->json($deleteProduct, 200);
     }
 }

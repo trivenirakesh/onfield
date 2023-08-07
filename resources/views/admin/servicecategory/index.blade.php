@@ -19,12 +19,12 @@
                             <table id="data_table_main" class="table w-100">
                                 <thead>
                                     <tr>
-                                        <th class="text-left"></th>
+                                        <th width="80" class="text-left"></th>
                                         <th>Image</th>
                                         <th>Name</th>
                                         <th>Description</th>
                                         <th>Status</th>
-                                        <th></th>
+                                        <th width="20"></th>
                                     </tr>
                                 </thead>
                             </table>

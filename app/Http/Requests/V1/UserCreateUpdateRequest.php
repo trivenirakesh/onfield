@@ -4,6 +4,7 @@ namespace App\Http\Requests\V1;
 
 use App\Helpers\CommonHelper;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserCreateUpdateRequest extends FormRequest
@@ -45,45 +46,15 @@ class UserCreateUpdateRequest extends FormRequest
         }
         
         if (request()->has('password') || request()->has('id') ) {
-            $rules['password'] = request()->has('id') && request()->id>0 ? null: [
+            $rules['password'] = request()->has('id') && request()->id>0 ? '': [
                 'required',
-                'min:8',          
-                'regex:/[a-z]/',      // must contain at least one lowercase letter
-                'regex:/[A-Z]/',      // must contain at least one uppercase letter
-                'regex:/[0-9]/',      // must contain at least one digit
-                'regex:/[@$!%*#?&]/', // must contain a special character
+                Password::min(8)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols(),
             ];
         }
         return $rules;
     }
 
-    public function messages()
-    {
-        $messages = [
-            'first_name.required' => __('messages.validation.first_name'),
-            'first_name.max' => __('messages.validation.max'),
-            'last_name.required' => __('messages.validation.last_name'),
-            'last_name.max' => __('messages.validation.max'),
-            'email.required' => __('messages.validation.email'),
-            'email.email' => __('messages.validation.email_email'),
-            'email.unique' => __('messages.validation.email_unique'),
-            'mobile.required' => __('messages.validation.mobile'),
-            'mobile.numeric' => 'Mobile' . __('messages.validation.must_numeric'),
-            'mobile.digits' => __('messages.validation.mobile_digits'),
-            'mobile.unique' => __('messages.validation.mobile_unique'),
-            'user_type.required' => __('messages.validation.user_type'),
-            'user_type.in' => __('messages.validation.user_type_in'),
-            'status.required' => __('messages.validation.status'),
-            'status.in' => __('messages.validation.status_in'),
-            'role_id.required' => __('messages.validation.role_id'),
-            'role_id.exists' => 'Role'.__('messages.validation.not_found'),
-        ];
-        if (request()->has('password')) {
-            $messages['password.required'] = __('messages.validation.password');
-            $messages['password.min'] = __('messages.validation.new_password_min');
-            $messages['password.regex'] = __('messages.validation.strong_password');
-        }
-        
-        return $messages;
-    }
 }

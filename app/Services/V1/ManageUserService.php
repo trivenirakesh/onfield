@@ -22,8 +22,8 @@ class ManageUserService
      */
     public function index()
     {
-        $getItemCategoryData =  UserResource::collection(User::latest('id')->get());
-        return $this->successResponseArr(self::module . __('messages.success.list'), $getItemCategoryData);
+        $getProductCategoryData =  UserResource::collection(User::latest('id')->get());
+        return $this->successResponseArr(self::module . __('messages.success.list'), $getProductCategoryData);
     }
 
     /**
@@ -89,8 +89,8 @@ class ManageUserService
         $user->updated_ip = CommonHelper::getUserIp();
         $user->update();
 
-        $getItemCategoryDetails = new UserDetailResource($user);
-        return $this->successResponseArr(self::module . __('messages.success.update'), $getItemCategoryDetails);
+        $getProductCategoryDetails = new UserDetailResource($user);
+        return $this->successResponseArr(self::module . __('messages.success.update'), $getProductCategoryDetails);
     }
 
     /**

@@ -67,3 +67,27 @@ function load_preview_image(input, div = "preview_div",imgDiv = "image_preview")
         $(imgParentDiv).hide();
     }
 }
+
+$('.letter-accept').keypress(function (e) {
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var strigChar = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (regex.test(strigChar)) {
+        return true;
+    }
+    return false
+});
+
+$('.numbers-accept').on('keypress',function(e){
+    var deleteCode = 8;  var backspaceCode = 46;
+    var key = e.which;
+    if ((key>=48 && key<=57) || key === deleteCode || key === backspaceCode || (key>=37 &&  key<=40) || key===0)    
+    {    
+        character = String.fromCharCode(key);
+        if( character != '.' && character != '%' && character != '&' && character != '(' && character != '\'' ) 
+        { 
+            return true; 
+        }
+        else { return false; }
+     }
+     else   { return false; }
+});

@@ -16,7 +16,7 @@ class UnitOfMeasurement extends Model
         $this->attributes['name'] = preg_replace('/\s+/', ' ', ucfirst(strtolower($value)));
     }
 
-    public function item(){
-        return $this->hasOne(Item::class);
+    public function product(){
+        return $this->hasOne(Product::class);
     }
 }

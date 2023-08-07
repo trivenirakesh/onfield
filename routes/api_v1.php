@@ -33,7 +33,7 @@ Route::group(['prefix' => 'client'], function () {
         Route::post('verification', 'otpVerification');
         Route::post('resend-otp', 'resendVerificationOtp');
         Route::post('resend-activation', 'resendActivation');
-        Route::post('forgot-password', 'forgotPasaword');
+        Route::post('forgot-password', 'forgotPassword');
         Route::post('reset-password', 'resetPassword');
     });
 
@@ -54,7 +54,7 @@ Route::group(['prefix' => 'engineer'], function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('login', 'login');
         Route::post('register', 'engineerRegister');
-        Route::post('forgot-password', 'forgotPasaword');
+        Route::post('forgot-password', 'forgotPassword');
         Route::post('reset-password', 'resetPassword');
         Route::post('resend-activation', 'resendActivation');
     });

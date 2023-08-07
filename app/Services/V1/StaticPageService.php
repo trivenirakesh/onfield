@@ -3,13 +3,8 @@
 namespace App\Services\V1;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Traits\CommonTrait;
-use App\Http\Resources\V1\UserResource;
-use App\Http\Resources\V1\UserDetailResource;
-use App\Helpers\CommonHelper;
 use App\Models\StaticPage;
-use Illuminate\Support\Facades\Hash;
 
 class StaticPageService
 {
@@ -39,7 +34,7 @@ class StaticPageService
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $post_data = $request->only('slug', 'content');
         $post_data['title'] = StaticPage::PAGES[$request->slug];

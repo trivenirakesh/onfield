@@ -3,16 +3,16 @@
 namespace App\Services\V1;
 
 use Illuminate\Http\Request;
-use App\Models\Item;
+use App\Models\Product;
 use App\Traits\CommonTrait;
-use App\Http\Resources\V1\ItemResource;
+use App\Http\Resources\V1\ProductResource;
 use App\Helpers\CommonHelper;
 use App\Models\Upload;
 
-class ItemService
+class ProductService
 {
     use CommonTrait;
-    const module = 'Item';
+    const module = 'Product';
 
     /**
      * Display a listing of the resource.
@@ -21,8 +21,8 @@ class ItemService
      */
     public function index()
     {
-        $getItemData =  ItemResource::collection(Item::latest('id')->get());
-        return $this->successResponseArr(self::module . __('messages.success.list'), $getItemData);
+        $getProductData =  ProductResource::collection(Product::latest('id')->get());
+        return $this->successResponseArr(self::module . __('messages.success.list'), $getProductData);
     }
 
     /**
@@ -33,40 +33,40 @@ class ItemService
      */
     public function store(Request $request)
     {
-        // Save item  section
-        $saveItem = new Item;
-        $saveItem->name = $request->name;
-        $saveItem->description = $request->description;
-        $saveItem->unit_of_measurement_id = $request->unit_of_measurement_id;
-        $saveItem->item_category_id = $request->item_category_id;
-        $saveItem->price = $request->price;
-        $saveItem->status = $request->status;
+        // Save product  section
+        $saveProduct = new Product;
+        $saveProduct->name = $request->name;
+        $saveProduct->description = $request->description;
+        $saveProduct->unit_of_measurement_id = $request->unit_of_measurement_id;
+        $saveProduct->product_category_id = $request->product_category_id;
+        $saveProduct->price = $request->price;
+        $saveProduct->status = $request->status;
         if($request->has('is_vendor') && $request->has('user_id')){
-            $saveItem->is_vendor = $request->is_vendor;
-            $saveItem->user_id = $request->user_id;
+            $saveProduct->is_vendor = $request->is_vendor;
+            $saveProduct->user_id = $request->user_id;
         }
-        $saveItem->created_by = auth()->user()->id;
-        $saveItem->created_ip = CommonHelper::getUserIp();
-        $saveItem->save();
+        $saveProduct->created_by = auth()->user()->id;
+        $saveProduct->created_ip = CommonHelper::getUserIp();
+        $saveProduct->save();
 
         // upload file 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $data = CommonHelper::uploadImages($image,Item::FOLDERNAME,0);
+            $data = CommonHelper::uploadImages($image,Product::FOLDERNAME,0);
             if (!empty($data)) {
                 $saveUploads = new Upload();
                 $saveUploads['file'] = $data['filename'];
-                $saveUploads['media_type'] = Item::MEDIA_TYPES[0];
+                $saveUploads['media_type'] = Product::MEDIA_TYPES[0];
                 $saveUploads['image_type'] = $data['filetype'];
                 $saveUploads['created_by'] = auth()->user()->id;
                 $saveUploads['created_ip'] = CommonHelper::getUserIp();
-                $saveUploads['reference_id'] = $saveItem->id;
-                $saveUploads['reference_type'] = Item::class;
+                $saveUploads['reference_id'] = $saveProduct->id;
+                $saveUploads['reference_type'] = Product::class;
                 $saveUploads->save();
             }
         }
-        $getItemDetails = new ItemResource($saveItem);
-        return $this->successResponseArr(self::module . __('messages.success.create'), $getItemDetails);
+        $getProductDetails = new ProductResource($saveProduct);
+        return $this->successResponseArr(self::module . __('messages.success.create'), $getProductDetails);
     }
 
     /**
@@ -77,12 +77,12 @@ class ItemService
      */
     public function show($id)
     {
-        $getItemData = Item::where('id', $id)->first();
-        if ($getItemData == null) {
+        $getProductData = Product::where('id', $id)->first();
+        if ($getProductData == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        $getItemData = new ItemResource($getItemData);
-        return $this->successResponseArr(self::module . __('messages.success.details'), $getItemData);
+        $getProductData = new ProductResource($getProductData);
+        return $this->successResponseArr(self::module . __('messages.success.details'), $getProductData);
     }
 
     /**
@@ -95,37 +95,37 @@ class ItemService
     public function update(Request $request, $id)
     {
 
-        $updateItem = Item::where('id', $id)->first();
-        if ($updateItem == null) {
+        $updateProduct = Product::where('id', $id)->first();
+        if ($updateProduct == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        $updateItem->name = $request->name;
-        $updateItem->status = $request->status;
-        $updateItem->name = $request->name;
-        $updateItem->description = $request->description;
-        $updateItem->uom_id = $request->uom_id;
-        $updateItem->item_category_id = $request->item_category_id;
-        $updateItem->price = $request->price;
+        $updateProduct->name = $request->name;
+        $updateProduct->status = $request->status;
+        $updateProduct->name = $request->name;
+        $updateProduct->description = $request->description;
+        $updateProduct->uom_id = $request->uom_id;
+        $updateProduct->product_category_id = $request->product_category_id;
+        $updateProduct->price = $request->price;
         if($request->has('is_vendor') && $request->has('user_id')){
-            $updateItem->is_vendor = $request->is_vendor;
-            $updateItem->user_id = $request->user_id;
+            $updateProduct->is_vendor = $request->is_vendor;
+            $updateProduct->user_id = $request->user_id;
         }
-        $updateItem->updated_by = auth()->user()->id;
-        $updateItem->updated_ip = CommonHelper::getUserIp();
-        $updateItem->update();
+        $updateProduct->updated_by = auth()->user()->id;
+        $updateProduct->updated_ip = CommonHelper::getUserIp();
+        $updateProduct->update();
 
         // Update file
         if ($request->hasFile('image')) {
-            $updateUploads = Upload::where('reference_type',Item::class)->where('reference_id',$id)->first();
+            $updateUploads = Upload::where('reference_type',Product::class)->where('reference_id',$id)->first();
             // Unlink old image from storage 
             $oldImage = $updateUploads->file ?? null;
             if ($oldImage != null){
-                CommonHelper::removeUploadedImages($oldImage,Item::FOLDERNAME);
+                CommonHelper::removeUploadedImages($oldImage,Product::FOLDERNAME);
             }
             // Unlink old image from storage 
 
             $image = $request->file('image');
-            $data = CommonHelper::uploadImages($image,Item::FOLDERNAME,0);
+            $data = CommonHelper::uploadImages($image,Product::FOLDERNAME,0);
             if (!empty($data)) {
                 $updateUploads->file = $data['filename'];
                 $updateUploads->image_type = $data['filetype'];
@@ -134,8 +134,8 @@ class ItemService
                 $updateUploads->update();
             }
         }
-        $getItemDetails = new ItemResource($updateItem);
-        return $this->successResponseArr(self::module . __('messages.success.update'), $getItemDetails);
+        $getProductDetails = new ProductResource($updateProduct);
+        return $this->successResponseArr(self::module . __('messages.success.update'), $getProductDetails);
     }
 
     /**
@@ -146,17 +146,17 @@ class ItemService
      */
     public function destroy($id)
     {
-        $item =  Item::where('id', $id)->first();
-        if ($item == null) {
+        $product =  Product::where('id', $id)->first();
+        if ($product == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
 
-        // Delete item
-        $item->deleted_by = auth()->user()->id;
-        $item->deleted_ip = CommonHelper::getUserIp();
-        $item->update();
-        $deleteItem = $item->delete();
-        if ($deleteItem) {
+        // Delete product
+        $product->deleted_by = auth()->user()->id;
+        $product->deleted_ip = CommonHelper::getUserIp();
+        $product->update();
+        $deleteProduct = $product->delete();
+        if ($deleteProduct) {
             return $this->successResponseArr(self::module . __('messages.success.delete'));
         }
     }

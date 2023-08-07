@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\CommonHelper;
 use App\Http\Controllers\Controller;
 use App\Models\ServiceCategory;
-use App\Models\Item;
+use App\Models\Product;
 use App\Models\UnitOfMeasurement;
 use Illuminate\Http\Request;
 
@@ -27,9 +27,9 @@ class ServiceController extends Controller
     {
         $title =  'Service';
         $getServiceCategoryData = CommonHelper::getTableWiseData(ServiceCategory::class);
-        $getItemsData = CommonHelper::getTableWiseData(Item::class);
+        $getProductsData = CommonHelper::getTableWiseData(Product::class);
         $getUomData = CommonHelper::getTableWiseData(UnitOfMeasurement::class);
-        return view('admin.service.create', compact('title','getServiceCategoryData','getItemsData','getUomData'));
+        return view('admin.service.create', compact('title','getServiceCategoryData','getProductsData','getUomData'));
     }
 
     /**

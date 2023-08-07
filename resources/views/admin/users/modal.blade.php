@@ -32,7 +32,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label class="col-form-label"><b>Status</b></label><br>
-                                            <p id="info_status_text"></p>
+                                            <p id="info_status"></p>
                                         </div>
                                         <div class="col-md-12">
                                             <label class="col-form-label"><b>Created At</b></label><br>
@@ -77,14 +77,14 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>First name <span class="red">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Please enter first name" id="first_name" name="first_name" value="">
+                                    <input type="text" class="form-control letter-accept" placeholder="Please enter first name" id="first_name" name="first_name" value="">
                                     <label id="name-error" class="text-danger" for="name"></label>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Last name <span class="red">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Please enter last name" id="last_name" name="last_name" value="">
+                                    <input type="text" class="form-control letter-accept" placeholder="Please enter last name" id="last_name" name="last_name" value="">
                                     <label id="name-error" class="text-danger" for="name"></label>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Mobile <span class="red">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Please enter mobile" id="mobile" name="mobile" value="">
+                                    <input type="text" class="form-control numbers-accept" placeholder="Please enter mobile" id="mobile" name="mobile" value="">
                                     <label id="name-error" class="text-danger" for="name"></label>
                                 </div>
                             </div>
@@ -122,7 +122,7 @@
                                 <div class="form-group">
                                     <label>Password <span class="red">*</span></label>
                                     <input type="password" class="form-control" placeholder="Please enter password" id="password" name="password" value="">
-                                    <label id="name-error" class="text-danger" for="name"></label>
+                                    <label id="password-error" class="text-danger" for="password"></label>
                                 </div>
                             </div>
                         </div>
