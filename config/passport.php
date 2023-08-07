@@ -43,20 +43,21 @@ return [
 
     'client_uuids' => false,
 
-    /*
-    |--------------------------------------------------------------------------
-    | Personal Access Client
-    |--------------------------------------------------------------------------
-    |
-    | If you enable client hashing, you should set the personal access client
-    | ID and unhashed secret within your environment file. The values will
-    | get used while issuing fresh personal access tokens to your users.
-    |
-    */
-
     'personal_access_client' => [
         'id' => env('PASSPORT_PERSONAL_ACCESS_CLIENT_ID'),
         'secret' => env('PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Password Grant Client
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'password_grant_client' => [
+        'id' => env('PASSPORT_PASSWORD_GRANT_CLIENT_ID'),
+        'secret' => env('PASSPORT_PASSWORD_GRANT_CLIENT_SECRET'),
     ],
 
 ];

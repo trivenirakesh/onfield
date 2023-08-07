@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Helpers\CommonHelper;
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\Api\{ClientRegisterRequest, ClientLoginRequest, EngineerRegisterRequest, ForgotPasswordRequest, ResendOtpRequest, VerifyOtpRequest, ResetPasswordRequest};
+use App\Http\Requests\V1\Api\{ClientRegisterRequest, ClientLoginRequest, EngineerRegisterRequest, ForgotPasswordRequest, RefreshTokenRequest, ResendOtpRequest, VerifyOtpRequest, ResetPasswordRequest};
 use App\Http\Requests\V1\SignUpRequest;
 use App\Http\Resources\V1\UserResource;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +21,9 @@ use App\Notifications\VerifyAccountOTP;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Request;
+use Laravel\Passport\RefreshTokenRepository;
 
 class AuthController extends Controller
 {
@@ -296,12 +298,22 @@ class AuthController extends Controller
                 return $this->errorResponse(__('messages.auth.account_not_verified'), 401);
             }
             $getUserDetails = new UserResource($user);
-            $objToken = $user->createToken('example');
-            $expiration = $objToken->token->expires_at->diffInSeconds(Carbon::now());
-            $tokenBody =  [
-                'expires_in' => $expiration,
-                'access_token' => $objToken->accessToken
-            ];
+            // $objToken = $user->createToken('example');
+            // $expiration = $objToken->token->expires_at->diffInSeconds(Carbon::now());
+            // $tokenBody =  [
+            //     'expires_in' => $expiration,
+            //     'access_token' => $objToken->accessToken
+            // ];
+            $baseUrl = url('/');
+            $response = Http::post("{$baseUrl}/oauth/token", [
+                'username' => $request->mobile,
+                'password' => $request->password,
+                'client_id' => config('passport.password_grant_client.id'),
+                'client_secret' => config('passport.password_grant_client.secret'),
+                'grant_type' => 'password'
+            ]);
+
+            $tokenBody = json_decode($response->getBody(), true);
             $response = [
                 'auth_token' => $tokenBody,
                 'user' => $getUserDetails,
@@ -312,11 +324,38 @@ class AuthController extends Controller
         }
     }
 
+    public function refreshToken(RefreshTokenRequest $request)
+    {
+        try {
+            $baseUrl = url('/');
+            $response = Http::post("{$baseUrl}/oauth/token", [
+                'refresh_token' => $request->refresh_token,
+                'client_id' => config('passport.password_grant_client.id'),
+                'client_secret' => config('passport.password_grant_client.secret'),
+                'grant_type' => 'refresh_token'
+            ]);
+
+            $result = json_decode($response->getBody(), true);
+            if (!$response->ok()) {
+                return $this->errorResponse($result['error_description'], 401);
+            }
+        } catch (\Throwable $th) {
+            return $this->errorResponse(__('messages.failed.general'), 500);
+        }
+        return  $this->successResponse(__('messages.success.access_token_success'), $result);
+    }
+
     public function logout(Request $request)
     {
         try {
-            $user = Auth::user()->token();
-            $user->revoke();
+            $token = Auth::user()->token();
+            /* --------------------------- revoke access token -------------------------- */
+            $token->revoke();
+            $token->delete();
+
+            /* -------------------------- revoke refresh token -------------------------- */
+            $refreshTokenRepository = app(RefreshTokenRepository::class);
+            $refreshTokenRepository->revokeRefreshTokensByAccessTokenId($token->id);
             return  $this->successResponse('Account logout successfully.');
         } catch (Exception $th) {
             return $this->errorResponse(__('messages.failed.general'), 500);

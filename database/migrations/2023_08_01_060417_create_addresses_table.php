@@ -22,11 +22,12 @@ return new class extends Migration
             $table->text('address');
             $table->unsignedBigInteger('state_id')->nullable();
             $table->foreign('state_id')->references('id')->on('states');
-            $table->string('city',200);
-            $table->string('pincode',10)->nullable();
-            $table->string('longitude',50)->nullable();
-            $table->string('latitude',50)->nullable();
-            $table->string('notes',200)->nullable();
+            $table->string('city', 200);
+            $table->string('pincode', 10)->nullable();
+            $table->string('longitude', 50)->nullable();
+            $table->string('latitude', 50)->nullable();
+            $table->string('notes', 200)->nullable();
+            $table->tinyInteger('status')->default(1)->comment('0 - Deactive, 1 - Active');
             $this->timestampColumns($table);
         });
     }
