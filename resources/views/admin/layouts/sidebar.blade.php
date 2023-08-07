@@ -65,7 +65,7 @@
                             <li class="nav-item">
                                 <a href="{{route('admin.static_page',['about-us'])}}" class="nav-link {{request()->is('admin/static-page/about-us*') ?'active' : ''}}">
                                     <i class="fas fa-circle nav-icon"></i>
-                                    <p>Abount Us</p>
+                                    <p>About Us</p>
                                 </a>
                             </li>
                             <li class="nav-item">
