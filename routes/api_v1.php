@@ -44,6 +44,7 @@ Route::group(['prefix' => 'client'], function () {
         Route::get('logout', [AuthController::class, 'logout']);
         Route::get('address-type', [AddressController::class, 'addressType']);
         Route::resource('address', AddressController::class)->except(['create', 'edit']);
+        Route::get('dashboard', [ProfileController::class,'index']);
     });
 });
 

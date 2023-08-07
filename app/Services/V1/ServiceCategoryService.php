@@ -23,10 +23,10 @@ class ServiceCategoryService
     public function index()
     {
         $activeStatus = CommonHelper::getConfigValue('status.active');
-        if(auth()->user()->user_type == User::USERADMIN){
+        if (auth()->user()->user_type == User::USERADMIN) {
             $getCategoryData = ServiceCategory::latest('id')->get();
-        }else{
-            $getCategoryData = ServiceCategory::where('status',$activeStatus)->latest('id')->get();
+        } else {
+            $getCategoryData = ServiceCategory::where('status', $activeStatus)->latest('id')->get();
         }
         $getServiceCategoryData =  ServiceCategoryResource::collection($getCategoryData);
         return $this->successResponseArr(self::module . __('messages.success.list'), $getServiceCategoryData);
@@ -53,7 +53,7 @@ class ServiceCategoryService
         // upload file 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $data = CommonHelper::uploadImages($image,ServiceCategory::FOLDERNAME,0);
+            $data = CommonHelper::uploadImages($image, ServiceCategory::FOLDERNAME, 0);
             if (!empty($data)) {
                 $saveUploads = new Upload();
                 $saveUploads['file'] = $data['filename'];
@@ -110,16 +110,16 @@ class ServiceCategoryService
 
         // Update file
         if ($request->hasFile('image')) {
-            $updateUploads = Upload::where('reference_type',ServiceCategory::class)->where('reference_id',$id)->first();
+            $updateUploads = Upload::where('reference_type', ServiceCategory::class)->where('reference_id', $id)->first();
             // Unlink old image from storage 
             $oldImage = $updateUploads->file ?? null;
-            if ($oldImage != null){
-                CommonHelper::removeUploadedImages($oldImage,ServiceCategory::FOLDERNAME);
+            if ($oldImage != null) {
+                CommonHelper::removeUploadedImages($oldImage, ServiceCategory::FOLDERNAME);
             }
             // Unlink old image from storage 
 
             $image = $request->file('image');
-            $data = CommonHelper::uploadImages($image,ServiceCategory::FOLDERNAME,0);
+            $data = CommonHelper::uploadImages($image, ServiceCategory::FOLDERNAME, 0);
             if (!empty($data)) {
                 $updateUploads->file = $data['filename'];
                 $updateUploads->image_type = $data['filetype'];
@@ -150,7 +150,7 @@ class ServiceCategoryService
         $serviceCategory->deleted_ip = CommonHelper::getUserIp();
         $serviceCategory->update();
         $deleteRole = $serviceCategory->delete();
-        $deleteUploads = Upload::where('reference_type',ServiceCategory::class)->where('reference_id',$id)->first();
+        $deleteUploads = Upload::where('reference_type', ServiceCategory::class)->where('reference_id', $id)->first();
         $deleteUploads->deleted_by = auth()->user()->id;
         $deleteUploads->deleted_ip = CommonHelper::getUserIp();
         $deleteUploads->update();
@@ -159,4 +159,22 @@ class ServiceCategoryService
             return $this->successResponseArr(self::module . __('messages.success.delete'));
         }
     }
+
+
+    // /**
+    //  * Display a listing of the resource.
+    //  *
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function recentServices()
+    // {
+    //     $activeStatus = CommonHelper::getConfigValue('status.active');
+    //     $getCategoryData = ServiceCategory::when(auth()->user()->user_type != User::USERADMIN, function ($query) use ($activeStatus) {
+    //         $query->where('status', $activeStatus);
+    //     })
+    //         ->latest('id')->get();
+
+    //     $getServiceCategoryData =  ServiceCategoryResource::collection($getCategoryData);
+    //     return $this->successResponseArr(self::module . __('messages.success.list'), $getServiceCategoryData);
+    // }
 }

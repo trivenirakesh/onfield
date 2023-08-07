@@ -18,6 +18,23 @@ class ProfileController extends Controller
     use CommonTrait;
 
 
+    public function index()
+    {
+        try {
+            $popularProducts = [];
+            $recentServices = [];
+            $recentCalls = [];
+            $response = [
+                'recent_calls' => $recentCalls,
+                'recent_services' => $recentServices,
+                'popular_products' => $popularProducts,
+            ];
+            return $this->successResponse('Dashboard' . __('messages.success.details'), $response, 200);
+        } catch (Exception $th) {
+            return $this->errorResponse(__('messages.failed.general'), 500);
+        }
+    }
+
     public function profile(Request $request)
     {
         try {
