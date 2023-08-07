@@ -57,6 +57,32 @@
                             </a>
                         </li>
                         <li class="nav-item ">
+                        <a href="#" class="nav-link {{request()->is('admin/static-page*') ?'active' : ''}}">
+                            <i class="nav-iconfas fas fa-file-alt"></i>
+                            <p>Static Page <i class="right fas fa-angle-left"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview" style="display: {{request()->is('admin/static-page*') ? 'block' : 'none'}}">
+                            <li class="nav-item">
+                                <a href="{{route('admin.static_page',['about-us'])}}" class="nav-link {{request()->is('admin/static-page/about-us*') ?'active' : ''}}">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <p>Abount Us</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.static_page',['privacy-policy'])}}" class="nav-link {{request()->is('admin/static-page/privacy-policy*') ?'active' : ''}}">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <p>Privacy Policy</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.static_page',['terms-condition'])}}" class="nav-link {{request()->is('admin/static-page/terms-condition*') ?'active' : ''}}">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <p>Terms & Condition</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                        <li class="nav-item ">
                             <a href="#" class="nav-link @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/itemcategory') || request()->is('admin/unitofmeasurement') || request()->is('admin/servicecategory')) active @endif">
                             <i class="nav-icon fas fa-user-shield"></i>
 

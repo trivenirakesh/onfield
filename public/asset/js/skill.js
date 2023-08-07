@@ -150,7 +150,7 @@ $(document).ready(function () {
                         toastr.error(result.message);
                     }
                 },
-                error: function () {
+                error: function (result) {
                     var errors = result.responseJSON.errors;
                     // Clear previous error messages
                     $(".error-message").text("");

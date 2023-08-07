@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\{AddressTypeController, HomeController, ItemCategoryController, ItemController, ServiceCategoryController, ServiceController, SkillController, UnitOfMeasurementController, UsersController};
+use App\Http\Controllers\Admin\{AddressTypeController, HomeController, ItemCategoryController, ItemController, ServiceCategoryController, ServiceController, SkillController, StaticPageController, UnitOfMeasurementController, UsersController};
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,5 +37,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin'], 'as' => 'a
     Route::resource('users',UsersController::class)->except(['edit','update']);
     Route::resource('item',ItemController::class)->except(['edit','update']);
     Route::resource('service',ServiceController::class)->except(['edit','update']);
+
+    Route::get('static-page/{slug}', [StaticPageController::class, 'index'])->name('static_page');
+    Route::post('update-static-page', [StaticPageController::class, 'store'])->name('static_page_update');
 });
 Route::get('logout', [HomeController::class, 'logout'])->name('logout');
