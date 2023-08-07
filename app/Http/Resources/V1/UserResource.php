@@ -19,11 +19,13 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'username' => $this->first_name.' '.$this->last_name,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'full_name' => $this->first_name . ' ' . $this->last_name,
             'email' => $this->email,
             'mobile' => $this->mobile,
             'status' => ($this->status == 1 ? 'Active' : 'Deactive'),
             'created_at' => CommonHelper::getConvertedDateTime($this->created_at)
         ];
-    } 
+    }
 }
