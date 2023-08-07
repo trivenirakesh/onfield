@@ -51,9 +51,9 @@
                             </a>
                         </li> -->
                         <li class="nav-item">
-                            <a href="{{route('admin.item.index')}}" class="nav-link @if(request()->is('admin/item')) active @endif">
+                            <a href="{{route('admin.product.index')}}" class="nav-link @if(request()->is('admin/product')) active @endif">
                                 <i class="fas fa-circle nav-icon"></i>
-                                <p> Items</p>
+                                <p> Products</p>
                             </a>
                         </li>
                         <li class="nav-item ">
@@ -83,12 +83,12 @@
                         </ul>
                     </li>
                         <li class="nav-item ">
-                            <a href="#" class="nav-link @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/itemcategory') || request()->is('admin/unitofmeasurement') || request()->is('admin/servicecategory')) active @endif">
+                            <a href="#" class="nav-link @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/productcategory') || request()->is('admin/unitofmeasurement') || request()->is('admin/servicecategory')) active @endif">
                             <i class="nav-icon fas fa-user-shield"></i>
 
                                 <p>Configurations <i class="right fas fa-angle-left"></i></p>
                             </a>
-                            <ul class="nav nav-treeview" style="display: @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/itemcategory') || request()->is('admin/unitofmeasurement') || request()->is('admin/servicecategory')) block @else none @endif">
+                            <ul class="nav nav-treeview" style="display: @if(request()->is('admin/skill') || request()->is('admin/addresstype') || request()->is('admin/productcategory') || request()->is('admin/unitofmeasurement') || request()->is('admin/servicecategory')) block @else none @endif">
                                 <li class="nav-item">
                                     <a href="{{ route('admin.skill.index')}}" class="nav-link {{request()->is('admin/skill*') ?'active' : ''}}">
                                         <i class="fas fa-circle nav-icon"></i>
@@ -102,9 +102,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.itemcategory.index')}}" class="nav-link {{request()->is('admin/itemcategory*') ?'active' : ''}}">
+                                    <a href="{{ route('admin.productcategory.index')}}" class="nav-link {{request()->is('admin/productcategory*') ?'active' : ''}}">
                                         <i class="fas fa-circle nav-icon"></i>
-                                        <p>Manage Item Category</p>
+                                        <p>Manage Product Category</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

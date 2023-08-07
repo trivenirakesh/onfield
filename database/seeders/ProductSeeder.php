@@ -4,17 +4,21 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\ItemCategory;
+use App\Models\Product;
 
-class ItemCategorySeeder extends Seeder
+class ProductSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        ItemCategory::create([
+        Product::create([
             'name' => 'Laptop',
+            'description' => 'Laptop',
+            'unit_of_measurement_id' => 1,
+            'product_category_id' => 1,
+            'price' => 100,
             'status' => 1
         ]);
     }

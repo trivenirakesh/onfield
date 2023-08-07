@@ -3,14 +3,14 @@
 namespace App\Services\V1;
 
 use Illuminate\Http\Request;
-use App\Models\ItemCategory;
 use App\Traits\CommonTrait;
 use App\Helpers\CommonHelper;
+use App\Models\ProductCategory;
 
-class ItemCategoryService
+class ProductCategoryService
 {
     use CommonTrait;
-    const module = 'Item Category';
+    const module = 'Product Category';
 
     /**
      * Display a listing of the resource.
@@ -19,8 +19,8 @@ class ItemCategoryService
      */
     public function index()
     {
-        $getItemCategoryData = ItemCategory::latest('id')->get();
-        return $this->successResponseArr(self::module . __('messages.success.list'), $getItemCategoryData);
+        $getProductCategoryData = ProductCategory::latest('id')->get();
+        return $this->successResponseArr(self::module . __('messages.success.list'), $getProductCategoryData);
     }
 
     /**
@@ -31,13 +31,13 @@ class ItemCategoryService
      */
     public function store(Request $request)
     {
-        // Save item category section
+        // Save product category section
         $input = $request->validated();
         $input['created_by'] = auth()->user()->id;
         $input['created_ip'] = CommonHelper::getUserIp();
-        $itemCategory = ItemCategory::create($input);
+        $productCategory = ProductCategory::create($input);
         
-        return $this->successResponseArr(self::module . __('messages.success.create'), $itemCategory);
+        return $this->successResponseArr(self::module . __('messages.success.create'), $productCategory);
     }
 
     /**
@@ -48,11 +48,11 @@ class ItemCategoryService
      */
     public function show($id)
     {
-        $getItemCategoryData = ItemCategory::where('id', $id)->first();
-        if ($getItemCategoryData == null) {
+        $getProductCategoryData = ProductCategory::where('id', $id)->first();
+        if ($getProductCategoryData == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        return $this->successResponseArr(self::module . __('messages.success.details'), $getItemCategoryData);
+        return $this->successResponseArr(self::module . __('messages.success.details'), $getProductCategoryData);
     }
 
     /**
@@ -65,16 +65,16 @@ class ItemCategoryService
     public function update(Request $request, $id)
     {
 
-        $itemCategory = ItemCategory::where('id', $id)->first();
-        if ($itemCategory == null) {
+        $productCategory = ProductCategory::where('id', $id)->first();
+        if ($productCategory == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
         $input = $request->validated();
         $input['updated_by'] = auth()->user()->id;
         $input['updated_ip'] = CommonHelper::getUserIp();
 
-        $itemCategory->update($input);
-        return $this->successResponseArr(self::module . __('messages.success.update'), $itemCategory);
+        $productCategory->update($input);
+        return $this->successResponseArr(self::module . __('messages.success.update'), $productCategory);
     }
 
     /**
@@ -85,17 +85,17 @@ class ItemCategoryService
      */
     public function destroy($id)
     {
-        $itemCategory =  ItemCategory::where('id', $id)->first();
-        if ($itemCategory == null) {
+        $productCategory =  ProductCategory::where('id', $id)->first();
+        if ($productCategory == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
 
-        // Delete itemCategory
-        $itemCategory->deleted_by = auth()->user()->id;
-        $itemCategory->deleted_ip = CommonHelper::getUserIp();
-        $itemCategory->update();
-        $deleteItemCategory = $itemCategory->delete();
-        if ($deleteItemCategory) {
+        // Delete productCategory
+        $productCategory->deleted_by = auth()->user()->id;
+        $productCategory->deleted_ip = CommonHelper::getUserIp();
+        $productCategory->update();
+        $deleteproductCategory = $productCategory->delete();
+        if ($deleteproductCategory) {
             return $this->successResponseArr(self::module . __('messages.success.delete'));
         }
     }

@@ -59,14 +59,14 @@ class UnitOfMeasurementController extends Controller
     public function store(UnitOfMeasurementCreateUpdateRequest $request)
     {
         if (isset($request->id) && $request->id > 0) { //update data
-            $createUpdateItemUom = $this->unitOfMeasurementService->update($request, $request->id);
+            $createUpdateUom = $this->unitOfMeasurementService->update($request, $request->id);
         } else { //add data
-            $createUpdateItemUom  = $this->unitOfMeasurementService->store($request);
+            $createUpdateUom  = $this->unitOfMeasurementService->store($request);
         }
-        if (!$createUpdateItemUom['status']) {
-            return $this->jsonResponse($createUpdateItemUom, 401);
+        if (!$createUpdateUom['status']) {
+            return $this->jsonResponse($createUpdateUom, 401);
         }
-        return $this->jsonResponse($createUpdateItemUom, 200);
+        return $this->jsonResponse($createUpdateUom, 200);
     }
 
     /**

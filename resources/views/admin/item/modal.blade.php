@@ -96,11 +96,11 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Item category </label>
-                                    <select name="item_category_id" id="item_category_id" class="form-control">
+                                    <label>Product category </label>
+                                    <select name="product_category_id" id="product_category_id" class="form-control">
                                         <option value="">Select</option>
-                                        @if(!empty($getItemCategoryData))
-                                            @foreach($getItemCategoryData as $key => $value)
+                                        @if(!empty($getProductCategoryData))
+                                            @foreach($getProductCategoryData as $key => $value)
                                                 <option value="{{$value->id}}">{{$value->name}}</option>
                                             @endforeach
                                         @endif
@@ -118,7 +118,7 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label>Is Vendor item</label>
+                                    <label>Is Vendor product</label>
                                     <input type="checkbox" value="1" name="is_vendor">
                                 </div>
                             </div>

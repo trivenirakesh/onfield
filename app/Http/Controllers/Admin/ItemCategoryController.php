@@ -4,21 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\CommonHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\ItemCategoryCreateUpdateRequest;
-use App\Models\ItemCategory;
-use App\Services\V1\ItemCategoryService;
+use App\Http\Requests\V1\ProductCategoryCreateUpdateRequest;
+use App\Models\ProductCategory;
+use App\Services\V1\ProductCategoryService;
 use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class ItemCategoryController extends Controller
+class ProductCategoryController extends Controller
 {
     use CommonTrait;
-    protected $itemCategoryService;
+    protected $productCategoryService;
 
-    public function __construct(ItemCategoryService $itemCategoryService)
+    public function __construct(ProductCategoryService $productCategoryService)
     {
-        $this->itemCategoryService = $itemCategoryService;
+        $this->productCategoryService = $productCategoryService;
     }
 
     /**
@@ -27,8 +27,8 @@ class ItemCategoryController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $baseurl = route('admin.itemcategory.index');
-            $data = ItemCategory::latest()->get();
+            $baseurl = route('admin.productcategory.index');
+            $data = ProductCategory::latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action_edit', function ($row) use ($baseurl) {
@@ -46,24 +46,24 @@ class ItemCategoryController extends Controller
                 ->rawColumns(['action_edit', 'action_delete', 'name', 'status_text'])
                 ->make(true);
         }
-        $title =  'Item Category';
-        return view('admin.itemcategory.index', compact('title'));
+        $title =  'Product Category';
+        return view('admin.productcategory.index', compact('title'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ItemCategoryCreateUpdateRequest $request)
+    public function store(ProductCategoryCreateUpdateRequest $request)
     {
         if (isset($request->id) && $request->id > 0) { //update data
-            $createUpdateItemCategory = $this->itemCategoryService->update($request, $request->id);
+            $createUpdateProductCategory = $this->productCategoryService->update($request, $request->id);
         } else { //add data
-            $createUpdateItemCategory  = $this->itemCategoryService->store($request);
+            $createUpdateProductCategory  = $this->productCategoryService->store($request);
         }
-        if (!$createUpdateItemCategory['status']) {
-            return $this->jsonResponse($createUpdateItemCategory, 401);
+        if (!$createUpdateProductCategory['status']) {
+            return $this->jsonResponse($createUpdateProductCategory, 401);
         }
-        return $this->jsonResponse($createUpdateItemCategory, 200);
+        return $this->jsonResponse($createUpdateProductCategory, 200);
     }
 
     /**
@@ -71,11 +71,11 @@ class ItemCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $getItemCategoryDetails = $this->itemCategoryService->show($id);
-        if (!$getItemCategoryDetails['status']) {
-            return $this->jsonResponse($getItemCategoryDetails, 401);
+        $getProductCategoryDetails = $this->productCategoryService->show($id);
+        if (!$getProductCategoryDetails['status']) {
+            return $this->jsonResponse($getProductCategoryDetails, 401);
         }
-        return $this->jsonResponse($getItemCategoryDetails, 200);
+        return $this->jsonResponse($getProductCategoryDetails, 200);
     }
 
     /**
@@ -83,10 +83,10 @@ class ItemCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $deleteItemCategory = $this->itemCategoryService->destroy($id);
-        if (!$deleteItemCategory['status']) {
-            return $this->jsonResponse($deleteItemCategory, 401);
+        $deleteProductCategory = $this->productCategoryService->destroy($id);
+        if (!$deleteProductCategory['status']) {
+            return $this->jsonResponse($deleteProductCategory, 401);
         }
-        return $this->jsonResponse($deleteItemCategory, 200);
+        return $this->jsonResponse($deleteProductCategory, 200);
     }
 }

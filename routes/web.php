@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\{AddressTypeController, HomeController, ItemCategoryController, ItemController, ProfileController, ServiceCategoryController, ServiceController, SkillController, StaticPageController, UnitOfMeasurementController, UsersController};
+use App\Http\Controllers\Admin\{AddressTypeController, HomeController, ProductCategoryController, ProductController, ProfileController, ServiceCategoryController, ServiceController, SkillController, StaticPageController, UnitOfMeasurementController, UsersController};
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,11 +31,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin'], 'as' => 'a
     // Master module routes 
     Route::resource('skill',SkillController::class)->except(['edit', 'update']);
     Route::resource('addresstype',AddressTypeController::class)->except(['edit','update']);
-    Route::resource('itemcategory',ItemCategoryController::class)->except(['edit','update']);
+    Route::resource('productcategory',ProductCategoryController::class)->except(['edit','update']);
     Route::resource('unitofmeasurement',UnitOfMeasurementController::class)->except(['edit','update']);
     Route::resource('servicecategory',ServiceCategoryController::class)->except(['edit','update']);
     Route::resource('users',UsersController::class)->except(['edit','update']);
-    Route::resource('item',ItemController::class)->except(['edit','update']);
+    Route::resource('product',ProductController::class)->except(['edit','update']);
     Route::resource('service',ServiceController::class)->except(['edit','update']);
 
     Route::get('static-page/{slug}', [StaticPageController::class, 'index'])->name('static_page');

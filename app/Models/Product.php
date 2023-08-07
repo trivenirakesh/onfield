@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Item extends Model
+class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
-    const FOLDERNAME = "item/";
+    const FOLDERNAME = "product/";
 
     const MEDIA_TYPES = [
         0 => 'BASE',
@@ -30,8 +30,8 @@ class Item extends Model
         return $this->belongsTo(UnitOfMeasurement::class,'unit_of_measurement_id')->where('status',CommonHelper::getConfigValue('status.active'));
     }
 
-    public function itemCategory(){
-        return $this->belongsTo(ItemCategory::class,'item_category_id')->where('status',CommonHelper::getConfigValue('status.active'));
+    public function productCategory(){
+        return $this->belongsTo(ProductCategory::class,'product_category_id')->where('status',CommonHelper::getConfigValue('status.active'));
     }
 
     public function user(){

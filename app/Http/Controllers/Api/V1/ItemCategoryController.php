@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\ItemCategoryCreateUpdateRequest;
-use App\Http\Resources\V1\ItemCategoryResource;
-use App\Services\V1\ItemCategoryService;
-use Database\Seeders\ItemCategorySeeder;
+use App\Http\Requests\V1\ProductCategoryCreateUpdateRequest;
+use App\Http\Resources\V1\ProductCategoryResource;
+use App\Services\V1\ProductCategoryService;
+use Database\Seeders\ProductCategorySeeder;
 
-class ItemCategoryController extends Controller
+class ProductCategoryController extends Controller
 {
-    private $itemCategoryService;
+    private $productCategoryService;
 
-    public function __construct(ItemCategoryService $itemCategoryService)
+    public function __construct(ProductCategoryService $productCategoryService)
     {
-        $this->itemCategoryService = $itemCategoryService;
+        $this->productCategoryService = $productCategoryService;
     }
 
     /**
@@ -24,12 +24,12 @@ class ItemCategoryController extends Controller
      */
     public function index()
     {
-        $getItemCategory =  $this->itemCategoryService->index() ?? [];
-        $getItemCategory['data'] = ItemCategoryResource::collection($getItemCategory);
-        if (!$getItemCategory['status']) {
-            return response()->json($getItemCategory, 401);
+        $getProductCategory =  $this->productCategoryService->index() ?? [];
+        $getProductCategory['data'] = ProductCategoryResource::collection($getProductCategory);
+        if (!$getProductCategory['status']) {
+            return response()->json($getProductCategory, 401);
         }
-        return response()->json($getItemCategory, 200);
+        return response()->json($getProductCategory, 200);
     }
 
     /**
@@ -38,14 +38,14 @@ class ItemCategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ItemCategoryCreateUpdateRequest $request)
+    public function store(ProductCategoryCreateUpdateRequest $request)
     {
-        $saveItemCategory  = $this->itemCategoryService->store($request);
-        $saveItemCategory['data'] = new ItemCategoryResource($saveItemCategory);
-        if (!$saveItemCategory['status']) {
-            return response()->json($saveItemCategory, 401);
+        $saveProductCategory  = $this->productCategoryService->store($request);
+        $saveProductCategory['data'] = new ProductCategoryResource($saveProductCategory);
+        if (!$saveProductCategory['status']) {
+            return response()->json($saveProductCategory, 401);
         }
-        return response()->json($saveItemCategory, 200);
+        return response()->json($saveProductCategory, 200);
     }
 
     /**
@@ -56,12 +56,12 @@ class ItemCategoryController extends Controller
      */
     public function show($id)
     {
-        $getItemCategoryDetails = $this->itemCategoryService->show($id);
-        $getItemCategoryDetails['data'] = new ItemCategorySeeder($getItemCategoryDetails);
-        if (!$getItemCategoryDetails['status']) {
-            return response()->json($getItemCategoryDetails, 401);
+        $getProductCategoryDetails = $this->productCategoryService->show($id);
+        $getProductCategoryDetails['data'] = new ProductCategorySeeder($getProductCategoryDetails);
+        if (!$getProductCategoryDetails['status']) {
+            return response()->json($getProductCategoryDetails, 401);
         }
-        return response()->json($getItemCategoryDetails, 200);
+        return response()->json($getProductCategoryDetails, 200);
     }
 
     /**
@@ -71,14 +71,14 @@ class ItemCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ItemCategoryCreateUpdateRequest $request, $id)
+    public function update(ProductCategoryCreateUpdateRequest $request, $id)
     {
-        $updateItemCategory = $this->itemCategoryService->update($request, $id);
-        $updateItemCategory = new ItemCategoryResource($updateItemCategory);
-        if (!$updateItemCategory['status']) {
-            return response()->json($updateItemCategory, 401);
+        $updateProductCategory = $this->productCategoryService->update($request, $id);
+        $updateProductCategory = new ProductCategoryResource($updateProductCategory);
+        if (!$updateProductCategory['status']) {
+            return response()->json($updateProductCategory, 401);
         }
-        return response()->json($updateItemCategory, 200);
+        return response()->json($updateProductCategory, 200);
     }
 
     /**
@@ -89,10 +89,10 @@ class ItemCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $deleteItemCategory = $this->itemCategoryService->destroy($id);
-        if (!$deleteItemCategory['status']) {
-            return response()->json($deleteItemCategory, 401);
+        $deleteProductCategory = $this->productCategoryService->destroy($id);
+        if (!$deleteProductCategory['status']) {
+            return response()->json($deleteProductCategory, 401);
         }
-        return response()->json($deleteItemCategory, 200);
+        return response()->json($deleteProductCategory, 200);
     }
 }

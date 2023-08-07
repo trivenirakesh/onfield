@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ItemCategory extends Model
+class ProductCategory extends Model
 {
     use HasFactory,SoftDeletes;
     protected $guarded = [];
@@ -16,7 +16,7 @@ class ItemCategory extends Model
         $this->attributes['name'] = preg_replace('/\s+/', ' ', ucfirst(strtolower($value)));
     }
 
-    public function item(){
-        return $this->hasOne(Item::class);
+    public function product(){
+        return $this->hasOne(Product::class);
     }
 }

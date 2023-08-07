@@ -4,7 +4,6 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Traits\CommonTrait;
-use Illuminate\Support\Facades\Artisan;
 
 return new class extends Migration
 {
@@ -14,17 +13,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_categories', function (Blueprint $table) {
+        Schema::create('service_skills', function (Blueprint $table) {
             $table->id();
-            $table->string('name',200);
-            $table->tinyInteger('status')->comment('0 - Deactive, 1 - Active');
+            $table->unsignedBigInteger('service_id');
+            $table->foreign('service_id')->references('id')->on('services');
+            $table->unsignedBigInteger('skill_id')->nullable();
+            $table->foreign('skill_id')->references('id')->on('skills');
             $this->timestampColumns($table);
         });
-        
-        // Call seeder
-        Artisan::call('db:seed', [
-            '--class' => 'ProductCategorySeeder',
-        ]);
     }
 
     /**
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_categories');
+        Schema::dropIfExists('service_skills');
     }
 };

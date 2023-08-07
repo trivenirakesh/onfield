@@ -83,9 +83,9 @@ class User extends Authenticatable
         $this->attributes['last_name'] = preg_replace('/\s+/', ' ', ucfirst(strtolower($value)));
     }
 
-    public function item()
+    public function product()
     {
-        return $this->hasOne(Item::class);
+        return $this->hasOne(Product::class);
     }
 
     public static function generateOtp()

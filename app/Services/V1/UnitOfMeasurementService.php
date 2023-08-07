@@ -10,7 +10,7 @@ use App\Helpers\CommonHelper;
 class UnitOfMeasurementService
 {
     use CommonTrait;
-    const module = 'Item Category';
+    const module = 'Product Category';
 
     /**
      * Display a listing of the resource.

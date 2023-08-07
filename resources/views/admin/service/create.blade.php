@@ -75,11 +75,11 @@
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="name">Select Item <span class="red">*</span></label>
+                                                    <label for="name">Select Product <span class="red">*</span></label>
                                                     <select name="" id="" class="form-control">
                                                         <option value="">Select</option>
-                                                        @foreach ($getItemsData as $item)
-                                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                                        @foreach ($getProductsData as $product)
+                                                        <option value="{{$product->id}}">{{$product->name}}</option>
                                                         @endforeach
                                                     </select>
                                                     <label id="name-error" class="error" for="mobile"></label>

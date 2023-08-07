@@ -24,7 +24,7 @@
                                         <th>Name</th>
                                         <th>Description</th>
                                         <th>Unit of measurement</th>
-                                        <th>Item Category</th>
+                                        <th>Product Category</th>
                                         <th>Price</th>
                                         <th>Status</th>
                                         <th width="20"></th>
@@ -38,12 +38,12 @@
         </div>
     </section>
     <input type="hidden" id="page_module" value="{{$title}}">
-    <input type="hidden" id="module_index_url" value="{{ route('admin.item.index') }}">
+    <input type="hidden" id="module_index_url" value="{{ route('admin.product.index') }}">
 </div>
-@include('admin.item.modal')
+@include('admin.product.modal')
 <!-- /.content -->
 
 @endsection
 @push('script')
-<script src="{{asset('public/asset/js/item.js')}}"></script>
+<script src="{{asset('public/asset/js/product.js')}}"></script>
 @endpush

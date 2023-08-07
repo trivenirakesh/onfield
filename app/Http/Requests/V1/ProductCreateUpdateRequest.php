@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ItemCreateUpdateRequest extends FormRequest
+class ProductCreateUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,9 +32,9 @@ class ItemCreateUpdateRequest extends FormRequest
                     $query->where('status', CommonHelper::getConfigValue('status.active'));
                 }),
             ],
-            'item_category_id' => [
+            'product_category_id' => [
                 'required',
-                Rule::exists('item_categories','id')->where(function ($query) {
+                Rule::exists('product_categories','id')->where(function ($query) {
                     $query->where('status', CommonHelper::getConfigValue('status.active'));
                 }),
             ],
