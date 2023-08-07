@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
 use Laravel\Passport\Client as OClient;
 use Laravel\Passport\HasApiTokens;
 use GuzzleHttp\Client;
@@ -40,7 +39,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'mobile', 'user_type', 'password', 'status', 'otp','is_otp_verify','otp_verified_at'
+        'first_name', 'last_name', 'email', 'mobile', 'user_type', 'password', 'status', 'otp', 'is_otp_verify', 'otp_verified_at'
     ];
 
     /**
@@ -62,6 +61,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function findForPassport($username)
+    {
+        return self::where('mobile', $username)->first(); // change column name whatever you use in credentials
+    }
 
     public function role()
     {
