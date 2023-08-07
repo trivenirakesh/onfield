@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\{
+    AddressController,
     AuthController,
     ItemController,
     ProfileController,
@@ -21,12 +22,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('static-page/{slug}',[StaticPageController::class,'index']);
+Route::get('static-page/{slug}', [StaticPageController::class, 'index']);
 Route::group(['prefix' => 'client'], function () {
 
     // Auth routes
     Route::controller(AuthController::class)->group(function () {
         Route::post('login', 'login');
+        Route::post('refresh-token', 'refreshToken');
         Route::post('register', 'clientRegister');
         Route::post('verification', 'otpVerification');
         Route::post('resend-otp', 'resendVerificationOtp');
@@ -40,6 +42,8 @@ Route::group(['prefix' => 'client'], function () {
         Route::post('profile', [ProfileController::class, 'profileUpdate']);
         Route::post('change-password', [ProfileController::class, 'changePassword']);
         Route::get('logout', [AuthController::class, 'logout']);
+        Route::get('address-type', [AddressController::class, 'addressType']);
+        Route::resource('address', AddressController::class)->except(['create', 'edit']);
     });
 });
 
@@ -56,6 +60,9 @@ Route::group(['prefix' => 'engineer'], function () {
 
     Route::group(['middleware' => ['auth:api']], function () {
         Route::get('logout', [AuthController::class, 'logout']);
+        Route::get('profile', [ProfileController::class, 'profile']);
+        Route::post('profile', [ProfileController::class, 'profileUpdate']);
+        Route::post('change-password', [ProfileController::class, 'changePassword']);
     });
 });
 
