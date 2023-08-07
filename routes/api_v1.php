@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\{
     ProductController,
     ProfileController,
     ServiceCategoryController,
+    ServiceController,
     StaticPageController
 };
 use Illuminate\Http\Request;
@@ -44,6 +45,10 @@ Route::group(['prefix' => 'client'], function () {
         Route::get('logout', [AuthController::class, 'logout']);
         Route::get('address-type', [AddressController::class, 'addressType']);
         Route::resource('address', AddressController::class)->except(['create', 'edit']);
+        Route::get('dashboard', [ProfileController::class, 'dashboard']);
+
+        Route::get('service-category', [ServiceController::class, 'serviceCategory']);
+        Route::get('services', [ServiceController::class, 'index']);
     });
 });
 
