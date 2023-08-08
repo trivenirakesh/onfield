@@ -25,3 +25,4 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('/public/plugins/toastr/toastr.css') }}">
 <link rel="stylesheet" href="{{ asset('public/dist/css/custom.css') }}">
 <link rel="stylesheet" href="{{ asset('/public/plugins/sweetalert2/sweetalert2.min.css') }}" />
+@stack('styles')

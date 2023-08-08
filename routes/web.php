@@ -36,7 +36,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin'], 'as' => 'a
     Route::resource('servicecategory',ServiceCategoryController::class)->except(['edit','update']);
     Route::resource('users',UsersController::class)->except(['edit','update']);
     Route::resource('product',ProductController::class)->except(['edit','update']);
-    Route::resource('service',ServiceController::class)->except(['edit','update']);
+    Route::resource('service',ServiceController::class);
 
     Route::get('static-page/{slug}', [StaticPageController::class, 'index'])->name('static_page');
     Route::post('update-static-page', [StaticPageController::class, 'store'])->name('static_page_update');

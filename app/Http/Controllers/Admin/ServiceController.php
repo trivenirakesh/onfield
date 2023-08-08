@@ -6,6 +6,7 @@ use App\Helpers\CommonHelper;
 use App\Http\Controllers\Controller;
 use App\Models\ServiceCategory;
 use App\Models\Product;
+use App\Models\Skill;
 use App\Models\UnitOfMeasurement;
 use Illuminate\Http\Request;
 
@@ -25,11 +26,12 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        $title =  'Service';
+        $title =  'Create Service';
+        $getSkillsData = CommonHelper::getTableWiseData(Skill::class);
         $getServiceCategoryData = CommonHelper::getTableWiseData(ServiceCategory::class);
         $getProductsData = CommonHelper::getTableWiseData(Product::class);
         $getUomData = CommonHelper::getTableWiseData(UnitOfMeasurement::class);
-        return view('admin.service.create', compact('title','getServiceCategoryData','getProductsData','getUomData'));
+        return view('admin.service.create', compact('title','getServiceCategoryData','getProductsData','getUomData','getSkillsData'));
     }
 
     /**
@@ -53,7 +55,7 @@ class ServiceController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('admin.service.edit');
     }
 
     /**
