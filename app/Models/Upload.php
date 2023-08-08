@@ -17,8 +17,12 @@ class Upload extends Model
     return $this->morphTo();
   }
 
-  // public function getFileAttribute($file)
-  // {
-  //   dd($file,$this->path);
-  // }
+  public function getFileAttribute($file)
+  {
+    $imageUrl = 'public/dist/img/no-image.png';
+    if (!empty($file)) {
+      $imageUrl = $this->upload_path . '' . $file;
+    }
+    return asset($imageUrl);
+  }
 }

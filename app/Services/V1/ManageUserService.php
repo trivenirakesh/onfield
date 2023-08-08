@@ -60,7 +60,7 @@ class ManageUserService
     {
         $getUserData = User::when($getUplaods, function ($query) {
             $query->with(['uploads' => function ($query) {
-                $query->select('id', 'reference_id', 'reference_type', 'file', 'media_type', 'image_type');
+                $query->select('id', 'reference_id', 'reference_type', 'file', 'media_type', 'image_type','upload_path');
             }]);
         })->where('id', $id)->first();
         if ($getUserData == null) {

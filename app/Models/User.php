@@ -111,17 +111,17 @@ class User extends Authenticatable
 
     public function addressProof()
     {
-        return $this->morphMany(Upload::class, 'reference')->where('media_type', 'ADDRESS-PROOF')->latest();
+        return $this->morphOne(Upload::class, 'reference')->where('media_type', 'ADDRESS-PROOF')->latest();
     }
 
     public function resume()
     {
-        return $this->morphMany(Upload::class, 'reference')->where('media_type', 'RESUME')->latest();
+        return $this->morphOne(Upload::class, 'reference')->where('media_type', 'RESUME')->latest();
     }
 
     public function idProof()
     {
-        return $this->morphMany(Upload::class, 'reference')->where('media_type', 'ID-PROOF')->latest();
+        return $this->morphOne(Upload::class, 'reference')->where('media_type', 'ID-PROOF')->latest();
     }
 
     //morphic relationship end
