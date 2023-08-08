@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('booking_logs', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('booking_id');
+            $table->unsignedBigInteger('booking_id');
             $table->string('note')->nullable();
             $table->tinyInteger('status')->default(0)->comment("0=Booking Requested, 1=Accepted, 2=Reassign,3=Transfer to Back office, 4=Cancel, 5=Completed, 6= Missed");
             $this->timestampColumns($table);
+            $table->foreign('booking_id')->references('id')->on('bookings');
         });
     }
 

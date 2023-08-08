@@ -4,6 +4,7 @@ namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Request;
 use App\Helpers\CommonHelper;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +26,8 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'mobile' => $this->mobile,
             'status' => ($this->status == 1 ? 'Active' : 'Deactive'),
-            'created_at' => CommonHelper::getConvertedDateTime($this->created_at)
+            'created_at' => CommonHelper::getConvertedDateTime($this->created_at),
+            'uploads' => $this->whenLoaded('uploads'),
         ];
     }
 }

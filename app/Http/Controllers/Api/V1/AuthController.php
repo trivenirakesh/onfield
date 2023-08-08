@@ -67,7 +67,6 @@ class AuthController extends Controller
                 if (!empty($data)) {
                     $uploadsArr = [
                         'file' => $data['filename'],
-                        'file' => $data['filename'],
                         'thumb_file' => $data['filename'],
                         'media_type' => User::MEDIA_TYPES[0],
                         'image_type' => $data['filetype'],
@@ -140,6 +139,9 @@ class AuthController extends Controller
                     'address' => $request->address,
                     'state_id' => $request->state_id,
                     'city' => $request->city,
+                    'pincode' => $request->pincode ?? null,
+                    'latitude' => $request->latitude ?? null,
+                    'longitude' => $request->longitude ?? null,
                     'created_ip' => CommonHelper::getUserIp(),
                 ];
                 $add = Address::create($fullAddress);

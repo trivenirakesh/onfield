@@ -8,11 +8,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Upload extends Model
 {
-    use HasFactory, SoftDeletes;
+  use HasFactory, SoftDeletes;
 
-    protected $guarded = ['id'];
+  protected $guarded = ['id'];
 
-    public function reference() {
-        return $this->morphTo();
-      }
+  public function reference()
+  {
+    return $this->morphTo();
+  }
+
+  // public function getFileAttribute($file)
+  // {
+  //   dd($file,$this->path);
+  // }
 }
