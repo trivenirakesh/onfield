@@ -51,14 +51,16 @@ class ServiceCategoryService
         $serviceCategory->save();
 
         // upload file 
+        $uploadPath = ServiceCategory::FOLDERNAME;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $data = CommonHelper::uploadImages($image, ServiceCategory::FOLDERNAME, 0);
+            $data = CommonHelper::uploadImages($image,$uploadPath , 0);
             if (!empty($data)) {
                 $saveUploads = new Upload();
                 $saveUploads['file'] = $data['filename'];
                 $saveUploads['media_type'] = ServiceCategory::MEDIA_TYPES[0];
                 $saveUploads['image_type'] = $data['filetype'];
+                $saveUploads['upload_path'] = CommonHelper::getUploadPath($uploadPath);
                 $saveUploads['created_by'] = auth()->user()->id;
                 $saveUploads['created_ip'] = CommonHelper::getUserIp();
                 $saveUploads['reference_id'] = $serviceCategory->id;
@@ -109,20 +111,22 @@ class ServiceCategoryService
         $serviceCategory->update();
 
         // Update file
+        $uploadPath = ServiceCategory::FOLDERNAME;
         if ($request->hasFile('image')) {
             $updateUploads = Upload::where('reference_type', ServiceCategory::class)->where('reference_id', $id)->first();
             // Unlink old image from storage 
             $oldImage = $updateUploads->file ?? null;
             if ($oldImage != null) {
-                CommonHelper::removeUploadedImages($oldImage, ServiceCategory::FOLDERNAME);
+                CommonHelper::removeUploadedImages($oldImage, $uploadPath);
             }
             // Unlink old image from storage 
 
             $image = $request->file('image');
-            $data = CommonHelper::uploadImages($image, ServiceCategory::FOLDERNAME, 0);
+            $data = CommonHelper::uploadImages($image, $uploadPath, 0);
             if (!empty($data)) {
                 $updateUploads->file = $data['filename'];
                 $updateUploads->image_type = $data['filetype'];
+                $updateUploads->upload_type = CommonHelper::getUploadPath($uploadPath);
                 $updateUploads->updated_by = auth()->user()->id;
                 $updateUploads->updated_ip = CommonHelper::getUserIp();
                 $updateUploads->update();
