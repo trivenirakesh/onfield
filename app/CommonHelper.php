@@ -40,6 +40,9 @@ class CommonHelper{
     public static function uploadImages($file,$path,$type = null){ 
         $uploadPath = self::getConfigValue('upload_path').$path;
         $fileType = $file->getClientMimeType();
+        if($fileType == 'image/png' || $fileType == 'image/jpeg'){
+            $fileType = 'image';
+        }
         $fileName = '';
         // Upload base image
         if($type != 0){
@@ -73,7 +76,9 @@ class CommonHelper{
         $fileType = $file->getClientMimeType();
         $imagePath = $file->store($uploadPath);
         $fileName = basename($imagePath);
-
+        if($fileName == 'application/pdf' || $fileName == 'application/msword'){
+            $fileName = 'file';
+        }
         $responseArr['filename'] = $fileName;
         $responseArr['filetype'] = $fileType;
         return $responseArr;
@@ -138,5 +143,10 @@ class CommonHelper{
             $getData = $getData->where($where);
         }
         return $getData->latest()->get();
+    }
+
+    public static function getUploadPath($folderName) : String {
+        $linkPath = self::getConfigValue('link_path').$folderName;
+        return $linkPath;
     }
 }

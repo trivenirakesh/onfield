@@ -226,8 +226,8 @@ $(document).ready(function () {
                 name: "uom",
             },
             {
-                data: "item_category",
-                name: "item_category",
+                data: "product_category",
+                name: "product_category",
             },
             {
                 data: "price",

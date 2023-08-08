@@ -5,7 +5,7 @@ return [
     'site_timezone' => 'CDT', // By default CDT timezone wise date will display 
     'storage_path' => '/app/public/',
     'upload_path' => 'public/',
-    'link_path' => 'storage/app/public/',
+    'link_path' => 'public/storage/',
     'status' => [
         'active' => 1,
         'deactive' => 0,

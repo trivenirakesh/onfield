@@ -61,16 +61,17 @@ class AuthController extends Controller
             }
 
             // save engineer profile 
+            $uploadPath = User::FOLDERNAME;
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
-                $data = CommonHelper::uploadImages($image, User::FOLDERNAME, 1);
+                $data = CommonHelper::uploadImages($image, $uploadPath, 1);
                 if (!empty($data)) {
                     $uploadsArr = [
                         'file' => $data['filename'],
-                        'file' => $data['filename'],
                         'thumb_file' => $data['filename'],
                         'media_type' => User::MEDIA_TYPES[0],
-                        'image_type' => $data['filetype'],
+                        'file_type' => $data['filetype'],
+                        'upload_path' => CommonHelper::getUploadPath($uploadPath),
                         'created_ip' => CommonHelper::getUserIp(),
                         'reference_id' => $userId,
                         'reference_type' => User::class,
@@ -82,12 +83,13 @@ class AuthController extends Controller
             // save engineer address proof 
             if ($request->hasFile('addressproof')) {
                 $addressProof = $request->file('addressproof');
-                $data = CommonHelper::uploadImages($addressProof, User::FOLDERNAME, 1);
+                $data = CommonHelper::uploadImages($addressProof, $uploadPath, 1);
                 if (!empty($data)) {
                     $address = [
                         'thumb_file' => $data['filename'],
                         'media_type' => User::MEDIA_TYPES[2],
-                        'image_type' => $data['filetype'],
+                        'file_type' => $data['filetype'],
+                        'upload_path' => CommonHelper::getUploadPath($uploadPath),
                         'created_ip' => CommonHelper::getUserIp(),
                         'reference_id' => $userId,
                         'reference_type' => User::class,
@@ -100,13 +102,14 @@ class AuthController extends Controller
             // save engineer id proof 
             if ($request->hasFile('idproof')) {
                 $IdProof = $request->file('idproof');
-                $data = CommonHelper::uploadImages($IdProof, User::FOLDERNAME, 1);
+                $data = CommonHelper::uploadImages($IdProof, $uploadPath, 1);
                 if (!empty($data)) {
                     $idProof = [
                         'file' => $data['filename'],
                         'thumb_file' => $data['filename'],
                         'media_type' => User::MEDIA_TYPES[3],
-                        'image_type' => $data['filetype'],
+                        'upload_path' => CommonHelper::getUploadPath($uploadPath),
+                        'file_type' => $data['filetype'],
                         'created_ip' => CommonHelper::getUserIp(),
                         'reference_id' => $userId,
                         'reference_type' => User::class,
@@ -118,12 +121,13 @@ class AuthController extends Controller
             // save engineer resume 
             if ($request->hasFile('resume')) {
                 $resume = $request->file('resume');
-                $data = CommonHelper::uploadFile($resume, User::FOLDERNAME);
+                $data = CommonHelper::uploadFile($resume, $uploadPath);
                 if (!empty($data)) {
                     $resume = [
                         'file' => $data['filename'],
                         'media_type' => User::MEDIA_TYPES[1],
-                        'image_type' => $data['filetype'],
+                        'upload_path' => CommonHelper::getUploadPath($uploadPath),
+                        'file_type' => $data['filetype'],
                         'created_ip' => CommonHelper::getUserIp(),
                         'reference_id' => $userId,
                         'reference_type' => User::class,

@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->morphs('reference');
             $table->string('media_type');
-            $table->string('image_type');
+            $table->string('file_type');
+            $table->string('upload_path')->nullable();
             $table->string('file');
             $table->string('thumb_file')->nullable();
             $table->string('notes',200)->nullable();
