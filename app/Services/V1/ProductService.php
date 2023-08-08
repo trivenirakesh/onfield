@@ -49,15 +49,17 @@ class ProductService
         $saveProduct->created_ip = CommonHelper::getUserIp();
         $saveProduct->save();
 
-        // upload file 
+        // upload file
+        $uploadPath = Product::FOLDERNAME; 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $data = CommonHelper::uploadImages($image,Product::FOLDERNAME,0);
+            $data = CommonHelper::uploadImages($image,$uploadPath,0);
             if (!empty($data)) {
                 $saveUploads = new Upload();
                 $saveUploads['file'] = $data['filename'];
                 $saveUploads['media_type'] = Product::MEDIA_TYPES[0];
                 $saveUploads['image_type'] = $data['filetype'];
+                $saveUploads['upload_path'] = CommonHelper::getUploadPath($uploadPath);
                 $saveUploads['created_by'] = auth()->user()->id;
                 $saveUploads['created_ip'] = CommonHelper::getUserIp();
                 $saveUploads['reference_id'] = $saveProduct->id;

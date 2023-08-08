@@ -3,7 +3,7 @@
 use App\Http\Controllers\Api\V1\{
     AddressController,
     AuthController,
-    ItemController,
+    ProductController,
     ProfileController,
     ServiceBookingController,
     ServiceCategoryController,
@@ -95,11 +95,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
     Route::delete('servicecategory/{id}', [ServiceCategoryController::class, 'destroy']);
 
     // Item routes
-    Route::get('item', [ItemController::class, 'index']);
-    Route::get('item/{id}', [ItemController::class, 'show']);
-    Route::post('item', [ItemController::class, 'store']);
-    Route::post('item/{id}', [ItemController::class, 'update']);
-    Route::delete('item/{id}', [ItemController::class, 'destroy']);
+    Route::get('item', [ProductController::class, 'index']);
+    Route::get('item/{id}', [ProductController::class, 'show']);
+    Route::post('item', [ProductController::class, 'store']);
+    Route::post('item/{id}', [ProductController::class, 'update']);
+    Route::delete('item/{id}', [ProductController::class, 'destroy']);
 });
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

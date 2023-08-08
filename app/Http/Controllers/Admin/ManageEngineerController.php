@@ -2,23 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\CommonHelper;
 use App\Http\Controllers\Controller;
-use App\Models\ServiceCategory;
-use App\Models\Product;
-use App\Models\Skill;
-use App\Models\UnitOfMeasurement;
 use Illuminate\Http\Request;
 
-class ServiceController extends Controller
+class ManageEngineerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $title =  'Service';
-        return view('admin.service.index', compact('title'));
+        $title =  'Engineers';
+        return view('admin.engineer.index', compact('title'));
     }
 
     /**
@@ -26,12 +21,12 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        $title =  'Create Service';
-        $getSkillsData = CommonHelper::getTableWiseData(Skill::class);
-        $getServiceCategoryData = CommonHelper::getTableWiseData(ServiceCategory::class);
-        $getProductsData = CommonHelper::getTableWiseData(Product::class);
-        $getUomData = CommonHelper::getTableWiseData(UnitOfMeasurement::class);
-        return view('admin.service.create', compact('title','getServiceCategoryData','getProductsData','getUomData','getSkillsData'));
+        $title =  'Add Engineer';
+        // $getSkillsData = CommonHelper::getTableWiseData(Skill::class);
+        // $getServiceCategoryData = CommonHelper::getTableWiseData(ServiceCategory::class);
+        // $getProductsData = CommonHelper::getTableWiseData(Product::class);
+        // $getUomData = CommonHelper::getTableWiseData(UnitOfMeasurement::class);
+        return view('admin.engineer.create', compact('title'));
     }
 
     /**
@@ -55,7 +50,7 @@ class ServiceController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.service.edit');
+        //
     }
 
     /**
