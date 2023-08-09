@@ -41,7 +41,7 @@ class ProductController extends Controller
                     return $this->actionHtml($baseurl, $row->id, true);
                 })
                 ->addColumn('image', function ($row) {
-                    $imagePath = CommonHelper::getUploadUrl(Product::class,$row->id,Product::FOLDERNAME);
+                    $imagePath = !empty($row->upload->file) ? $row->upload->file : '';
                     $image = '<img src="' . $imagePath . '" class="img-fluid img-radius" width="40px" height="40px">';
                     return $image;
                 })

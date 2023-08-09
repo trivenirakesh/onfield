@@ -42,13 +42,10 @@ class ServiceCategoryService
     public function store(Request $request)
     {
         // Save serviceCategory section
-        $serviceCategory = new ServiceCategory();
-        $serviceCategory->name = $request->name;
-        $serviceCategory->description = $request->description;
-        $serviceCategory->status = $request->status;
-        $serviceCategory->created_by = auth()->user()->id;
-        $serviceCategory->created_ip = CommonHelper::getUserIp();
-        $serviceCategory->save();
+        $input = $request->only('name', 'description', 'status');
+        $input['created_by'] = auth()->user()->id;
+        $input['created_ip'] = CommonHelper::getUserIp();
+        $serviceCategory = ServiceCategory::create($input);
 
         // upload file 
         $uploadPath = ServiceCategory::FOLDERNAME;
@@ -56,16 +53,18 @@ class ServiceCategoryService
             $image = $request->file('image');
             $data = CommonHelper::uploadImages($image,$uploadPath , 0);
             if (!empty($data)) {
-                $saveUploads = new Upload();
-                $saveUploads['file'] = $data['filename'];
-                $saveUploads['media_type'] = ServiceCategory::MEDIA_TYPES[0];
-                $saveUploads['image_type'] = $data['filetype'];
-                $saveUploads['upload_path'] = CommonHelper::getUploadPath($uploadPath);
-                $saveUploads['created_by'] = auth()->user()->id;
-                $saveUploads['created_ip'] = CommonHelper::getUserIp();
-                $saveUploads['reference_id'] = $serviceCategory->id;
-                $saveUploads['reference_type'] = ServiceCategory::class;
-                $saveUploads->save();
+                $uploadsArr = [
+                    'file' => $data['filename'],
+                    'thumb_file' => $data['filename'],
+                    'media_type' => ServiceCategory::MEDIA_TYPES[0],
+                    'file_type' => $data['filetype'],
+                    'upload_path' => CommonHelper::getUploadPath($uploadPath),
+                    'created_ip' => CommonHelper::getUserIp(),
+                    'created_by' => auth()->user()->id,
+                    'reference_id' => $serviceCategory->id,
+                    'reference_type' => ServiceCategory::class,
+                ];
+                Upload::create($uploadsArr);
             }
         }
 
@@ -98,38 +97,46 @@ class ServiceCategoryService
      */
     public function update(Request $request, $id)
     {
-
-        $serviceCategory = ServiceCategory::where('id', $id)->first();
+        $input = $request->only('name', 'description', 'status');
+        $serviceCategory = ServiceCategory::with(['upload' => function ($query) {
+            $query->select('id', 'reference_id', 'reference_type', 'file', 'media_type', 'file_type', 'upload_path');
+        }])->where('id', $id)->first();
         if ($serviceCategory == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        $serviceCategory->name = $request->name;
-        $serviceCategory->description = $request->description;
-        $serviceCategory->status = $request->status;
-        $serviceCategory->updated_by = auth()->user()->id;
-        $serviceCategory->updated_ip = CommonHelper::getUserIp();
-        $serviceCategory->update();
-
+        $input['updated_by'] = auth()->user()->id;
+        $input['updated_ip'] = CommonHelper::getUserIp();
+        $serviceCategory->update($input);
+        
         // Update file
         $uploadPath = ServiceCategory::FOLDERNAME;
         if ($request->hasFile('image')) {
-            $updateUploads = Upload::where('reference_type', ServiceCategory::class)->where('reference_id', $id)->first();
-            // Unlink old image from storage 
-            $oldImage = $updateUploads->file ?? null;
-            if ($oldImage != null) {
-                CommonHelper::removeUploadedImages($oldImage, $uploadPath);
-            }
-            // Unlink old image from storage 
-
             $image = $request->file('image');
             $data = CommonHelper::uploadImages($image, $uploadPath, 0);
             if (!empty($data)) {
-                $updateUploads->file = $data['filename'];
-                $updateUploads->image_type = $data['filetype'];
-                $updateUploads->upload_type = CommonHelper::getUploadPath($uploadPath);
-                $updateUploads->updated_by = auth()->user()->id;
-                $updateUploads->updated_ip = CommonHelper::getUserIp();
-                $updateUploads->update();
+                // delete file if exists
+                if ($serviceCategory?->upload?->id != null) {
+                    // Unlink old image from storage 
+                    $oldImage = $serviceCategory?->upload->getAttributes()['file'] ?? null;
+                    $path = $serviceCategory->upload->upload_path ?? null;
+                    if ($oldImage != null && $path != null) {
+                        CommonHelper::removeUploadedImages($oldImage, $path);
+                    }
+                    $serviceCategory->upload->delete();
+                }
+
+                $uploadsArr = [
+                    'file' => $data['filename'],
+                    'thumb_file' => $data['filename'],
+                    'media_type' => ServiceCategory::MEDIA_TYPES[0],
+                    'file_type' => $data['filetype'],
+                    'upload_path' => CommonHelper::getUploadPath($uploadPath),
+                    'created_ip' => CommonHelper::getUserIp(),
+                    'created_by' => auth()->user()->id,
+                    'reference_id' => $id,
+                    'reference_type' => ServiceCategory::class,
+                ];
+                Upload::create($uploadsArr);
             }
         }
         $getServiceCategoryDetails = new ServiceCategoryResource($serviceCategory);

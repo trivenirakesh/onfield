@@ -30,7 +30,7 @@ class ProductResource extends JsonResource
             'user_id' => !empty($this->user_id) ? $this->user_id : '',
             'status' => $this->status,
             'status_text' => ($this->status == 1 ? 'Active' : 'Deactive'),
-            'image' => CommonHelper::getUploadUrl(Product::class,$this->id,Product::FOLDERNAME),
+            'image' => !empty($this->upload->file) ? $this->upload->file : '',
             'created_at' => CommonHelper::getConvertedDateTime($this->created_at)
         ];
     }

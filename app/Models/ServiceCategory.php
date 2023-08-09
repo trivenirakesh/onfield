@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ServiceCategory extends Model
 {
     use HasFactory,SoftDeletes;
+    protected $guarded = [];
     
     const FOLDERNAME = "servicecategory/";
 
@@ -16,8 +17,8 @@ class ServiceCategory extends Model
       0 => 'BASE',
   ];
 
-    public function image() {
-      return $this->morphOne(Upload::class, 'reference');
+    public function upload() {
+      return $this->morphOne(Upload::class, 'reference')->where('media_type',self::MEDIA_TYPES[0])->latest();
     }
 
     public function setNameAttribute($value)
