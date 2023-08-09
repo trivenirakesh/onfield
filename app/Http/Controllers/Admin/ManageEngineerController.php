@@ -3,10 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\EngineerCreateRequest;
 use Illuminate\Http\Request;
+use App\Services\V1\ManageUserService;
+use App\Traits\CommonTrait;
 
 class ManageEngineerController extends Controller
 {
+    use CommonTrait;
+    protected $manageUserService;
+
+    public function __construct(ManageUserService $manageUserService)
+    {
+        $this->manageUserService = $manageUserService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -32,9 +43,14 @@ class ManageEngineerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EngineerCreateRequest $request)
     {
-        //
+        $createEngineer  = $this->manageUserService->store($request);
+        
+        if (!$createEngineer['status']) {
+            return $this->jsonResponse($createEngineer, 401);
+        }
+        return $this->jsonResponse($createEngineer, 200);
     }
 
     /**
@@ -50,7 +66,8 @@ class ManageEngineerController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $title =  'Edit Engineer';
+        return view('admin.engineer.edit', compact('title'));
     }
 
     /**
