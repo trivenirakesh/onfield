@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\Api\EngineerSkillRequest;
-use App\Http\Resources\V1\EngineerSkillResource;
+use App\Http\Requests\V1\Api\ScheduleRequest;
+use App\Http\Resources\V1\SchedulesResource;
+use App\Models\Schedule;
 use App\Services\V1\ScheduleService;
 use App\Traits\CommonTrait;
-use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request;
 
 class EngineerScheduleController extends Controller
 {
@@ -25,18 +26,18 @@ class EngineerScheduleController extends Controller
         if (!$schedule['status']) {
             return response()->json($schedule, 401);
         }
-        $schedule['data'] = [];
+        $schedule['data'] = SchedulesResource::collection($schedule['data']);
         return response()->json($schedule, 200);
     }
 
 
-    public function update(Request $request)
+    public function update(ScheduleRequest $request)
     {
-        // $updateSkill = $this->scheduleService->updateSkills($request, auth()->id());
-        // if (!$updateSkill['status']) {
-        //     return response()->json($updateSkill, 401);
-        // }
-        // $updateSkill['data'] = EngineerSkillResource::collection($updateSkill['data']);
-        // return response()->json($updateSkill, 200);
+        $updateSchedule = $this->scheduleService->engineerScheduleUpdate($request, auth()->id());
+        if (!$updateSchedule['status']) {
+            return response()->json($updateSchedule, 401);
+        }
+        $updateSchedule['data'] = SchedulesResource::collection($updateSchedule['data']);
+        return response()->json($updateSchedule, 200);
     }
 }
