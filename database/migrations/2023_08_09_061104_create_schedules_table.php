@@ -3,6 +3,7 @@
 use App\Traits\CommonTrait;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -23,6 +24,12 @@ return new class extends Migration
             $this->timestampColumns($table);
             $table->foreign('user_id')->references('id')->on('users');
         });
+
+        // Call seeder
+        Artisan::call('db:seed', [
+            '--class' => 'ScheduleSeeder',
+        ]);
+        
     }
 
     /**
