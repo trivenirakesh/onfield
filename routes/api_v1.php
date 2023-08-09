@@ -83,9 +83,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
     // Master module routes
     Route::resource('skill', SkillController::class)->except(['create', 'edit']);
     Route::resource('addresstype', AddressTypeController::class)->except(['create', 'edit']);
-    Route::resource('itemcategory', ItemCategoryController::class)->except(['create', 'edit']);
+    Route::resource('itemcategory', ProductCategoryController::class)->except(['create', 'edit']);
     Route::resource('unitofmeasurment', UnitOfMeasurementController::class)->except(['create', 'edit']);
-    Route::resource('entityuser', ManageEntityController::class)->except(['create', 'edit']);
+    Route::resource('entityuser', ManageUserController::class)->except(['create', 'edit']);
 
     // Service category routes
     Route::get('servicecategory', [ServiceCategoryController::class, 'index']);
