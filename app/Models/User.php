@@ -106,22 +106,22 @@ class User extends Authenticatable
 
     public function profile()
     {
-        return $this->morphOne(Upload::class, 'reference')->where('media_type', 'PROFILE')->latest();
+        return $this->morphOne(Upload::class, 'reference')->where('media_type', self::MEDIA_TYPES[0])->latest();
     }
 
     public function addressProof()
     {
-        return $this->morphOne(Upload::class, 'reference')->where('media_type', 'ADDRESS-PROOF')->latest();
+        return $this->morphOne(Upload::class, 'reference')->where('media_type', self::MEDIA_TYPES[2])->latest();
     }
 
     public function resume()
     {
-        return $this->morphOne(Upload::class, 'reference')->where('media_type', 'RESUME')->latest();
+        return $this->morphOne(Upload::class, 'reference')->where('media_type', self::MEDIA_TYPES[1])->latest();
     }
 
     public function idProof()
     {
-        return $this->morphOne(Upload::class, 'reference')->where('media_type', 'ID-PROOF')->latest();
+        return $this->morphOne(Upload::class, 'reference')->where('media_type', self::MEDIA_TYPES[3])->latest();
     }
 
     //morphic relationship end

@@ -37,7 +37,7 @@ class ServiceCategoryController extends Controller
                     return $this->actionHtml($baseurl, $row->id, true);
                 })
                 ->addColumn('image', function ($row) {
-                    $imagePath = CommonHelper::getUploadUrl(ServiceCategory::class,$row->id,ServiceCategory::FOLDERNAME);
+                    $imagePath = !empty($row->upload->file) ? $row->upload->file : '';
                     $image = '<img src="' . $imagePath . '" class="img-fluid img-radius" width="40px" height="40px">';
                     return $image;
                 })
