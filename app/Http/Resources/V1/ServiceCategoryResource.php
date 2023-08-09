@@ -22,7 +22,7 @@ class ServiceCategoryResource extends JsonResource
             'description' => ($this->description != NULL) ? $this->description : '',
             'status' => $this->status,
             'status_text' => ($this->status == 1 ? 'Active' : 'Deactive'),
-            'image' => CommonHelper::getUploadUrl(ServiceCategory::class,$this->id,ServiceCategory::FOLDERNAME),
+            'image' => !empty($this->upload->file) ? $this->upload->file : '',
             'created_at' => CommonHelper::getConvertedDateTime($this->created_at)
         ];
     }

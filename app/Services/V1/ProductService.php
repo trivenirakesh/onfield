@@ -34,20 +34,14 @@ class ProductService
     public function store(Request $request)
     {
         // Save product  section
-        $saveProduct = new Product;
-        $saveProduct->name = $request->name;
-        $saveProduct->description = $request->description;
-        $saveProduct->unit_of_measurement_id = $request->unit_of_measurement_id;
-        $saveProduct->product_category_id = $request->product_category_id;
-        $saveProduct->price = $request->price;
-        $saveProduct->status = $request->status;
+        $input = $request->only('name', 'description', 'unit_of_measurement_id','product_category_id','price','status');
         if($request->has('is_vendor') && $request->has('user_id')){
-            $saveProduct->is_vendor = $request->is_vendor;
-            $saveProduct->user_id = $request->user_id;
+            $input['is_vendor'] = $request->is_vendor;
+            $input['user_id'] = $request->user_id;
         }
-        $saveProduct->created_by = auth()->user()->id;
-        $saveProduct->created_ip = CommonHelper::getUserIp();
-        $saveProduct->save();
+        $input['created_by'] = auth()->user()->id;
+        $input['created_ip'] = CommonHelper::getUserIp();
+        $saveProduct = Product::create($input);
 
         // upload file
         $uploadPath = Product::FOLDERNAME; 
@@ -55,16 +49,18 @@ class ProductService
             $image = $request->file('image');
             $data = CommonHelper::uploadImages($image,$uploadPath,0);
             if (!empty($data)) {
-                $saveUploads = new Upload();
-                $saveUploads['file'] = $data['filename'];
-                $saveUploads['media_type'] = Product::MEDIA_TYPES[0];
-                $saveUploads['image_type'] = $data['filetype'];
-                $saveUploads['upload_path'] = CommonHelper::getUploadPath($uploadPath);
-                $saveUploads['created_by'] = auth()->user()->id;
-                $saveUploads['created_ip'] = CommonHelper::getUserIp();
-                $saveUploads['reference_id'] = $saveProduct->id;
-                $saveUploads['reference_type'] = Product::class;
-                $saveUploads->save();
+                $uploadsArr = [
+                    'file' => $data['filename'],
+                    'thumb_file' => $data['filename'],
+                    'media_type' => Product::MEDIA_TYPES[0],
+                    'file_type' => $data['filetype'],
+                    'upload_path' => CommonHelper::getUploadPath($uploadPath),
+                    'created_ip' => CommonHelper::getUserIp(),
+                    'created_by' => auth()->user()->id,
+                    'reference_id' => $saveProduct->id,
+                    'reference_type' => Product::class,
+                ];
+                Upload::create($uploadsArr);
             }
         }
         $getProductDetails = new ProductResource($saveProduct);
@@ -96,44 +92,50 @@ class ProductService
      */
     public function update(Request $request, $id)
     {
-
-        $updateProduct = Product::where('id', $id)->first();
+        $input = $request->only('name', 'description', 'unit_of_measurement_id','product_category_id','price','status');
+        $updateProduct = Product::with(['upload' => function ($query) {
+            $query->select('id', 'reference_id', 'reference_type', 'file', 'media_type', 'file_type', 'upload_path');
+        }])->where('id', $id)->first();
         if ($updateProduct == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
-        $updateProduct->name = $request->name;
-        $updateProduct->status = $request->status;
-        $updateProduct->name = $request->name;
-        $updateProduct->description = $request->description;
-        $updateProduct->uom_id = $request->uom_id;
-        $updateProduct->product_category_id = $request->product_category_id;
-        $updateProduct->price = $request->price;
         if($request->has('is_vendor') && $request->has('user_id')){
-            $updateProduct->is_vendor = $request->is_vendor;
-            $updateProduct->user_id = $request->user_id;
+            $input['is_vendor'] = $request->is_vendor;
+            $input['user_id'] = $request->user_id;
         }
-        $updateProduct->updated_by = auth()->user()->id;
-        $updateProduct->updated_ip = CommonHelper::getUserIp();
-        $updateProduct->update();
+        $input['updated_by'] = auth()->user()->id;
+        $input['updated_ip'] = CommonHelper::getUserIp();
+        $updateProduct->update($input);
 
         // Update file
+        $uploadPath = Product::FOLDERNAME;
         if ($request->hasFile('image')) {
-            $updateUploads = Upload::where('reference_type',Product::class)->where('reference_id',$id)->first();
-            // Unlink old image from storage 
-            $oldImage = $updateUploads->file ?? null;
-            if ($oldImage != null){
-                CommonHelper::removeUploadedImages($oldImage,Product::FOLDERNAME);
-            }
-            // Unlink old image from storage 
-
             $image = $request->file('image');
-            $data = CommonHelper::uploadImages($image,Product::FOLDERNAME,0);
+            $data = CommonHelper::uploadImages($image, $uploadPath, 0);
             if (!empty($data)) {
-                $updateUploads->file = $data['filename'];
-                $updateUploads->image_type = $data['filetype'];
-                $updateUploads->updated_by = auth()->user()->id;
-                $updateUploads->updated_ip = CommonHelper::getUserIp();
-                $updateUploads->update();
+                // delete file if exists
+                if ($updateProduct?->upload?->id != null) {
+                    // Unlink old image from storage 
+                    $oldImage = $updateProduct?->upload->getAttributes()['file'] ?? null;
+                    $path = $updateProduct->upload->upload_path ?? null;
+                    if ($oldImage != null && $path != null) {
+                        CommonHelper::removeUploadedImages($oldImage, $path);
+                    }
+                    $updateProduct->upload->delete();
+                }
+
+                $uploadsArr = [
+                    'file' => $data['filename'],
+                    'thumb_file' => $data['filename'],
+                    'media_type' => Product::MEDIA_TYPES[0],
+                    'file_type' => $data['filetype'],
+                    'upload_path' => CommonHelper::getUploadPath($uploadPath),
+                    'created_ip' => CommonHelper::getUserIp(),
+                    'created_by' => auth()->user()->id,
+                    'reference_id' => $id,
+                    'reference_type' => Product::class,
+                ];
+                Upload::create($uploadsArr);
             }
         }
         $getProductDetails = new ProductResource($updateProduct);

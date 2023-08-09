@@ -75,7 +75,7 @@ class ProfileController extends Controller
         try {
             $inputs = $request->only('first_name', 'last_name', 'email');
             $user = User::with(['uploads' => function ($query) {
-                $query->select('id', 'reference_id', 'reference_type', 'file', 'media_type', 'image_type', 'upload_path');
+                $query->select('id', 'reference_id', 'reference_type', 'file', 'media_type', 'file_type', 'upload_path');
             }])->where('id', auth()->id())->first();
             $user->update($inputs);
             $userId = $user->id;
@@ -101,7 +101,7 @@ class ProfileController extends Controller
                         'file' => $data['filename'],
                         'thumb_file' => $data['filename'],
                         'media_type' => User::MEDIA_TYPES[0],
-                        'image_type' => $data['filetype'],
+                        'file_type' => $data['filetype'],
                         'upload_path' => CommonHelper::getUploadPath($uploadPath),
                         'created_ip' => CommonHelper::getUserIp(),
                         'reference_id' => $userId,
@@ -129,7 +129,7 @@ class ProfileController extends Controller
                     $address = [
                         'thumb_file' => $data['filename'],
                         'media_type' => User::MEDIA_TYPES[2],
-                        'image_type' => $data['filetype'],
+                        'file_type' => $data['filetype'],
                         'created_ip' => CommonHelper::getUserIp(),
                         'upload_path' => CommonHelper::getUploadPath($uploadPath),
                         'reference_id' => $userId,
@@ -161,7 +161,7 @@ class ProfileController extends Controller
                         'thumb_file' => $data['filename'],
                         'upload_path' => CommonHelper::getUploadPath($uploadPath),
                         'media_type' => User::MEDIA_TYPES[3],
-                        'image_type' => $data['filetype'],
+                        'file_type' => $data['filetype'],
                         'created_ip' => CommonHelper::getUserIp(),
                         'reference_id' => $userId,
                         'reference_type' => User::class,
@@ -190,7 +190,7 @@ class ProfileController extends Controller
                     $resume = [
                         'file' => $data['filename'],
                         'media_type' => User::MEDIA_TYPES[1],
-                        'image_type' => $data['filetype'],
+                        'file_type' => $data['filetype'],
                         'upload_path' => CommonHelper::getUploadPath($uploadPath),
                         'created_ip' => CommonHelper::getUserIp(),
                         'reference_id' => $userId,

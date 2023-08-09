@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $guarded = [];
 
     const FOLDERNAME = "product/";
 
@@ -22,8 +23,8 @@ class Product extends Model
         $this->attributes['name'] = preg_replace('/\s+/', ' ', ucfirst(strtolower($value)));
     }
     
-    public function images() {
-        return $this->morphMany(Upload::class, 'reference');
+    public function upload() {
+        return $this->morphOne(Upload::class, 'reference')->where('media_type',self::MEDIA_TYPES[0])->latest();
     }
 
     public function unitOfMeasurement(){
