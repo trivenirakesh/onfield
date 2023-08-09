@@ -86,6 +86,8 @@ Route::group(['prefix' => 'engineer'], function () {
 
         Route::get('schedule', [EngineerScheduleController::class, 'index']);
         Route::post('schedule/update', [EngineerScheduleController::class, 'update']);
+
+        Route::resource('schedule-exception', EngineerScheduleExceptionController::class)->except(['create', 'edit']);
     });
 });
 
