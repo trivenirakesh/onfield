@@ -3,10 +3,11 @@
 namespace App\Http\Requests\V1\Api;
 
 use App\Helpers\CommonHelper;
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
-class ProfileRequest extends FormRequest
+class EngineerProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,13 +28,16 @@ class ProfileRequest extends FormRequest
         $rules = [
             'first_name' => 'required|max:200',
             'last_name' => 'required|max:200',
-            'email' => 'required|email|unique:users,email,' . $id . ',id,deleted_at,NULL',
-            // 'mobile' => 'required|numeric|digits:10|unique:users,mobile,' . $id . ',id,deleted_at,NULL',
+            'email' => 'required|email|max:255|unique:users,email,' . $id . ',id,deleted_at,NULL',
+            'image' => 'nullable|max:2048|mimes:jpg,png,jpeg',
+            'addressproof' => 'nullable|max:2048|mimes:jpg,png,jpeg',
+            'idproof' => 'nullable|max:2048|mimes:jpg,png,jpeg',
+            'resume' => 'nullable|max:2048|mimes:pdf',
         ];
         return $rules;
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

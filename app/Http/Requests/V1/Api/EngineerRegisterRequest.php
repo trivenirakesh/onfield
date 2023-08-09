@@ -43,6 +43,9 @@ class EngineerRegisterRequest extends FormRequest
             'state_id' => 'required|exists:states,id',
             'city' => 'required|max:200',
             'address' => 'required|max:255',
+            'pincode' => 'nullable|numeric|digits_between:3,10',
+            'longitude' => ['nullable', 'numeric', 'min:-90', 'max:90'],
+            'latitude' => ['nullable', 'numeric', 'min:-90', 'max:90'],
             'skills' => 'required|array',
             'skills.*' => [
                 'required',

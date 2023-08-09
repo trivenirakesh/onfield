@@ -70,6 +70,7 @@ class AuthController extends Controller
                         'file' => $data['filename'],
                         'thumb_file' => $data['filename'],
                         'media_type' => User::MEDIA_TYPES[0],
+                        'image_type' => $data['filetype'],
                         'file_type' => $data['filetype'],
                         'upload_path' => CommonHelper::getUploadPath($uploadPath),
                         'created_ip' => CommonHelper::getUserIp(),
@@ -89,6 +90,7 @@ class AuthController extends Controller
                         'thumb_file' => $data['filename'],
                         'media_type' => User::MEDIA_TYPES[2],
                         'file_type' => $data['filetype'],
+                        'image_type' => $data['filetype'],
                         'upload_path' => CommonHelper::getUploadPath($uploadPath),
                         'created_ip' => CommonHelper::getUserIp(),
                         'reference_id' => $userId,
@@ -108,6 +110,7 @@ class AuthController extends Controller
                         'file' => $data['filename'],
                         'thumb_file' => $data['filename'],
                         'media_type' => User::MEDIA_TYPES[3],
+                        'image_type' => $data['filetype'],
                         'upload_path' => CommonHelper::getUploadPath($uploadPath),
                         'file_type' => $data['filetype'],
                         'created_ip' => CommonHelper::getUserIp(),
@@ -126,6 +129,7 @@ class AuthController extends Controller
                     $resume = [
                         'file' => $data['filename'],
                         'media_type' => User::MEDIA_TYPES[1],
+                        'image_type' => $data['filetype'],
                         'upload_path' => CommonHelper::getUploadPath($uploadPath),
                         'file_type' => $data['filetype'],
                         'created_ip' => CommonHelper::getUserIp(),
@@ -144,6 +148,9 @@ class AuthController extends Controller
                     'address' => $request->address,
                     'state_id' => $request->state_id,
                     'city' => $request->city,
+                    'pincode' => $request->pincode ?? null,
+                    'latitude' => $request->latitude ?? null,
+                    'longitude' => $request->longitude ?? null,
                     'created_ip' => CommonHelper::getUserIp(),
                 ];
                 $add = Address::create($fullAddress);

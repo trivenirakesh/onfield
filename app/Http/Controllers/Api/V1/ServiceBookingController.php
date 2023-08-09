@@ -4,24 +4,25 @@ namespace App\Http\Controllers\API\V1;
 
 
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests\V1\Api\BookingRequest;
 use App\Http\Resources\V1\ServiceCategoryResource;
 use App\Http\Resources\V1\ServiceResource;
 use App\Services\V1\ServiceCategoryService;
 use App\Services\V1\ServicesService;
 use App\Traits\CommonTrait;
 use Exception;
+use Illuminate\Http\Request;
 
-class ServiceController extends Controller
+class ServiceBookingController extends Controller
 {
     use CommonTrait;
 
 
-    public function index($categoryId)
+    public function index()
     {
         try {
             $servicesService = new ServicesService;
-            $result =  $servicesService->index($categoryId);
+            $result =  $servicesService->index();
             if (!$result['status'] ?? true) {
                 return response()->json($result, 404);
             }
@@ -32,8 +33,9 @@ class ServiceController extends Controller
         }
     }
 
-    public function subServices()
+    public function create(BookingRequest $request)
     {
+        dd($request->all());
         try {
             // sub services call here under development
             return response()->json(['status' => true, 'messsage'  => 'success', 'data' => []], 200);
