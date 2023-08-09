@@ -21,7 +21,7 @@ class ProfileController extends Controller
     use CommonTrait;
 
 
-    public function index()
+    public function dashboard()
     {
         try {
             $popularProducts = [];

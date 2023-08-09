@@ -25,8 +25,17 @@ class ScheduleExceptionRequest extends FormRequest
             'start_date' => 'required|date_format:Y-m-d',
             'end_date' => 'required|date_format:Y-m-d|after_or_equal:start_date',
             'all_day' => 'required|boolean',
-            'start_time' => 'required_if:all_day,0|date_format:H:i:s',
-            'end_time' => 'required_if:all_day,0|date_format:H:i:s|after:start_time',
+            'start_time' => [
+                'required_unless:all_day,1',
+                'nullable',
+                'date_format:H:i:s',
+            ],
+            'end_time' => [
+                'required_unless:all_day,1',
+                'nullable',
+                'date_format:H:i:s',
+                'after:start_time',
+            ],
         ];
         return $rules;
     }

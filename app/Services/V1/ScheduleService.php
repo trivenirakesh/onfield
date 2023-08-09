@@ -116,4 +116,17 @@ class ScheduleService
         $getBackOfficeSchedule = $this->adminSchedule()['data'];
         return $this->successResponseArr(self::module . __('messages.success.update'), $getBackOfficeSchedule);
     }
+
+    public function bookingSchedule()
+    {
+        // $schedules = Schedule::where('user_id', auth()->id())
+        //     ->orderBy('work_day')
+        //     ->get();
+        // if (count($schedules) == 0) {
+        //     $schedules = Schedule::where('user_id', null)
+        //         ->orderBy('work_day')
+        //         ->get();
+        // }
+        // return $this->successResponseArr(self::module . __('messages.success.list'), $schedules);
+    }
 }
