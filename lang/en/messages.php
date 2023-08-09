@@ -105,5 +105,6 @@ return [
     ],
     'failed' => [
         'general' => 'Something went wrong!!',
+        'schedule_exception_invalid' => 'Invalid request, the date range conflicts with an existing schedule exception.',
     ]
 ];

@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Api\ScheduleRequest;
 use App\Http\Resources\V1\SchedulesResource;
-use App\Models\Schedule;
 use App\Services\V1\ScheduleService;
 use App\Traits\CommonTrait;
-use Illuminate\Http\Request;
 
 class EngineerScheduleController extends Controller
 {
