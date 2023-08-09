@@ -16,8 +16,8 @@ class ServiceCategory extends Model
       0 => 'BASE',
   ];
 
-    public function images() {
-      return $this->morphMany(Upload::class, 'reference');
+    public function image() {
+      return $this->morphOne(Upload::class, 'reference');
     }
 
     public function setNameAttribute($value)
