@@ -3,12 +3,15 @@
 use App\Http\Controllers\Api\V1\{
     AddressController,
     AuthController,
+    EngineerSkillController,
     ProductController,
     ProfileController,
     ServiceBookingController,
     ServiceCategoryController,
     ServiceController,
-    StaticPageController
+    SkillController,
+    StaticPageController,
+    UserSkillController
 };
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +58,11 @@ Route::group(['prefix' => 'client'], function () {
     });
 });
 
+
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::get('skills', [SkillController::class, 'index']);
+});
+
 Route::group(['prefix' => 'engineer'], function () {
 
     // Auth routes
@@ -71,6 +79,9 @@ Route::group(['prefix' => 'engineer'], function () {
         Route::get('profile', [ProfileController::class, 'engineerProfile']);
         Route::post('profile', [ProfileController::class, 'engineerProfileUpdate']);
         Route::post('change-password', [ProfileController::class, 'changePassword']);
+        //user skill manage
+        Route::get('skills', [EngineerSkillController::class, 'index']);
+        Route::post('skills/update', [EngineerSkillController::class, 'update']);
     });
 });
 
