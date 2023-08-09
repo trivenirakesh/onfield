@@ -49,6 +49,7 @@ return [
         'factor_numeric' => 'Factor must be a number or decimal',
         'skill_required' => 'Please select skill',
         'category_id' => 'Please select category id',
+        'invalid_schedule_request' => 'Invalid schedule request, schedule must have all week days',
     ],
     'item' => [
         'uom_id_required' => 'Please enter unit of measurement id',

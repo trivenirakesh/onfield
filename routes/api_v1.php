@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\{
     AddressController,
     AuthController,
+    EngineerScheduleController,
     EngineerSkillController,
     ProductController,
     ProfileController,
@@ -84,6 +85,7 @@ Route::group(['prefix' => 'engineer'], function () {
         Route::post('skills/update', [EngineerSkillController::class, 'update']);
 
         Route::get('schedule', [EngineerScheduleController::class, 'index']);
+        Route::post('schedule/update', [EngineerScheduleController::class, 'update']);
     });
 });
 
