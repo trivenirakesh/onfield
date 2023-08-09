@@ -43,6 +43,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin'], 'as' => 'a
     Route::post('update-static-page', [StaticPageController::class, 'store'])->name('static_page_update');
 
     Route::get('timing/{slug}', [ScheduleTimingController::class, 'index'])->name('timing');
+    Route::post('update-schedule-timing', [ScheduleTimingController::class, 'store'])->name('schedule_timing_update');
 
     Route::get('profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('profile', [ProfileController::class, 'update'])->name('profile-update');
