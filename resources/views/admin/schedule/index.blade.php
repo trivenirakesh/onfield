@@ -65,7 +65,7 @@
                             @endfor
                         </div>
                         <div class="modal-footer ">
-                            <button type="submit" class="float-right btn btn-primary" id="module_form_btn">Update<span style="display: none" id="users_form_loader"><i class="fa fa-spinner fa-spin"></i></span></button>
+                            <button type="submit" class="float-right btn btn-primary" id="module_form_btn">Update<span style="display: none" id="module_form_loader"><i class="fa fa-spinner fa-spin"></i></span></button>
                         </div>
                         </form>
                     </div>

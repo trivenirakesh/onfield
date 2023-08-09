@@ -3,6 +3,8 @@ let update_url = $("#module_update_url").val();
 
 $("#updateScheduleTimingFrm").submit(function(e){
     e.preventDefault();
+    const formBtn = $("#module_form_btn");
+    const formLoader = $("#module_form_loader");
     let requestArr  = [];
     $(".dayWiseRow").each(function(key,val){
         let fieldArr = new Object();
@@ -27,10 +29,22 @@ $("#updateScheduleTimingFrm").submit(function(e){
         headers: {
             "X-CSRF-TOKEN": csrf_token,
         },
-        success: function (response) {
-            console.log(response);
+        beforeSend: function () {
+            formLoader.show();
+            formBtn.prop("disabled", true);
+        },
+        success: function (result) {
+            formLoader.hide();
+            formBtn.prop("disabled", false);
+            if (result.status) {
+                toastr.success(result.message);
+            } else {
+                toastr.error(result.message);
+            }
         },
         error: function () {
+            formLoader.hide();
+            formBtn.prop("disabled", false);
             toastr.error("Please Reload Page.");
         },
     })
