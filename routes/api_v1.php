@@ -82,6 +82,8 @@ Route::group(['prefix' => 'engineer'], function () {
         //user skill manage
         Route::get('skills', [EngineerSkillController::class, 'index']);
         Route::post('skills/update', [EngineerSkillController::class, 'update']);
+
+        Route::get('schedule', [EngineerScheduleController::class, 'index']);
     });
 });
 
