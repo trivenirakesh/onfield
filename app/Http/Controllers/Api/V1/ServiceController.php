@@ -57,6 +57,21 @@ class ServiceController extends Controller
         }
     }
 
+    public function bookingSchedule()
+    {
+        try {
+            $serviceCategoryService = new ServiceCategoryService;
+            $serviceCategory =  $serviceCategoryService->index() ?? [];
+            if (!$serviceCategory['status']) {
+                return response()->json($serviceCategory, 404);
+            }
+            $serviceCategory['data'] = ServiceCategoryResource::collection($serviceCategory['data']);
+            return response()->json($serviceCategory, 200);
+        } catch (Exception $th) {
+            return $this->errorResponse(__('messages.failed.general'), 500);
+        }
+    }
+
     public function dashboard()
     {
         try {
