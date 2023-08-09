@@ -83,19 +83,19 @@
                         </ul>
                     </li>
                     <li class="nav-item ">
-                        <a href="#" class="nav-link {{request()->is('admin/timing*') ?'active' : ''}}">
+                        <a href="#" class="nav-link @if(request()->is('admin/schedule') || request()->is('admin/scheduleexception')) active @endif">
                             <i class="fas fa-calendar-alt"></i>
                             <p>Schedule Timing <i class="right fas fa-angle-left"></i></p>
                         </a>
-                        <ul class="nav nav-treeview" style="display: {{request()->is('admin/timing*') ? 'block' : 'none'}}">
+                        <ul class="nav nav-treeview" style="display: @if(request()->is('admin/schedule') || request()->is('admin/scheduleexception')) block @else none @endif">
                             <li class="nav-item">
-                                <a href="{{route('admin.timing',['schedule'])}}" class="nav-link {{request()->is('admin/timing/schedule*') ?'active' : ''}}">
+                                <a href="{{route('admin.schedule')}}" class="nav-link {{request()->is('admin/schedule/') ?'active' : ''}}">
                                     <i class="fas fa-circle nav-icon"></i>
                                     <p>Timing</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('admin.static_page',['about-us'])}}" class="nav-link {{request()->is('admin/sitesetting/timing*') ?'active' : ''}}">
+                                <a href="{{route('admin.scheduleexception.index')}}" class="nav-link {{request()->is('admin/scheduleexception') ?'active' : ''}}">
                                     <i class="fas fa-circle nav-icon"></i>
                                     <p>Exception </p>
                                 </a>

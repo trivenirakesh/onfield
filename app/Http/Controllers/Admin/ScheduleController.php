@@ -8,7 +8,7 @@ use App\Http\Requests\V1\Api\ScheduleRequest;
 use App\Services\V1\ScheduleService;
 use App\Models\Schedule;
 
-class ScheduleTimingController extends Controller
+class ScheduleController extends Controller
 {
     use CommonTrait;
     private $scheduleService;

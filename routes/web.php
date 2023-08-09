@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\{AddressTypeController, HomeController, ManageEngineerController, ProductCategoryController, ProductController, ProfileController, ScheduleTimingController, ServiceCategoryController, ServiceController, SkillController, StaticPageController, UnitOfMeasurementController, UsersController};
+use App\Http\Controllers\Admin\{AddressTypeController, HomeController, ManageEngineerController, ProductCategoryController, ProductController, ProfileController, ScheduleController, ScheduleExceptionController, ServiceCategoryController, ServiceController, SkillController, StaticPageController, UnitOfMeasurementController, UsersController};
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,8 +42,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin'], 'as' => 'a
     Route::get('static-page/{slug}', [StaticPageController::class, 'index'])->name('static_page');
     Route::post('update-static-page', [StaticPageController::class, 'store'])->name('static_page_update');
 
-    Route::get('timing/{slug}', [ScheduleTimingController::class, 'index'])->name('timing');
-    Route::post('update-schedule-timing', [ScheduleTimingController::class, 'store'])->name('schedule_timing_update');
+    Route::get('schedule', [ScheduleController::class, 'index'])->name('schedule');
+    Route::post('update-schedule-timing', [ScheduleController::class, 'store'])->name('schedule_timing_update');
+    Route::resource('scheduleexception',ScheduleExceptionController::class)->except(['edit','update']);;
 
     Route::get('profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('profile', [ProfileController::class, 'update'])->name('profile-update');
