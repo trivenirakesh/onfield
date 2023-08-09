@@ -98,43 +98,31 @@ class User extends Authenticatable
         return $otp;
     }
 
-    public static function getTokenAndRefreshToken($mobile, $password)
+    //morphic relationship start
+    public function uploads()
     {
-        try {
-            //code...
-
-            $oClient = OClient::where('password_client', 1)->first();
-            if (empty($oClient)) {
-                throw new Exception('password_client not found');
-            }
-            $http = new Client();
-            $response = $http->request('POST', url('oauth/token'), [
-                'form_params' => [
-                    'grant_type' => 'client_credentials',
-                    'client_id' => $oClient->id,
-                    'client_secret' => $oClient->secret,
-                    'username' => $mobile,
-                    'password' => $password,
-                    'scope' => '*',
-                ],
-                'verify' => false,
-            ]);
-        } catch (\Throwable $th) {
-            throw new Exception('password_client not found');
-        }
-        return json_decode((string) $response->getBody(), true);
+        return $this->morphMany(Upload::class, 'reference');
     }
 
-    public function loginResponse()
+    public function profile()
     {
-        return [
-            'id' => $this->id,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'email' => $this->email,
-            'mobile' => $this->mobile,
-            'image' => '',
-            'status' => $this->status == 1 ? 'Active' : 'Deactive'
-        ];
+        return $this->morphOne(Upload::class, 'reference')->where('media_type', 'PROFILE')->latest();
     }
+
+    public function addressProof()
+    {
+        return $this->morphOne(Upload::class, 'reference')->where('media_type', 'ADDRESS-PROOF')->latest();
+    }
+
+    public function resume()
+    {
+        return $this->morphOne(Upload::class, 'reference')->where('media_type', 'RESUME')->latest();
+    }
+
+    public function idProof()
+    {
+        return $this->morphOne(Upload::class, 'reference')->where('media_type', 'ID-PROOF')->latest();
+    }
+
+    //morphic relationship end
 }

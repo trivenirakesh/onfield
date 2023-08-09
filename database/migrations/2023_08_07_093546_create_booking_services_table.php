@@ -16,13 +16,16 @@ return new class extends Migration
     {
         Schema::create('booking_services', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('booking_id');
-            $table->bigInteger('sub_service_id')->nullable();
-            $table->bigInteger('product_id')->nullable();
+            $table->unsignedBigInteger('booking_id');
+            $table->unsignedBigInteger('sub_service_id')->nullable();
+            $table->unsignedBigInteger('product_id')->nullable();
             $table->bigInteger('quantity')->nullable();
             $table->string('input_from_client')->nullable();
-            $table->bigInteger('uom_id')->nullable()->comment('unit_of_measurement_id');
+            $table->unsignedBigInteger('uom_id')->nullable()->comment('unit_of_measurement_id');
             $this->timestampColumns($table);
+            $table->foreign('sub_service_id')->references('id')->on('sub_services');
+            $table->foreign('booking_id')->references('id')->on('bookings');
+            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 

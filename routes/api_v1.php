@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\{
     AuthController,
     ProductController,
     ProfileController,
+    ServiceBookingController,
     ServiceCategoryController,
     ServiceController,
     StaticPageController
@@ -48,7 +49,9 @@ Route::group(['prefix' => 'client'], function () {
         Route::get('dashboard', [ProfileController::class, 'dashboard']);
 
         Route::get('service-category', [ServiceController::class, 'serviceCategory']);
-        Route::get('services', [ServiceController::class, 'index']);
+        Route::get('services/{category_id}', [ServiceController::class, 'index']);
+        Route::get('sub-services', [ServiceController::class, 'subServices']);
+        Route::post('services/booking', [ServiceBookingController::class, 'create'])->name('services.booking.create');
     });
 });
 
@@ -65,8 +68,8 @@ Route::group(['prefix' => 'engineer'], function () {
 
     Route::group(['middleware' => ['auth:api']], function () {
         Route::get('logout', [AuthController::class, 'logout']);
-        Route::get('profile', [ProfileController::class, 'profile']);
-        Route::post('profile', [ProfileController::class, 'profileUpdate']);
+        Route::get('profile', [ProfileController::class, 'engineerProfile']);
+        Route::post('profile', [ProfileController::class, 'engineerProfileUpdate']);
         Route::post('change-password', [ProfileController::class, 'changePassword']);
     });
 });

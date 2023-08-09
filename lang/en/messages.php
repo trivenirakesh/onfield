@@ -48,6 +48,7 @@ return [
         'factor_required' => 'Please enter factor',
         'factor_numeric' => 'Factor must be a number or decimal',
         'skill_required' => 'Please select skill',
+        'category_id' => 'Please select category id',
     ],
     'item' => [
         'uom_id_required' => 'Please enter unit of measurement id',

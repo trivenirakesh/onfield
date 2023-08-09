@@ -38,7 +38,7 @@ class ManageUserService
         $user = new User;
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
-        $user->email = str_replace(' ', '',$request->email);
+        $user->email = str_replace(' ', '', $request->email);
         $user->mobile = $request->mobile;
         $user->user_type = $request->user_type;
         $user->status = $request->status;
@@ -56,9 +56,13 @@ class ManageUserService
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $getUplaods = false)
     {
-        $getUserData = User::where('id', $id)->first();
+        $getUserData = User::when($getUplaods, function ($query) {
+            $query->with(['uploads' => function ($query) {
+                $query->select('id', 'reference_id', 'reference_type', 'file', 'media_type', 'image_type','upload_path');
+            }]);
+        })->where('id', $id)->first();
         if ($getUserData == null) {
             return $this->errorResponseArr(self::module . __('messages.validation.not_found'));
         }
@@ -82,7 +86,7 @@ class ManageUserService
         // update user 
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
-        $user->email = str_replace(' ', '',$request->email);
+        $user->email = str_replace(' ', '', $request->email);
         $user->mobile = $request->mobile;
         $user->role_id = $request->role_id;
         $user->updated_by = auth()->user()->id;

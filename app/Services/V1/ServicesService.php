@@ -21,12 +21,15 @@ class ServicesService
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($categoryId = null)
     {
         $activeStatus = CommonHelper::getConfigValue('status.active');
-        $result = Service::with(['service_category'])
+        $result = Service::query()
             ->when(auth()->user()->user_type != User::USERADMIN, function ($query) use ($activeStatus) {
                 $query->where('status', $activeStatus);
+            })
+            ->when($categoryId != null, function ($query)  use ($categoryId) {
+                $query->where('service_category_id', $categoryId);
             })
             ->latest('id')->get();
         return $this->successResponseArr(self::module . __('messages.success.list'), $result);
