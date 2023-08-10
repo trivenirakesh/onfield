@@ -56,6 +56,7 @@ Route::group(['prefix' => 'client'], function () {
         Route::get('services/{category_id}', [ServiceController::class, 'index']);
         Route::get('sub-services', [ServiceController::class, 'subServices']);
         Route::get('booking-schedule', [ServiceController::class, 'bookingSchedule']);
+        Route::post('booking-schedule', [ServiceController::class, 'bookingScheduleByDate']);
         Route::post('services/booking', [ServiceBookingController::class, 'create'])->name('services.booking.create');
     });
 });

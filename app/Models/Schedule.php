@@ -10,5 +10,6 @@ class Schedule extends Model
 {
     use HasFactory, SoftDeletes;
     protected $guarded = ['id'];
+    const SLOTGAP = 60; // minutes
     const DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 }
