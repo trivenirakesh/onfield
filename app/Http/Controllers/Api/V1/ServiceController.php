@@ -7,10 +7,13 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Resources\V1\ServiceCategoryResource;
 use App\Http\Resources\V1\ServiceResource;
+use App\Services\V1\ScheduleService;
 use App\Services\V1\ServiceCategoryService;
 use App\Services\V1\ServicesService;
 use App\Traits\CommonTrait;
 use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ServiceController extends Controller
 {
@@ -60,17 +63,46 @@ class ServiceController extends Controller
     public function bookingSchedule()
     {
         try {
-            $serviceCategoryService = new ServiceCategoryService;
-            $serviceCategory =  $serviceCategoryService->index() ?? [];
-            if (!$serviceCategory['status']) {
-                return response()->json($serviceCategory, 404);
+            $scheduleService = new ScheduleService;
+            $scheduleService =  $scheduleService->bookingSchedule();
+            if (!$scheduleService['status']) {
+                return response()->json($scheduleService, 404);
             }
-            $serviceCategory['data'] = ServiceCategoryResource::collection($serviceCategory['data']);
-            return response()->json($serviceCategory, 200);
+            // $scheduleService['data'] = ScheduleServiceResource::collection($serviceCategory['data']);
+            return response()->json($scheduleService, 200);
         } catch (Exception $th) {
             return $this->errorResponse(__('messages.failed.general'), 500);
         }
     }
+
+    public function bookingScheduleByDate(Request $request)
+    {
+
+        try {
+            $validator = Validator::make($request->all(), [
+                'date' => 'required|date_format:Y-m-d|after_or_equal:today',
+            ]);
+
+            if ($validator->fails()) {
+                $message = $validator->messages()->first();
+                return response()->json([
+                    'status' => false,
+                    'message' => $message,
+                    'errors' => $validator->errors(),
+                ], 404);
+            }
+
+            $scheduleService = new ScheduleService;
+            $scheduleService =  $scheduleService->bookingScheduleByDate($request);
+            if (!$scheduleService['status']) {
+                return response()->json($scheduleService, 404);
+            }
+            return response()->json($scheduleService, 200);
+        } catch (Exception $th) {
+            return $this->errorResponse(__('messages.failed.general'), 500);
+        }
+    }
+
 
     public function dashboard()
     {

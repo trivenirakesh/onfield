@@ -43,21 +43,21 @@ class ScheduleExceptionService
     public function store(Request $request, $userId = null)
     {
         //validate date  conflict
-        $newStartDate = $request->start_date;
-        $newEndDate = $request->end_date;
-        $isExists =  ScheduleException::when($userId != null, function ($query)  use ($userId) {
-            $query->where('user_id', $userId);
-        })->where(function ($query) use ($newStartDate, $newEndDate) {
-            $query->whereBetween('start_date', [$newStartDate, $newEndDate])
-                ->orWhereBetween('end_date', [$newStartDate, $newEndDate])
-                ->orWhere(function ($q) use ($newStartDate, $newEndDate) {
-                    $q->where('start_date', '<=', $newStartDate)
-                        ->where('end_date', '>=', $newEndDate);
-                });
-        })->exists();
-        if ($isExists) {
-            return $this->errorResponseArr(__('messages.failed.schedule_exception_invalid'));
-        }
+        // $newStartDate = $request->start_date;
+        // $newEndDate = $request->end_date;
+        // $isExists =  ScheduleException::when($userId != null, function ($query)  use ($userId) {
+        //     $query->where('user_id', $userId);
+        // })->where(function ($query) use ($newStartDate, $newEndDate) {
+        //     $query->whereBetween('start_date', [$newStartDate, $newEndDate])
+        //         ->orWhereBetween('end_date', [$newStartDate, $newEndDate])
+        //         ->orWhere(function ($q) use ($newStartDate, $newEndDate) {
+        //             $q->where('start_date', '<=', $newStartDate)
+        //                 ->where('end_date', '>=', $newEndDate);
+        //         });
+        // })->exists();
+        // if ($isExists) {
+        //     return $this->errorResponseArr(__('messages.failed.schedule_exception_invalid'));
+        // }
 
         $input = $request->validated();
         $input['user_id'] = $userId;
@@ -97,21 +97,21 @@ class ScheduleExceptionService
     {
 
         //validate date  conflict
-        $newStartDate = $request->start_date;
-        $newEndDate = $request->end_date;
-        $isExists =  ScheduleException::when($userId != null, function ($query)  use ($userId) {
-            $query->where('user_id', $userId);
-        })->where('id', '!=', $id)->where(function ($query) use ($newStartDate, $newEndDate) {
-            $query->whereBetween('start_date', [$newStartDate, $newEndDate])
-                ->orWhereBetween('end_date', [$newStartDate, $newEndDate])
-                ->orWhere(function ($q) use ($newStartDate, $newEndDate) {
-                    $q->where('start_date', '<=', $newStartDate)
-                        ->where('end_date', '>=', $newEndDate);
-                });
-        })->exists();
-        if ($isExists) {
-            return $this->errorResponseArr(__('messages.failed.schedule_exception_invalid'));
-        }
+        // $newStartDate = $request->start_date;
+        // $newEndDate = $request->end_date;
+        // $isExists =  ScheduleException::when($userId != null, function ($query)  use ($userId) {
+        //     $query->where('user_id', $userId);
+        // })->where('id', '!=', $id)->where(function ($query) use ($newStartDate, $newEndDate) {
+        //     $query->whereBetween('start_date', [$newStartDate, $newEndDate])
+        //         ->orWhereBetween('end_date', [$newStartDate, $newEndDate])
+        //         ->orWhere(function ($q) use ($newStartDate, $newEndDate) {
+        //             $q->where('start_date', '<=', $newStartDate)
+        //                 ->where('end_date', '>=', $newEndDate);
+        //         });
+        // })->exists();
+        // if ($isExists) {
+        //     return $this->errorResponseArr(__('messages.failed.schedule_exception_invalid'));
+        // }
 
         $result = ScheduleException::where('id', $id)
             ->when(auth()->user()->user_type != User::USERADMIN, function ($query) {
